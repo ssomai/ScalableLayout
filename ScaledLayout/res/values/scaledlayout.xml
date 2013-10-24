@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<item type="id" name="JMAbsolView480_TextSize_SP"/>
+	<item type="id" name="JMAbsolView480_TextSize_PX"/>
+	<item type="id" name="JMAbsolView480_RectF"/>
+</resources>
