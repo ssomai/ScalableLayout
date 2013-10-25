@@ -33,8 +33,8 @@ import android.widget.TextView;
 		}
 	}
 	
-	public static final int Tag_TextSize_PX_Float = com.jnm.github.android.scaledlayout.R.id.JMAbsolView480_TextSize_PX;
-	public static final int Tag_DestRect_RectF = com.jnm.github.android.scaledlayout.R.id.JMAbsolView480_RectF;
+	public static final int Tag_TextSize_PX_Float = com.jnm.github.android.scaledlayout.R.id.ScaledLayout_TextSize_PX;
+	public static final int Tag_DestRect_RectF = com.jnm.github.android.scaledlayout.R.id.ScaledLayout_RectF;
 	
 	private Vector<View> mViews = new Vector<View>();
 	
@@ -65,8 +65,8 @@ import android.widget.TextView;
 	public void setTextSize(TextView pTextView, float pFontSize) {
 		pTextView.setTag(Tag_TextSize_PX_Float, Float.valueOf(pFontSize));
 	}
-	public TextView addNewTextView(String pText, float pFontSize_UnitPX480, float left, float top, float width, float height) {
-		return addNewTextView(pText, pFontSize_UnitPX480, left, top, width, height, false);
+	public TextView addNewTextView(String pText, float pFontSize, float left, float top, float width, float height) {
+		return addNewTextView(pText, pFontSize, left, top, width, height, false);
 	}
 	public TextView addNewTextView(String pText, float pFontSize, float left, float top, float width, float height, boolean pDuplicateState){
 		TextView ret = new TextView(getContext());
