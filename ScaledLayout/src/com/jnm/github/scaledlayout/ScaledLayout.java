@@ -33,34 +33,26 @@ import android.widget.TextView;
 		}
 	}
 	
-	public static final int 	Tag_TextSize_PX_Float 			= com.jnm.github.android.scaledlayout.R.id.JMAbsolView480_TextSize_PX;
-	public static final int 	Tag_DestRect_RectF 				= com.jnm.github.android.scaledlayout.R.id.JMAbsolView480_RectF;
+	public static final int Tag_TextSize_PX_Float = com.jnm.github.android.scaledlayout.R.id.JMAbsolView480_TextSize_PX;
+	public static final int Tag_DestRect_RectF = com.jnm.github.android.scaledlayout.R.id.JMAbsolView480_RectF;
 	
 	private Vector<View> mViews = new Vector<View>();
 	
-//	public static final float 	Default_Width 				= 480f;
-//	public static final float 	Default_Height 				= 480f;
-	private float mScaleWidth 				= -1;
-	private float mScaleHeight 			= -1;
-	//private float mRatioOfWidthHeight 	= mScaleHeight / Default_Width;
+	private float mScaleWidth = -1;
+	private float mScaleHeight = -1;
 	private float mRatioOfWidthHeight 	= mScaleHeight / mScaleWidth;
-	
-	public float getScaleWidth() {
-		return mScaleWidth;
-	}
-	public float getScaleHeight() {
-		return mScaleHeight;
-	}
+	public float getScaleWidth() { return mScaleWidth; }
+	public float getScaleHeight() { return mScaleHeight; }
 	
 	public void setScaleWidth(float pWidth){
 		mScaleWidth = pWidth;
 		mRatioOfWidthHeight = mScaleHeight / mScaleWidth;
-		invalidate();
+		postInvalidate();
 	}
 	public void setScaleHeight(float pHeight){
 		mScaleHeight = pHeight;
 		mRatioOfWidthHeight = mScaleHeight / mScaleWidth;
-		invalidate();
+		postInvalidate();
 	}
 	
 	public ScaledLayout(Context context, float pInitialWidth, float pInitialHeight) {
@@ -85,7 +77,7 @@ import android.widget.TextView;
 		ret.setTextColor(Color.BLACK);
 		ret.setDuplicateParentStateEnabled(pDuplicateState);
 		
-		addChildView(ret, left, top, width, height);
+		addView(ret, left, top, width, height);
 		return ret;
 	}
 	
@@ -96,7 +88,7 @@ import android.widget.TextView;
 		ret.setGravity(Gravity.CENTER);
 		ret.setTextColor(Color.BLACK);
 		
-		addChildView(ret, left, top, width, height);
+		addView(ret, left, top, width, height);
 		return ret;
 	}
 	
@@ -126,7 +118,7 @@ import android.widget.TextView;
 		lNewImageView.setScaleType(ScaleType.FIT_XY);
 		lNewImageView.setDuplicateParentStateEnabled(pDuplicateState);
 		
-		addChildView(lNewImageView, left, top, width, height);
+		addView(lNewImageView, left, top, width, height);
 		return lNewImageView;
 	}
 	
@@ -147,7 +139,7 @@ import android.widget.TextView;
 	public void addView(View pChild, android.view.ViewGroup.LayoutParams pParams) { super.addView(pChild, pParams); }
 	
 	
-	public void addChildView(View pView, float left, float top, float width, float height) {
+	public void addView(View pView, float left, float top, float width, float height) {
 		pView.setTag(Tag_DestRect_RectF, new RectF(left, top, width + left, height + top));
 		mViews.add(pView);
 		addView(pView, new FrameLayout.LayoutParams((int)width, (int)height, Gravity.LEFT | Gravity.TOP));
@@ -289,7 +281,6 @@ import android.widget.TextView;
 		
 		float lScale = lBGWidth / mScaleWidth;
 		
-		// 1280 - 768 
 		float lTopMarginFromWeight = (lBGHeight - (lBGWidth * mRatioOfWidthHeight))/4;
 		log("  onMeasure ("+lBGWidth+","+lBGHeight+") Ratio:"+mRatioOfWidthHeight+" Scale:"+lScale+" lTopMarginFromWeight:"+lTopMarginFromWeight);
 		
