@@ -54,6 +54,9 @@ import android.widget.TextView;
 		mRatioOfWidthHeight = mScaleHeight / mScaleWidth;
 		postInvalidate();
 	}
+	public ScaledLayout(Context context) {
+		super(context);
+	}
 	
 	public ScaledLayout(Context context, float pInitialWidth, float pInitialHeight) {
 		super(context);
@@ -164,8 +167,6 @@ import android.widget.TextView;
 	
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//		super.onMeasure(MeasureSpec.makeMeasureSpec(Math.round(lBGWidth), widthMode), MeasureSpec.makeMeasureSpec(Math.round(lBGHeight), heightMode));	
-//		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		log("onMeasure ================ Start "+this.toString());
 		float lBGWidth = 0;
 		int widthMode = MeasureSpec.getMode(widthMeasureSpec);
@@ -173,59 +174,6 @@ import android.widget.TextView;
 		float lBGHeight = 0;
 		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 		int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-		
-
-//		if (widthMode == MeasureSpec.EXACTLY) {
-//			log("onMeasure Width Exactly "+lBGWidth+", "+widthSize);
-//			lBGWidth = widthSize;
-//		} else {
-//			lBGWidth = mInitialWidth;
-//			if (widthMode == MeasureSpec.AT_MOST) {
-//				log("onMeasure Width AtMost "+lBGWidth+", "+widthSize);
-//				lBGWidth = Math.max(lBGWidth, widthSize);
-//			}
-//		}
-//		if (heightMode == MeasureSpec.EXACTLY) {
-//			log("onMeasure Height Exactly "+lBGHeight+", "+heightSize);
-//			lBGHeight = heightSize;
-//			
-//			if(lBGHeight/mRatioOfWidthHeight < lBGWidth)
-//				lBGWidth = lBGHeight/mRatioOfWidthHeight;
-//		} else {
-//			lBGHeight = lBGWidth * mRatioOfWidthHeight;
-//			
-//			if (heightMode == MeasureSpec.AT_MOST) {
-//				log("onMeasure Height AtMost "+lBGHeight+", "+heightSize);
-//				lBGHeight = Math.min(lBGHeight, heightSize);
-//			}
-//		}
-		
-//		if (widthMode == MeasureSpec.EXACTLY) {
-//			log("  onMeasure Width Exactly "+lBGWidth+", "+widthSize);
-//			lBGWidth = widthSize;
-//		} else {
-//			lBGWidth = mInitialWidth;
-//			if (widthMode == MeasureSpec.AT_MOST) {
-//				log("  onMeasure Width AtMost "+lBGWidth+", "+widthSize);
-//				lBGWidth = Math.min(lBGWidth, widthSize);
-//			}
-//		}
-//		
-//		if (heightMode == MeasureSpec.EXACTLY) {
-//			log("  onMeasure Height Exactly "+lBGHeight+", "+heightSize);
-//			lBGHeight = heightSize;
-//			
-//			if(lBGHeight/mRatioOfWidthHeight < lBGWidth)
-//				lBGWidth = lBGHeight/mRatioOfWidthHeight;
-//		} else {
-//			lBGHeight = lBGWidth * mRatioOfWidthHeight;
-//			
-//			if (heightMode == MeasureSpec.AT_MOST) {
-//				log("  onMeasure Height AtMost "+lBGHeight+", "+heightSize);
-//				lBGHeight = Math.min(lBGHeight, heightSize);
-//			}
-//		}
-		
 
 		switch (widthMode) {
 		case MeasureSpec.EXACTLY:
