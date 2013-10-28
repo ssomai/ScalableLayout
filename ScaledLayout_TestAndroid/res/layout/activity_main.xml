@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main_relativelayout"
     tools:context=".MainActivity" >
 
     <TextView
@@ -9,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:id="@+id/main_textview"
         android:text="@string/hello_world" />
 
 </RelativeLayout>
