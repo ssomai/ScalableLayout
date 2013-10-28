@@ -54,9 +54,9 @@ import android.widget.TextView;
 		mRatioOfWidthHeight = mScaleHeight / mScaleWidth;
 		postInvalidate();
 	}
-	public ScaledLayout(Context context) {
-		super(context);
-	}
+//	public ScaledLayout(Context context) {
+//		super(context);
+//	}
 	
 	public ScaledLayout(Context context, float pInitialWidth, float pInitialHeight) {
 		super(context);
