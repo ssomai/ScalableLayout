@@ -7,11 +7,13 @@ com.jnm.github.android.scaledlayout.ScaledLayout
 
 It supports any display size.
 
-test
-![alt tag](https://raw.github.com/username/projectname/branch/path/to/img.png)
 
-<!-- 
-![alt tag](https://raw.github.com/username/projectname/branch/path/to/img.png)
--->
+Principle
+====================
 
 
+Preview
+====================
+![alt tag](https://raw.github.com/ssomai/ScaledLayout/master/images/totalshot.jpg)
+![alt tag](https://raw.github.com/ssomai/ScaledLayout/master/images/tablet.jpg)
+![alt tag](https://raw.github.com/ssomai/ScaledLayout/master/images/phone.jpg)
