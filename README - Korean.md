@@ -14,9 +14,9 @@ Class: com.jnm.github.android.scaledlayout.ScaledLayout
 
 예시 화면
 ====================
-![alt tag](https://raw.github.com/ssomai/ScaledLayout/master/images/totalshot.png)
-![alt tag](https://raw.github.com/ssomai/ScaledLayout/master/images/tablet.png)
-![alt tag](https://raw.github.com/ssomai/ScaledLayout/master/images/phone.png)
+![alt tag](https://raw.github.com/ssomai/ScaledLayout/master/images/totalshot.jpg)
+![alt tag](https://raw.github.com/ssomai/ScaledLayout/master/images/tablet.jpg)
+![alt tag](https://raw.github.com/ssomai/ScaledLayout/master/images/phone.jpg)
 
 
 
