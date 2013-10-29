@@ -10,6 +10,7 @@ Class: com.jnm.github.android.scaledlayout.ScaledLayout
 
 원리
 ====================
+작성중...
 
 
 예시 화면
