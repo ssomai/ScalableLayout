@@ -10,7 +10,7 @@ It supports any display size.
 
 Principle
 ====================
-
+Writing...
 
 Preview
 ====================
