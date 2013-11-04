@@ -2,8 +2,6 @@ package com.jnm.github.scaledlayout;
 
 import java.util.Vector;
 
-import com.jnm.github.android.scaledlayout.R;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,8 +34,8 @@ import android.widget.TextView;
 		}
 	}
 	
-	public static final int Tag_TextSize_PX_Float = com.jnm.github.android.scaledlayout.R.id.ScaledLayout_TextSize_PX;
-	public static final int Tag_DestRect_RectF = com.jnm.github.android.scaledlayout.R.id.ScaledLayout_RectF;
+	public static final int Tag_TextSize_PX_Float = com.jnm.github.scaledlayout.R.id.ScaledLayout_TextSize_PX;
+	public static final int Tag_DestRect_RectF = com.jnm.github.scaledlayout.R.id.ScaledLayout_RectF;
 //	public static final int Tag_TextSize_PX_Float = 0;
 //	public static final int Tag_DestRect_RectF = 1;
 	

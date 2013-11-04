@@ -9,8 +9,8 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
-import com.jnm.github.android.scaledlayout.ScaledLayout;
 import com.jnm.github.android.scaledlayout.scaledlayout_testandroid.R;
+import com.jnm.github.scaledlayout.ScaledLayout;
 
 public class MainActivity extends Activity {
 	
