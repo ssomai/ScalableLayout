@@ -2,6 +2,8 @@ package com.jnm.github.scaledlayout;
 
 import java.util.Vector;
 
+import com.jnm.github.android.scaledlayout.R;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -35,33 +38,47 @@ import android.widget.TextView;
 	
 	public static final int Tag_TextSize_PX_Float = com.jnm.github.android.scaledlayout.R.id.ScaledLayout_TextSize_PX;
 	public static final int Tag_DestRect_RectF = com.jnm.github.android.scaledlayout.R.id.ScaledLayout_RectF;
+//	public static final int Tag_TextSize_PX_Float = 0;
+//	public static final int Tag_DestRect_RectF = 1;
 	
 	private Vector<View> mViews = new Vector<View>();
 	
-	private float mScaleWidth = -1;
-	private float mScaleHeight = -1;
+	private float mScaleWidth 			= 100;
+	private float mScaleHeight 		= 100;
 	private float mRatioOfWidthHeight 	= mScaleHeight / mScaleWidth;
 	public float getScaleWidth() { return mScaleWidth; }
 	public float getScaleHeight() { return mScaleHeight; }
 	
-	public void setScaleWidth(float pWidth){
+	public void setScaleWidth(float pWidth) {
 		mScaleWidth = pWidth;
 		mRatioOfWidthHeight = mScaleHeight / mScaleWidth;
 		postInvalidate();
 	}
-	public void setScaleHeight(float pHeight){
+	public void setScaleHeight(float pHeight) {
 		mScaleHeight = pHeight;
 		mRatioOfWidthHeight = mScaleHeight / mScaleWidth;
 		postInvalidate();
 	}
-//	public ScaledLayout(Context context) {
-//		super(context);
-//	}
 	
-	public ScaledLayout(Context context, float pInitialWidth, float pInitialHeight) {
-		super(context);
-		setScaleWidth(pInitialWidth);
-		setScaleHeight(pInitialHeight);
+	public ScaledLayout(Context context) {
+		this(context, 100, 100);
+	}
+	public ScaledLayout(Context context, float pScaleWidth, float pScaleHeight) {
+		this(context, null, pScaleWidth, pScaleHeight);
+	}
+	public ScaledLayout(Context context, AttributeSet attrs) {
+		//this(context, attrs, attrs.getAttributeFloatValue("scaledlayout", "scale_width", 100), attrs.getAttributeFloatValue("scaledlayout", "scale_height", 100));
+		this(context, attrs, 
+			context.obtainStyledAttributes(attrs, R.styleable.ScaledLayout).getFloat(R.styleable.ScaledLayout_scale_width, 100f), 
+			context.obtainStyledAttributes(attrs, R.styleable.ScaledLayout).getFloat(R.styleable.ScaledLayout_scale_height, 100f));
+//			context.obtainStyledAttributes(attrs, R.styleable.ScaledLayout).getFloat(R.styleable.ScaledLayout_ScaleWidth, 100f), 
+//			context.obtainStyledAttributes(attrs, R.styleable.ScaledLayout).getFloat(R.styleable.ScaledLayout_ScaleHeight, 100f));
+	}
+	private ScaledLayout(Context context, AttributeSet attrs, float pScaleWidth, float pScaleHeight) {
+		super(context, attrs);
+		
+		setScaleWidth(pScaleWidth);
+		setScaleHeight(pScaleHeight);
 		setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 	}
 	
@@ -73,7 +90,6 @@ import android.widget.TextView;
 	}
 	public TextView addNewTextView(String pText, float pFontSize, float left, float top, float width, float height, boolean pDuplicateState){
 		TextView ret = new TextView(getContext());
-		// ret.setTag(Tag_TextSize_PX_Float, Float.valueOf(pFontSize));
 		setTextSize(ret, pFontSize);
 		ret.setText(pText);
 		ret.setGravity(Gravity.CENTER);
@@ -263,3 +279,4 @@ import android.widget.TextView;
 		setMeasuredDimension(Math.round(lBGWidth), Math.round(lBGHeight));
 	}
 }
+
