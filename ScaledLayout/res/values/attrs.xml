@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    
     <!-- 
     <declare-styleable name="Carousel">
         <attr name="android:gravity" /> 
@@ -32,9 +31,13 @@
 		<attr name="ScaleHeight" 	format="float" />
 	</declare-styleable>  
      -->
+     
 	<declare-styleable name="ScaledLayout">
-		<attr name="scale_textsize" format="float" />
-		<attr name="scale_width" 	format="float" />
-		<attr name="scale_height" 	format="float" />
+		<attr name="scale_textsize" 	format="float" />
+		<attr name="scale_top" 			format="float" />
+		<attr name="scale_left" 		format="float" />
+		<attr name="scale_width" 		format="float" />
+		<attr name="scale_height" 		format="float" />
 	</declare-styleable>  
 </resources> 
+
