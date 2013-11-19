@@ -19,17 +19,17 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		ScaledLayout sl = new ScaledLayout(this, 400, 100);
-		sl.setBackgroundColor(Color.LTGRAY);
-		ImageView iv = sl.addNewImageView(R.drawable.ic_launcher, 100, 20, 70, 70);
-		iv.setBackgroundColor(Color.BLUE);
-		TextView tv = sl.addNewTextView("Test TextView", 20, 200, 30, 100, 65);
-		tv.setBackgroundColor(Color.GREEN);
-		
-		RelativeLayout rl = (RelativeLayout)findViewById(R.id.main_relativelayout);
-		LayoutParams rllp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-		rllp.addRule(RelativeLayout.BELOW, R.id.main_textview);
-		rl.addView(sl, rllp);
+//		ScaledLayout sl = new ScaledLayout(this, 400, 100);
+//		sl.setBackgroundColor(Color.LTGRAY);
+//		ImageView iv = sl.addNewImageView(R.drawable.ic_launcher, 100, 20, 70, 70);
+//		iv.setBackgroundColor(Color.BLUE);
+//		TextView tv = sl.addNewTextView("Test TextView", 20, 200, 30, 100, 65);
+//		tv.setBackgroundColor(Color.GREEN);
+//		
+//		RelativeLayout rl = (RelativeLayout)findViewById(R.id.main_relativelayout);
+//		LayoutParams rllp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+//		rllp.addRule(RelativeLayout.BELOW, R.id.main_textview);
+//		rl.addView(sl, rllp);
 	}
 	
 	@Override

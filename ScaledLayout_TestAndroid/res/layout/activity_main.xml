@@ -25,9 +25,12 @@
         sl:scale_height="200"
         >
         <TextView 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+            sl:scale_top="30"
+            sl:scale_left="30"
+            sl:scale_width="100"
+            sl:scale_height="100"
 	        android:text="@string/hello_world" 
+        	android:background="@android:color/background_light"
             />
     </com.jnm.github.scaledlayout.ScaledLayout>
 
