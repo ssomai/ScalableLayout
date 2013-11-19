@@ -21,7 +21,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
  public class ScaledLayout extends FrameLayout {
-	private static String sLogTag = null;
+	private static String sLogTag = "ScaledLayout";
 	public static void setLoggable() {
 		setLoggable("ScaledLayout");
 	}
@@ -141,19 +141,67 @@ import android.widget.TextView;
 	
 	@Override
 	@Deprecated
-	public void addView(View pChild) { super.addView(pChild); }
+	public void addView(View pChild) { 
+		super.addView(pChild); 
+		log("addView 1 "+pChild);
+	}
 	@Override
 	@Deprecated
-	public void addView(View pChild, int pIndex) { super.addView(pChild, pIndex); }
+	public void addView(View pChild, int pIndex) { 
+		super.addView(pChild, pIndex); 
+		log("addView 2 "+pChild);
+	}
 	@Override
 	@Deprecated
-	public void addView(View pChild, int pIndex, android.view.ViewGroup.LayoutParams pParams) { super.addView(pChild, pIndex, pParams); }
+	public void addView(View pChild, int pIndex, android.view.ViewGroup.LayoutParams pParams) { 
+		super.addView(pChild, pIndex, pParams); 
+		if(pParams instanceof FrameLayout.LayoutParams) {
+			FrameLayout.LayoutParams flp = (FrameLayout.LayoutParams) pParams;
+			log("addView ! "+pChild+" ("+pParams.width+", "+pParams.height+") ("+flp.topMargin+", "+flp.leftMargin+") ");
+		}
+		log("addView 3 "+pChild+" ("+pParams.width+", "+pParams.height+") ");
+	}
 	@Override
 	@Deprecated
-	public void addView(View pChild, int pWidth, int pHeight) { super.addView(pChild, pWidth, pHeight); }
+	public void addView(View pChild, int pWidth, int pHeight) { 
+		super.addView(pChild, pWidth, pHeight); 
+		log("addView 4 "+pChild);
+	}
 	@Override
 	@Deprecated
-	public void addView(View pChild, android.view.ViewGroup.LayoutParams pParams) { super.addView(pChild, pParams); }
+	public void addView(View pChild, android.view.ViewGroup.LayoutParams pParams) { 
+		super.addView(pChild, pParams); 
+		log("addView 5 "+pChild);
+	}
+	@Override
+	public void removeView(View pView) {
+		super.removeView(pView);
+		log("removeView "+pView);
+	}
+	@Override
+	public void removeViewAt(int pIndex) {
+		super.removeViewAt(pIndex);
+		log("removeViewAt "+pIndex);
+	}
+	@Override
+	public void removeViewInLayout(View pView) {
+		super.removeViewInLayout(pView);
+		log("removeViewInLayout "+pView);
+	}
+	
+	@Override
+	protected boolean addViewInLayout(View pChild, int pIndex, android.view.ViewGroup.LayoutParams pParams) {
+		log("addViewInLayout 1");
+		return super.addViewInLayout(pChild, pIndex, pParams);
+	}
+	
+	@Override
+	protected boolean addViewInLayout(View pChild, int pIndex, android.view.ViewGroup.LayoutParams pParams, boolean pPreventRequestLayout) {
+		log("addViewInLayout 2");
+		return super.addViewInLayout(pChild, pIndex, pParams, pPreventRequestLayout);
+	}
+	
+	
 	
 	
 	public void addView(View pView, float left, float top, float width, float height) {
