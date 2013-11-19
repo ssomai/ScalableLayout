@@ -155,10 +155,17 @@ import android.widget.TextView;
 	@Deprecated
 	public void addView(View pChild, int pIndex, android.view.ViewGroup.LayoutParams pParams) { 
 		super.addView(pChild, pIndex, pParams); 
-		if(pParams instanceof FrameLayout.LayoutParams) {
-			FrameLayout.LayoutParams flp = (FrameLayout.LayoutParams) pParams;
-			log("addView ! "+pChild+" ("+pParams.width+", "+pParams.height+") ("+flp.topMargin+", "+flp.leftMargin+") ");
-		}
+//		if(pParams instanceof FrameLayout.LayoutParams) {
+//			FrameLayout.LayoutParams flp = (FrameLayout.LayoutParams) pParams;
+//			log("addView ! "+pChild+" ("+pParams.width+", "+pParams.height+") ("+flp.topMargin+", "+flp.leftMargin+") ");
+//		}
+		
+	
+//		Context context = pChild.getContext();
+////		context.obtainStyledAttributes(attrs, R.styleable.ScaledLayout).getFloat(R.styleable.ScaledLayout_scale_width, 100f), 
+////		context.obtainStyledAttributes(attrs, R.styleable.ScaledLayout).getFloat(R.styleable.ScaledLayout_scale_height, 100f));
+//		pChild.getResources().
+		
 		log("addView 3 "+pChild+" ("+pParams.width+", "+pParams.height+") ");
 	}
 	@Override
