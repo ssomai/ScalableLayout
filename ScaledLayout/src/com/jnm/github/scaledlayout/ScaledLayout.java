@@ -30,12 +30,12 @@ import android.widget.TextView;
 	}
 	private static void log(String pLog) {
 		if(sLogTag != null) {
-			Log.e(sLogTag, pLog);
+//			Log.e(sLogTag, pLog);
 		}
 	}
 	
-	public static final int Tag_TextSize_PX_Float = com.jnm.github.scaledlayout.R.id.ScaledLayout_TextSize_PX;
-	public static final int Tag_DestRect_RectF = com.jnm.github.scaledlayout.R.id.ScaledLayout_RectF;
+	public static final int Tag_TextSize_PX_Float 	= com.jnm.github.scaledlayout.R.id.ScaledLayout_TextSize_PX;
+	public static final int Tag_DestRect_RectF 		= com.jnm.github.scaledlayout.R.id.ScaledLayout_RectF;
 //	public static final int Tag_TextSize_PX_Float = 0;
 //	public static final int Tag_DestRect_RectF = 1;
 	
