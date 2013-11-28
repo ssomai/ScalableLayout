@@ -80,9 +80,7 @@ public class ScalableLayout extends FrameLayout {
 		private float mScale_TextSize = Default_Scale_TextSize;
 		public float getScale_TextSize() { return mScale_TextSize; }
 		public void setScale_TextSize(float pScale_TextSize) { mScale_TextSize = pScale_TextSize; }
-
 	}
-	
 	
 	private static String sLogTag = "ScaledLayout";
 	public static void setLoggable() {
