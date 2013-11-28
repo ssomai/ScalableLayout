@@ -2,6 +2,8 @@ package com.jnm.github.scalablelayout;
 
 import java.util.Vector;
 
+import com.jnm.github.scalablelayout.ScalableLayout.LayoutParams;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,11 +37,6 @@ public class ScalableLayout extends FrameLayout {
 			super(pContext, pAttrs);
 		}
 
-//		@Deprecated
-//		public LayoutParams(int pWidth, int pHeight) { super(pWidth, pHeight); }
-//		@Deprecated
-//		public LayoutParams(int pWidth, int pHeight, int pGravity) { super(pWidth, pHeight, pGravity); }
-		
 		public LayoutParams(float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
 			this(pScale_Left, pScale_Top, pScale_Width, pScale_Height, 10f);
 		}
@@ -104,10 +101,7 @@ public class ScalableLayout extends FrameLayout {
 		}
 	}
 	
-//	public static final int Tag_TextSize_PX_Float 	= com.jnm.github.scaledlayout.R.id.ScaledLayout_TextSize_PX;
-//	public static final int Tag_DestRect_RectF 		= com.jnm.github.scaledlayout.R.id.ScaledLayout_RectF;
-	
-	private Vector<View> mViews = new Vector<View>();
+	// private Vector<View> mViews = new Vector<View>();
 	
 	private float mScale_Full_Width 		= Default_Scale_Base_Width;
 	private float mScale_Full_Height 		= Default_Scale_Base_Height;
@@ -142,7 +136,12 @@ public class ScalableLayout extends FrameLayout {
 	}
 	
 	private ScalableLayout.LayoutParams getChildLayoutParams(View pChild) {
-		return (LayoutParams) pChild.getLayoutParams();
+		LayoutParams ret = (LayoutParams) pChild.getLayoutParams();
+		if(ret == null) {
+			ret = generateDefaultLayoutParams();
+			pChild.setLayoutParams(ret);
+		}
+		return ret;
 	}
 	public void setTextSize(TextView pTextView, float pScale_TextSize) {
 		getChildLayoutParams(pTextView).setScale_TextSize(pScale_TextSize);
@@ -213,19 +212,6 @@ public class ScalableLayout extends FrameLayout {
 	public void addView(View pChild, ViewGroup.LayoutParams pParams) { addView(pChild, getChildCount(), pParams); }
 	@Override
 	public void addView(View pChild, int pIndex, ViewGroup.LayoutParams pParams) {
-		// super.addView(pChild, pIndex, pParams); 
-		
-		//		if(pParams instanceof FrameLayout.LayoutParams) {
-		//			FrameLayout.LayoutParams flp = (FrameLayout.LayoutParams) pParams;
-		//			log("addView ! "+pChild+" ("+pParams.width+", "+pParams.height+") ("+flp.topMargin+", "+flp.leftMargin+") ");
-		//		}
-		
-		
-		//		Context context = pChild.getContext();
-		////		context.obtainStyledAttributes(attrs, R.styleable.ScaledLayout).getFloat(R.styleable.ScaledLayout_scale_width, 100f), 
-		////		context.obtainStyledAttributes(attrs, R.styleable.ScaledLayout).getFloat(R.styleable.ScaledLayout_scale_height, 100f));
-		//		pChild.getResources().
-		
 		if(pParams instanceof ScalableLayout.LayoutParams) {
 			addView_Final(pChild, pIndex, (ScalableLayout.LayoutParams) pParams);
 		} else {
@@ -233,33 +219,25 @@ public class ScalableLayout extends FrameLayout {
 		}
 	}
 	public void addView(View pChild, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
-//		pChild.setTag(Tag_DestRect_RectF, new RectF(pLeft, pTop, pWidth + pLeft, pHeight + pTop));
-//		mViews.add(pChild);
-//		addView(pChild, new FrameLayout.LayoutParams((int)pWidth, (int)pHeight, Gravity.LEFT | Gravity.TOP));
 		addView_Final(pChild, getChildCount(), new ScalableLayout.LayoutParams(pScale_Left, pScale_Top, pScale_Width, pScale_Height));
 	}
 	
 	private final void addView_Final(View pChild, int pIndex, ScalableLayout.LayoutParams pScaledLayoutParams) {
-		mViews.add(pChild);
+		// mViews.add(pChild);
 		super.addView(pChild, pIndex, pScaledLayoutParams);
 	}
 	
 	@Override
 	protected ScalableLayout.LayoutParams generateDefaultLayoutParams() {
-		// return super.generateDefaultLayoutParams();
 		return new ScalableLayout.LayoutParams(0f, 0f, getScaleWidth(), getScaleHeight());
 	}
 	@Override
 	public ScalableLayout.LayoutParams generateLayoutParams(AttributeSet pAttrs) {
-		// TODO Auto-generated method stub
 		log("generateLayoutParams AttributeSet: "+pAttrs);
 		for(int i=0;i<pAttrs.getAttributeCount();i++) { 
 			log("attr["+i+"] "+pAttrs.getAttributeName(i)+":"+pAttrs.getAttributeValue(i));
-			// = getContext().obtainStyledAttributes(pAttrs, R.styleable.ScalableLayout).getFloat(R.styleable.ScalableLayout_scale_full_width, 100f); 
-			// getContext().obtainStyledAttributes(pAttrs, R.styleable.ScaledLayout).getFloat(R.styleable.ScaledLayout_scale_height, 100f));
 			
 		}
-//		return super.generateLayoutParams(pAttrs);
 		return new ScalableLayout.LayoutParams(
 			 getContext().obtainStyledAttributes(pAttrs, R.styleable.ScalableLayout).getFloat(R.styleable.ScalableLayout_scale_left, Default_Scale_Left),
 			 getContext().obtainStyledAttributes(pAttrs, R.styleable.ScalableLayout).getFloat(R.styleable.ScalableLayout_scale_top, Default_Scale_Top),
@@ -273,35 +251,16 @@ public class ScalableLayout extends FrameLayout {
 			return (ScalableLayout.LayoutParams) pP;
 		}
 		return new ScalableLayout.LayoutParams(pP); 
-		
-		//return super.generateLayoutParams(pP);
 	}
 	
 	
 	public void moveChildView(View pView, float pScale_Left, float pScale_Top) {
-		
-//		RectF rect = (RectF) pView.getTag(Tag_DestRect_RectF);
-//		float width = rect.right - rect.left;
-//		float height = rect.bottom - rect.top;
-//		rect.left = pLeft;
-//		rect.top = pTop;
-//		rect.right = pLeft+width;
-//		rect.bottom = pTop+height;
-//		postInvalidate();
-		
 		ScalableLayout.LayoutParams rect = getChildLayoutParams(pView);
 		rect.mScale_Left = pScale_Left;
 		rect.mScale_Top = pScale_Top;
 		postInvalidate();
 	}
 	public void moveChildView(View pView, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
-//		RectF rect = (RectF) pView.getTag(Tag_DestRect_RectF);
-//		rect.left = pLeft;
-//		rect.top = pTop;
-//		rect.right = pLeft+pWidth;
-//		rect.bottom = pTop+pHeight;
-//		postInvalidate();
-		
 		ScalableLayout.LayoutParams rect = getChildLayoutParams(pView);
 		rect.mScale_Left = pScale_Left;
 		rect.mScale_Top = pScale_Top;
@@ -324,25 +283,12 @@ public class ScalableLayout extends FrameLayout {
 		
 		switch (lWidthMode) {
 		case MeasureSpec.EXACTLY:
-			//log("  onMeasure Width Exactly "+lBGWidth+" = "+widthSize);
 			log("  onMeasure Width Exactly "+lBGWidth+" = min("+mScale_Full_Width+", "+lWidthSize+")");
-			//			if(mInitialWidth < widthSize) {
-			//				lBGWidth = widthSize;
-			//			} else {
-			//				//lBGWidth = Math.max(mInitialWidth, widthSize);
-			//				lBGWidth = mInitialWidth;
-			//			}
 			lBGWidth = lWidthSize;
 			break;
 		case MeasureSpec.AT_MOST:
 			log("  onMeasure Width AtMost "+lBGWidth+" = min("+mScale_Full_Width+", "+lWidthSize+")");
-			//			lBGWidth = Math.max(mInitialWidth, widthSize);
-			//			lBGWidth = Math.min(mInitialWidth, widthSize);
-			//			if(mInitialWidth < widthSize) {
-			//				lBGWidth = widthSize;
-			//			} else {
 			lBGWidth = lWidthSize;
-			//			}
 			break;
 		default:
 			log("  onMeasure Width Unspecified "+lBGWidth+" = "+mScale_Full_Width);
@@ -352,7 +298,6 @@ public class ScalableLayout extends FrameLayout {
 		
 		switch (lHeightMode) {
 		case MeasureSpec.EXACTLY:
-			//			lBGHeight = heightSize;
 			lBGHeight = Math.min(lBGWidth * mRatioOfWidthHeight, lHeightSize);
 			
 			log("  onMeasure Height Exactly "+lBGHeight+", "+lHeightSize);
@@ -379,30 +324,26 @@ public class ScalableLayout extends FrameLayout {
 		float lTopMarginFromWeight = (lBGHeight - (lBGWidth * mRatioOfWidthHeight))/4;
 		log("  onMeasure ("+lBGWidth+","+lBGHeight+") Ratio:"+mRatioOfWidthHeight+" Scale:"+lScale+" lTopMarginFromWeight:"+lTopMarginFromWeight);
 		
-		for (View pView : mViews){
-//			RectF lViewRect = (RectF) pView.getTag(Tag_DestRect_RectF);
-			ScalableLayout.LayoutParams lParams = getChildLayoutParams(pView);
+		//for (View pView : mViews){
+		for (int i=0;i<getChildCount();i++) {
+			View lView = getChildAt(i);
+				
+			ScalableLayout.LayoutParams lParams = getChildLayoutParams(lView);
 			
 			lParams.width = (int)(lScale * lParams.mScale_Width)+1;
 			lParams.height = (int)(lScale * lParams.mScale_Height)+1;
 			lParams.setMargins(Math.round(lScale * lParams.mScale_Left), Math.round(lScale * lParams.mScale_Top + lTopMarginFromWeight), 0, 0);
-			log("  "+pView.toString()+" "+
+			log("  "+lView.toString()+" "+
 				String.format("(%f, %f, %f, %f)", lParams.mScale_Left, lParams.mScale_Top, lParams.mScale_Width, lParams.mScale_Height)+
 				"->"+
 				String.format("(%d, %d, %d, %d)", lParams.leftMargin, lParams.topMargin, lParams.width, lParams.height));
-			pView.setLayoutParams(lParams);
+			lView.setLayoutParams(lParams);
 			
-			if(pView instanceof TextView) {
-				//if(pView.getTag(Tag_TextSize_PX_Float) != null){
-					//((TextView)pView).setTextSize(TypedValue.COMPLEX_UNIT_PX, ((Float)pView.getTag(Tag_TextSize_PX_Float)).floatValue() * lScale);
-				//((TextView)pView).setTextSize(TypedValue.COMPLEX_UNIT_PX, ((Float)pView.getTag(Tag_TextSize_PX_Float)).floatValue() * lScale);
-				((TextView)pView).setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale);
+			if(lView instanceof TextView) {
+				((TextView)lView).setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale);
 			}
-			else if(pView instanceof EditText) {
-//				if(pView.getTag(Tag_TextSize_PX_Float) != null){
-//					((EditText)pView).setTextSize(TypedValue.COMPLEX_UNIT_PX, ((Float)pView.getTag(Tag_TextSize_PX_Float)).floatValue() * lScale);
-//				}
-				((EditText)pView).setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale);
+			else if(lView instanceof EditText) {
+				((EditText)lView).setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale);
 			}
 		}
 		
