@@ -32,7 +32,9 @@
 	</declare-styleable>  
      -->
      
-	<declare-styleable name="ScaledLayout">
+	<declare-styleable name="ScalableLayout">
+		<attr name="scale_base_width" 		format="float" />
+		<attr name="scale_base_height" 		format="float" />
 		<attr name="scale_textsize" 	format="float" />
 		<attr name="scale_top" 			format="float" />
 		<attr name="scale_left" 		format="float" />
