@@ -14,21 +14,21 @@ ScaledLayout이 커지거나 작아짐에 따라 함께 커지고 작아집니�
 XML로도 배치를 할수 있습니다. <br/>
 
     <RelativeLayout 
-      xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:tools="http://schemas.android.com/tools"
-      xmlns:sl="http://schemas.android.com/apk/res/com.jnm.github.android.scalablelayout.scalablelayout_testandroid"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:id="@+id/main_relativelayout"
-      tools:context=".MainActivity" >
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:sl="http://schemas.android.com/apk/res/com.jnm.github.android.scalablelayout.scalablelayout_testandroid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_relativelayout"
+        tools:context=".MainActivity" >
       <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:id="@+id/main_textview"
-        android:text="@string/hello_world" 
-        />
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_centerHorizontal="true"
+          android:layout_centerVertical="true"
+          android:id="@+id/main_textview"
+          android:text="@string/hello_world" 
+          />
       <com.jnm.github.scalablelayout.ScalableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,11 +40,11 @@ XML로도 배치를 할수 있습니다. <br/>
         <TextView 
         	android:layout_width="wrap_content"
         	android:layout_height="wrap_content"
-            sl:scale_top="30"
-            sl:scale_left="40"
-            sl:scale_width="100"
-            sl:scale_height="100"
-            sl:scale_textsize="20"
+          sl:scale_top="30"
+          sl:scale_left="40"
+          sl:scale_width="100"
+          sl:scale_height="100"
+          sl:scale_textsize="20"
           android:text="@string/hello_world" 
           android:textColor="@android:color/white"
           android:background="@android:color/black"
