@@ -1,9 +1,5 @@
 package com.jnm.github.scalablelayout;
 
-import java.util.Vector;
-
-import com.jnm.github.scalablelayout.ScalableLayout.LayoutParams;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
