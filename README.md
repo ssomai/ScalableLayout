@@ -1,9 +1,9 @@
-ScaledLayout
+ScalableLayout
 ====================
 
-ScaledLayout for Android.
+ScalableLayout for Android.
 
-com.jnm.github.android.scaledlayout.ScaledLayout
+com.jnm.github.android.scalablelayout.ScalableLayout
 
 It supports any display size.
 
@@ -14,6 +14,6 @@ Writing...
 
 Preview
 ====================
-![alt tag](https://raw.github.com/ssomai/ScaledLayout/master/images/totalshot.jpg)
-![alt tag](https://raw.github.com/ssomai/ScaledLayout/master/images/tablet.jpg)
-![alt tag](https://raw.github.com/ssomai/ScaledLayout/master/images/phone.jpg)
+![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/totalshot.jpg)
+![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/tablet.jpg)
+![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/phone.jpg)
