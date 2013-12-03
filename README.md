@@ -5,12 +5,11 @@ ScalableLayout for Android.
 
 com.jnm.github.android.scalablelayout.ScalableLayout
 
-It supports any display size.
+This layout scale all the views on the layout relative to the layout size.
 
 
 Principle
 ====================
-Writing...
 
 Example XML
 
