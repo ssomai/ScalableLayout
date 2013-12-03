@@ -19,12 +19,21 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		ScalableLayout sl = new ScalableLayout(this, 400, 100);
+	    // init base width and height of scalable layout.
+		ScalableLayout sl = new ScalableLayout(this, 400, 200);
 		sl.setBackgroundColor(Color.LTGRAY);
-		ImageView iv = sl.addNewImageView(R.drawable.ic_launcher, 100, 20, 70, 70);
-		iv.setBackgroundColor(Color.BLUE);
-		TextView tv = sl.addNewTextView("Test TextView", 20, 200, 30, 100, 65);
-		tv.setBackgroundColor(Color.GREEN);
+		
+	    // insert TextView
+		TextView tv = new TextView(this);
+		tv.setText("test");
+		tv.setBackgroundColor(Color.YELLOW);
+		sl.addView(tv, 20f, 40f, 100f, 30f);
+		sl.setTextSize(tv, 20f);
+		
+	    // insert ImageView
+		ImageView iv = new ImageView(this);
+		iv.setImageResource(R.drawable.ic_launcher);
+		sl.addView(iv, 200f, 30f, 50f, 50f);
 		
 		RelativeLayout rl = (RelativeLayout)findViewById(R.id.main_relativelayout);
 		RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
