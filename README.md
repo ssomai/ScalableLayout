@@ -7,8 +7,9 @@ com.jnm.github.android.scalablelayout.ScalableLayout
 
 This layout scale all the views on the layout relative to the layout size.
 
+Therefore ScalableLayout do nice layouts that work well on different screen sizes.
 
-Principle
+
 ====================
 
 Example XML
