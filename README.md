@@ -9,10 +9,9 @@ This layout scale all the views on the layout relative to the layout size.
 
 Therefore ScalableLayout do nice layouts that work well on different screen sizes.
 
-Sample Code
-====================
+# Sample Code
 
-#Java
+Java:
 
     // init base width and height of scalable layout.
     ScalableLayout sl = new ScalableLayout(context, 400f, 100f); 
@@ -29,7 +28,7 @@ Sample Code
 	sl.setTextSize(tv, 20f);
 
 
-#XML
+XML:
 
     <RelativeLayout 
         xmlns:android="http://schemas.android.com/apk/res/android"
