@@ -1,76 +1,40 @@
-ScalableLayout
+ScalableLayout for Android. 
 ====================
 
-ScalableLayout for Android.
+Class: com.jnm.android.widget.ScalableLayout 
 
-com.jnm.github.android.scalablelayout.ScalableLayout
-
-This layout scale all the views on the layout relative to the layout size.
-
-Therefore ScalableLayout do nice layouts that work well on different screen sizes.
-
-# Sample Code
-
-Java:
-
-    // init base width and height of scalable layout.
-    ScalableLayout sl = new ScalableLayout(context, 400f, 100f); 
-    
-    // insert ImageView
-    ImageView iv = new ImageView(context);
-	iv.setImageResource(R.drawable.ic_launcher);
-	sl.addView(iv, 200f, 30f, 50f, 50f);
-		
-    // insert TextView
-	TextView tv = new TextView(context);
-	tv.setText("test");
-	sl.addView(tv, 40f, 20f, 100f, 30f);
-	sl.setTextSize(tv, 20f);
-
-
-XML:
-
-    <RelativeLayout 
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:sl="http://schemas.android.com/apk/res/com.jnm.github.android.scalablelayout.scalablelayout_testandroid"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main_relativelayout"
-        tools:context=".MainActivity" >
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_centerHorizontal="true"
-          android:layout_centerVertical="true"
-          android:id="@+id/main_textview"
-          android:text="@string/hello_world" 
-          />
-      <com.jnm.github.scalablelayout.ScalableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:layout_above="@+id/main_textview"
-        sl:scale_base_width="400"
-        sl:scale_base_height="100"
-        >
-        <TextView 
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-          sl:scale_top="30"
-          sl:scale_left="40"
-          sl:scale_width="100"
-          sl:scale_height="100"
-          sl:scale_textsize="20"
-          android:text="@string/hello_world" 
-          android:textColor="@android:color/white"
-          android:background="@android:color/black"
-          />
-      </com.jnm.github.scalablelayout.ScalableLayout>
-    </RelativeLayout>
-
-Preview
+Just one code for every resolution of Android devices!<br/>
 ====================
-![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/totalshot.jpg)
-![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/tablet.jpg)
-![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/phone.jpg)
+
+ScalableLayout is one of the way to show consistent UI<br/>
+for every different resolution of Android devices including tablets.<br/>
+<br/>
+ScalableLayout can be usable in replace of Layouts for example FrameLayout or LinearLayout,<br/>
+which are used to place widgets from Android platform.<br/>
+<br/>
+Widgets to make application UI like TextView or Imageview<br/>
+would get relative (x,y) coordinates and relative (width, height) values in ScalableLayout.<br/>
+And then the ScalableLayout would place and resize the widgets inside according to its size.<br/>
+<br/>
+You can use ScalableLayout by just one java file importing.<br/>
+You can use both of Java and XML to place ScalableLayout in your project.<br/>
+<br/>
+ScalableLayout is used on the everysing application which was awarded as GooglePlay App Awards 2013.<br/>
+<br/>
+
+
+Examples of ScalableLayout on different resolutions of Android devices.
+====================
+From left. Samsung Galaxy S4 (1920 x 1080. 16:9), LG Optimus View2 (1024 x 768. 4:3), Samsung Galaxy Note 10.1 (1280 x 800. 8:5)<br/><br/>
+![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/sl_01_main.jpg)
+All the UIs are placed correctly on different resolutions.<br/><br/>
+
+![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/sl_02_singtop100.jpg)
+All the UIs in ListView are placed correctly on different resolutions.<br/><br/>
+
+![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/sl_03_singoption.jpg)
+UIs in Dialog are also placed correctly on different resolutions. You can notice there are more left and right margins on Optimus View 2 to layout correctly.<br/>
+
+
+
+
