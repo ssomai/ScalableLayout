@@ -1,13 +1,11 @@
-ScalableLayout
+ScalableLayout for Android. 
 ====================
 
-ScalableLayout for Android.
+Class: com.jnm.android.widget.ScalableLayout 
 
-Class: com.jnm.android.widget.ScalableLayout
-
-
-
-ScalableLayout은 화면의 크기가 매우 다양한 안드로이드 폰과 태블릿 환경에서<br/> 
+단 한번의 코딩으로 태블릿을 포함한 모든 화면에서 정확한 UI를 표현하고 싶다면!<br/>
+====================
+ScalableLayout은 화면의 크기가 매우 다양한 안드로이드 폰과 태블릿 환경에서<br/>
 일관성 있는 UI를 표현하기 위한 방법 중의 하나입니다.<br/>
 <br/>
 ScalableLayout은 android에서 widget을 감싸는 용도로 쓰이는<br/>
@@ -24,55 +22,17 @@ ScalableLayout은 2013년에 Google Play에서 빛난 올해의 앱 모음에 �
 S.M.ENTERTAINMENT의 everysing 앱에서도 이용되어 그 우수성을 증명한 바 있습니다.<br/>
 <br/>
 
-    <RelativeLayout 
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:sl="http://schemas.android.com/apk/res/com.jnm.github.android.scalablelayout.scalablelayout_testandroid"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main_relativelayout"
-        tools:context=".MainActivity" >
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_centerHorizontal="true"
-          android:layout_centerVertical="true"
-          android:id="@+id/main_textview"
-          android:text="@string/hello_world" 
-          />
-      <com.jnm.github.scalablelayout.ScalableLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:layout_above="@+id/main_textview"
-        sl:scale_base_width="400"
-        sl:scale_base_height="200"
-        >
-        <TextView 
-        	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content"
-          sl:scale_top="30"
-          sl:scale_left="40"
-          sl:scale_width="100"
-          sl:scale_height="100"
-          sl:scale_textsize="20"
-          android:text="@string/hello_world" 
-          android:textColor="@android:color/white"
-          android:background="@android:color/black"
-          />
-      </com.jnm.github.scalablelayout.ScalableLayout>
-    </RelativeLayout>
-
-원리
+다양한 비율의 화면에서 ScalableLayout이 적용된 예.
 ====================
-작성중...
+왼쪽부터 삼성 갤럭시 S4 (1920 x 1080. 16:9), LG 옵티머스 뷰2 (1024 x 768. 4:3), 갤럭시 노트 10.1 (1280 x 800. 8:5)<br/><br/>
+![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/sl_01_main.jpg)
+모든 사이즈의 화면에서 각각의 UI가 정확하게 표현되어 있습니다.<br/><br/>
 
+![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/sl_02_singtop100.jpg)
+ListView에서 각각의 UI가 정확하게 표현되어 있습니다.<br/><br/>
 
-예시 화면
-====================
-![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/totalshot.jpg)
-![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/tablet.jpg)
-![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/phone.jpg)
+![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/sl_03_singoption.jpg)
+다이얼로그에서도 각각의 UI가 정확하게 표현되어 있습니다. 비율대로 표현되기 때문에 옵티머스뷰2에서는 좌우의 여백이 큽니다.
 
 
 
