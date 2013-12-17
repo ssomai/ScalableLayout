@@ -3,15 +3,24 @@ ScalableLayout
 
 ScalableLayout for Android.
 
-Class: com.jnm.github.android.scalablelayout.ScalableLayout
+Class: com.jnm.android.widget.ScalableLayout
 
-비율 기반 Layout으로써 <br/>
-안드로이드의 다양한 화면 크기에서도 UI를 쉽고 깔끔하게 배치할 수 있습니다. <br/>
+
+
+ScalableLayout은 화면의 크기가 매우 다양한 안드로이드 폰과 태블릿 환경에서<br/> 
+일관성 있는 UI를 표현하기 위한 방법 중의 하나입니다.<br/>
 <br/>
-ScaledLayout안에 배치한 TextView나 EditText안의 글자도 <br/>
-ScaledLayout이 커지거나 작아짐에 따라 함께 커지고 작아집니다. <br/>
+ScalableLayout은 android에서 widget을 감싸는 용도로 쓰이는<br/>
+FrameLayout 이나 LinearLayout 대신 이용될 수 있는 Layout 입니다.<br/>
 <br/>
-XML로도 배치를 할수 있습니다. <br/>
+UI를 구성하는 TextView나 ImageView 같은 view 들은<br/>
+ScalableLayout 안에서 상대적인 (x,y) 좌표와 (width, height) 값을 부여받은 뒤,<br/>
+ScalableLayout 의 크기가 변함에 따라 비율에 맞춰 위치와 크기가 변화됩니다.<br/>
+<br/>
+ScalableLayout은 2013년에 Google Play에서 빛난 올해의 앱 모음에 선정된<br/>
+S.M.ENTERTAINMENT의 everysing 앱에서도 이용되어 그 우수성을 증명한 바 있습니다.<br/>
+<br/>
+ScalableLayout은 Java 또는 XML 두가지 방법으로 배치를 할 수 있습니다. <br/>
 
     <RelativeLayout 
         xmlns:android="http://schemas.android.com/apk/res/android"
