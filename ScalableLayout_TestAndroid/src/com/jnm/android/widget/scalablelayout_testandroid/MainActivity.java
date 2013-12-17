@@ -1,4 +1,4 @@
-package com.jnm.github.scalablelayout.scalablelayout_testandroid;
+package com.jnm.android.widget.scalablelayout_testandroid;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -9,8 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.jnm.github.android.scalablelayout.scalablelayout_testandroid.R;
-import com.jnm.github.scalablelayout.ScalableLayout;
+import com.jnm.android.widget.ScalableLayout;
 
 public class MainActivity extends Activity {
 	
