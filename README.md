@@ -59,7 +59,7 @@ ScalableLayout is used on the everysing application which was awarded as GoogleP
     iv.setImageResource(R.drawable.ic_launcher);
 
 
-# xml로 뷰를 배치하는 예시 코드
+# Simple example in XML
 
     <com.jnm.android.widget.ScalableLayout
       android:layout_width="match_parent"
