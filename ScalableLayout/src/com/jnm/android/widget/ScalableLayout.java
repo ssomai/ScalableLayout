@@ -29,74 +29,6 @@ public class ScalableLayout extends FrameLayout {
 	
 	private static final float Default_Scale_TextSize = 100f;
 	
-	public static class LayoutParams extends FrameLayout.LayoutParams {
-		public LayoutParams(Context pContext, AttributeSet pAttrs) { super(pContext, pAttrs); }
-		public LayoutParams(
-				float pScale_Left, float pScale_Top, 
-				float pScale_Width, float pScale_Height) {
-			this(pScale_Left, pScale_Top, pScale_Width, pScale_Height, Default_Scale_TextSize);
-		}
-		private LayoutParams(
-				float pScale_Left, float pScale_Top, 
-				float pScale_Width, float pScale_Height, float pScale_TextSize) {
-			super(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP);
-			
-			setScale_Left(pScale_Left);
-			setScale_Top(pScale_Top);
-			setScale_Width(pScale_Width);
-			setScale_Height(pScale_Height);
-			
-			setScale_TextSize(pScale_TextSize);
-		}
-
-
-		private LayoutParams(android.view.ViewGroup.LayoutParams pP) {
-			this(
-				Default_Scale_Left, Default_Scale_Top, 
-				Default_Scale_Width, Default_Scale_Height, 
-				Default_Scale_TextSize);
-			
-			width = pP.width;
-			height = pP.height;
-			layoutAnimationParameters = pP.layoutAnimationParameters;
-			gravity = Gravity.LEFT | Gravity.TOP;
-		}
-
-		private float mScale_Left = Default_Scale_Left;
-		public float getScale_Left() { return mScale_Left; }
-		public void setScale_Left(float pScale_Left) { mScale_Left = pScale_Left; }
-
-		private float mScale_Top = Default_Scale_Top;
-		public float getScale_Top() { return mScale_Top; }
-		public void setScale_Top(float pScale_Top) { mScale_Top = pScale_Top; }
-
-		private float mScale_Width = Default_Scale_Width;
-		public float getScale_Width() { return mScale_Width; }
-		public void setScale_Width(float pScale_Width) { mScale_Width = pScale_Width; }
-
-		private float mScale_Height = Default_Scale_Height;
-		public float getScale_Height() { return mScale_Height; }
-		public void setScale_Height(float pScale_Height) { mScale_Height = pScale_Height; }
-
-		private float mScale_TextSize = Default_Scale_TextSize;
-		public float getScale_TextSize() { return mScale_TextSize; }
-		public void setScale_TextSize(float pScale_TextSize) { mScale_TextSize = pScale_TextSize; }
-	}
-	
-	//private static String sLogTag = "ScalableLayout";
-	private static String sLogTag = null;
-	public static void setLoggable() {
-		setLoggable("ScalableLayout");
-	}
-	public static void setLoggable(String pLogTag) {
-		sLogTag = pLogTag;
-	}
-	private static void log(String pLog) {
-		if(sLogTag != null) {
-			Log.e(sLogTag, pLog);
-		}
-	}
-	
 	private float mScale_Full_Width 		= Default_Scale_Base_Width;
 	private float mScale_Full_Height 		= Default_Scale_Base_Height;
 	private float mRatioOfWidthHeight 	= mScale_Full_Height / mScale_Full_Width;
@@ -150,7 +82,9 @@ public class ScalableLayout extends FrameLayout {
 	public void setScale_TextSize(TextView pTextView, float pScale_TextSize) {
 		getChildLayoutParams(pTextView).setScale_TextSize(pScale_TextSize);
 	}
-	/**
+	/** 
+	 * TextView 생성을 간편하게 해주는 함수
+	 * DuplicateState는 false
 	 * @param pText
 	 * @param pScale_TextSize
 	 * @param pScale_Left
@@ -159,10 +93,28 @@ public class ScalableLayout extends FrameLayout {
 	 * @param pScale_Height
 	 * @return
 	 */
-	public TextView addNewTextView(String pText, float pScale_TextSize, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
+	public TextView addNewTextView(String pText, 
+			float pScale_TextSize, 
+			float pScale_Left, float pScale_Top, 
+			float pScale_Width, float pScale_Height) {
 		return addNewTextView(pText, pScale_TextSize, pScale_Left, pScale_Top, pScale_Width, pScale_Height, false);
 	}
-	public TextView addNewTextView(String pText, float pScale_TextSize, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height, boolean pDuplicateState) {
+	/**
+	 * TextView 생성을 간편하게 하고자 하는 함수
+	 * @param pText
+	 * @param pScale_TextSize
+	 * @param pScale_Left
+	 * @param pScale_Top
+	 * @param pScale_Width
+	 * @param pScale_Height
+	 * @param pDuplicateState 생성되는 TextView의 setDuplicateParentStateEnabled에 넣어주는 파라미터
+	 * @return
+	 */
+	public TextView addNewTextView(String pText, 
+			float pScale_TextSize, 
+			float pScale_Left, float pScale_Top, 
+			float pScale_Width, float pScale_Height, 
+			boolean pDuplicateState) {
 		TextView ret = new TextView(getContext());
 		addView(ret, pScale_Left, pScale_Top, pScale_Width, pScale_Height);
 		
@@ -175,6 +127,15 @@ public class ScalableLayout extends FrameLayout {
 		return ret;
 	}
 	
+	/**
+	 * EditText 생성을 간편하게 하고자 하는 함수
+	 * @param pScale_TextSize
+	 * @param pScale_Left
+	 * @param pScale_Top
+	 * @param pScale_Width
+	 * @param pScale_Height
+	 * @return
+	 */
 	public EditText addNewEditText(float pScale_TextSize, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
 		EditText ret = new EditText(getContext());
 		addView(ret, pScale_Left, pScale_Top, pScale_Width, pScale_Height);
@@ -185,16 +146,59 @@ public class ScalableLayout extends FrameLayout {
 		return ret;
 	}
 	
+	/**
+	 * ImageView 생성을 간편하게 하고자 하는 함수
+	 * null Drawable로 세팅시킴
+	 * DuplicateState는 false
+	 * @param pScale_Left
+	 * @param pScale_Top
+	 * @param pScale_Width
+	 * @param pScale_Height
+	 * @return
+	 */
 	public ImageView addNewImageView(float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
 		return addNewImageView((Drawable)null, pScale_Left, pScale_Top, pScale_Width, pScale_Height, false);
 	}
+	/**
+	 * ImageView 생성을 간편하게 하고자 하는 함수
+	 * bitmap을 BitmapDrawable로 세팅시킴
+	 * DuplicateState는 false
+	 * @param pBitmap
+	 * @param pScale_Left
+	 * @param pScale_Top
+	 * @param pScale_Width
+	 * @param pScale_Height
+	 * @return
+	 */
 	public ImageView addNewImageView(Bitmap pBitmap, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
 		BitmapDrawable bm = new BitmapDrawable(getResources(), pBitmap);
 		return addNewImageView(bm, pScale_Left, pScale_Top, pScale_Width, pScale_Height, false);
 	}
+	/**
+	 * ImageView 생성을 간편하게 하고자 하는 함수
+	 * Resource를 가져와서 BitmapDrawable로 생성시킴
+	 * DuplicateState는 false
+	 * @param pResID
+	 * @param pScale_Left
+	 * @param pScale_Top
+	 * @param pScale_Width
+	 * @param pScale_Height
+	 * @return
+	 */
 	public ImageView addNewImageView(int pResID, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
 		return addNewImageView(pResID, pScale_Left, pScale_Top, pScale_Width, pScale_Height, false);
 	}
+	/**
+	 * ImageView 생성을 간편하게 하고자 하는 함수
+	 * Resource를 가져와서 BitmapDrawable로 생성시킴
+	 * @param pResID
+	 * @param pScale_Left
+	 * @param pScale_Top
+	 * @param pScale_Width
+	 * @param pScale_Height
+	 * @param pDuplicateState
+	 * @return
+	 */
 	public ImageView addNewImageView(int pResID, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height, boolean pDuplicateState) {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -202,9 +206,31 @@ public class ScalableLayout extends FrameLayout {
 			new BitmapDrawable(getResources(), BitmapFactory.decodeResource(getResources(), pResID, options)), 
 			pScale_Left, pScale_Top, pScale_Width, pScale_Height, pDuplicateState);
 	}
+	/**
+	 * ImageView 생성을 간편하게 하고자 하는 함수
+	 * drawable로 생성시킴
+	 * DuplicateState는 false
+	 * @param drawable
+	 * @param pScale_Left
+	 * @param pScale_Top
+	 * @param pScale_Width
+	 * @param pScale_Height
+	 * @return
+	 */
 	public ImageView addNewImageView(Drawable drawable, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
 		return addNewImageView(drawable, pScale_Left, pScale_Top, pScale_Width, pScale_Height, false);
 	}
+	/**
+	 * ImageView 생성을 간편하게 하고자 하는 함수
+	 * drawable로 생성시킴
+	 * @param drawable
+	 * @param pScale_Left
+	 * @param pScale_Top
+	 * @param pScale_Width
+	 * @param pScale_Height
+	 * @param pDuplicateState
+	 * @return
+	 */
 	public ImageView addNewImageView(Drawable drawable, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height, boolean pDuplicateState) {
 		ImageView lNewImageView = new ImageView(getContext());
 		lNewImageView.setImageDrawable(drawable);
@@ -265,14 +291,28 @@ public class ScalableLayout extends FrameLayout {
 	}
 	
 	
-	public void moveChildView(View pView, float pScale_Left, float pScale_Top) {
-		ScalableLayout.LayoutParams rect = getChildLayoutParams(pView);
+	/**
+	 * @param pChildView 재배치할 View (ScalableLayout안에 있는 View여야함)
+	 * @param pScale_Left
+	 * @param pScale_Top
+	 */
+	public void moveChildView(View pChildView, float pScale_Left, float pScale_Top) {
+		ScalableLayout.LayoutParams rect = getChildLayoutParams(pChildView);
 		rect.mScale_Left = pScale_Left;
 		rect.mScale_Top = pScale_Top;
 		postInvalidate();
 	}
-	public void moveChildView(View pView, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
-		ScalableLayout.LayoutParams rect = getChildLayoutParams(pView);
+	
+	/**
+	 * ChildView를 재배치함
+	 * @param pChildView 재배치할 View (ScalableLayout안에 있는 View여야함)
+	 * @param pScale_Left
+	 * @param pScale_Top
+	 * @param pScale_Width
+	 * @param pScale_Height
+	 */
+	public void moveChildView(View pChildView, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
+		ScalableLayout.LayoutParams rect = getChildLayoutParams(pChildView);
 		rect.mScale_Left = pScale_Left;
 		rect.mScale_Top = pScale_Top;
 		rect.mScale_Width = pScale_Width;
@@ -360,6 +400,87 @@ public class ScalableLayout extends FrameLayout {
 		log("onMeasure ================ End   "+this.toString());
 		super.onMeasure(MeasureSpec.makeMeasureSpec(Math.round(lBGWidth), lWidthMode), MeasureSpec.makeMeasureSpec(Math.round(lBGHeight), lHeightMode));
 		setMeasuredDimension(Math.round(lBGWidth), Math.round(lBGHeight));
+	}
+	
+	
+
+	
+	/**
+	 * ScalableLayout.LayoutParams
+	 */
+	public static class LayoutParams extends FrameLayout.LayoutParams {
+		public LayoutParams(Context pContext, AttributeSet pAttrs) { super(pContext, pAttrs); }
+		public LayoutParams(
+				float pScale_Left, float pScale_Top, 
+				float pScale_Width, float pScale_Height) {
+			this(pScale_Left, pScale_Top, pScale_Width, pScale_Height, Default_Scale_TextSize);
+		}
+		private LayoutParams(
+				float pScale_Left, float pScale_Top, 
+				float pScale_Width, float pScale_Height, float pScale_TextSize) {
+			super(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP);
+			
+			setScale_Left(pScale_Left);
+			setScale_Top(pScale_Top);
+			setScale_Width(pScale_Width);
+			setScale_Height(pScale_Height);
+			
+			setScale_TextSize(pScale_TextSize);
+		}
+		
+		private LayoutParams(android.view.ViewGroup.LayoutParams pP) {
+			this(
+				Default_Scale_Left, Default_Scale_Top, 
+				Default_Scale_Width, Default_Scale_Height, 
+				Default_Scale_TextSize);
+			
+			width = pP.width;
+			height = pP.height;
+			layoutAnimationParameters = pP.layoutAnimationParameters;
+			gravity = Gravity.LEFT | Gravity.TOP;
+		}
+
+		private float mScale_Left = Default_Scale_Left;
+		public float getScale_Left() { return mScale_Left; }
+		public void setScale_Left(float pScale_Left) { mScale_Left = pScale_Left; }
+
+		private float mScale_Top = Default_Scale_Top;
+		public float getScale_Top() { return mScale_Top; }
+		public void setScale_Top(float pScale_Top) { mScale_Top = pScale_Top; }
+
+		private float mScale_Width = Default_Scale_Width;
+		public float getScale_Width() { return mScale_Width; }
+		public void setScale_Width(float pScale_Width) { mScale_Width = pScale_Width; }
+
+		private float mScale_Height = Default_Scale_Height;
+		public float getScale_Height() { return mScale_Height; }
+		public void setScale_Height(float pScale_Height) { mScale_Height = pScale_Height; }
+
+		private float mScale_TextSize = Default_Scale_TextSize;
+		public float getScale_TextSize() { return mScale_TextSize; }
+		public void setScale_TextSize(float pScale_TextSize) { mScale_TextSize = pScale_TextSize; }
+	}
+	
+	
+	//private static String sLogTag = "ScalableLayout";
+	private static String sLogTag = null;
+	/**
+	 * setLoggable("ScalableLayout");
+	 */
+	public static void setLoggable() {
+		setLoggable("ScalableLayout");
+	}
+	/**
+	 * Log를 출력할수 있게함
+	 * @param pLogTag DDMS Log Tag를 지정
+	 */
+	public static void setLoggable(String pLogTag) {
+		sLogTag = pLogTag;
+	}
+	private static void log(String pLog) {
+		if(sLogTag != null) {
+			Log.e(sLogTag, pLog);
+		}
 	}
 }
 
