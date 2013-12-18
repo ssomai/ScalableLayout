@@ -23,6 +23,78 @@ ScalableLayout is used on the everysing application which was awarded as GoogleP
 <br/>
 
 
+
+# Simple example in Java
+
+    // Initialte ScalableLayout instance with 400 width and 200 height. 
+    // It's relative unit. It's not pixel or dp unit.
+    ScalableLayout sl = new ScalableLayout(this, 400, 200);
+
+
+    // Gonna place a TextView instance inside ScalableLayout instance. 
+    TextView tv = new TextView(this);
+    
+    // Placing a TextView with following parameters. left: 20, top: 40, width: 100, height: 30.  
+    // You can place it very easily. 
+    // It would place and scale automatically according to the size of its parent ScalableLayout.
+    sl.addView(tv, 20f, 40f, 100f, 30f);
+    
+    // Set the text size of TextView as 20. It would scale automatically.
+    sl.setScale_TextSize(tv, 20f);
+    
+    // All the original methods of TextView works properly. 
+    tv.setText("test");
+    tv.setBackgroundColor(Color.YELLOW);
+    
+    
+    // Gonna place a ImageView instance inside ScalableLayout instance. 
+    ImageView iv = new ImageView(this);
+    
+    // Placing a ImageView with following parameters. left: 200, top: 30, width: 50, height: 50.  
+    // You can place it very easily. 
+    // It would place and scale automatically according to the size of its parent ScalableLayout.
+    sl.addView(iv, 200f, 30f, 50f, 50f);
+    
+    // All the original methods of ImageView works properly of course. 
+    iv.setImageResource(R.drawable.ic_launcher);
+
+
+# xml로 뷰를 배치하는 예시 코드
+
+    <com.jnm.android.widget.ScalableLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:color/darker_gray"
+      android:layout_above="@+id/main_textview"
+      sl:scale_base_width="400"
+      sl:scale_base_height="200"
+      >
+      <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        sl:scale_left="20"
+        sl:scale_top="40"
+        sl:scale_width="100"
+        sl:scale_height="30"
+        sl:scale_textsize="20"
+        android:text="@string/hello_world" 
+        android:textColor="@android:color/white"
+        android:background="@android:color/black"
+        />
+      <ImageView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        sl:scale_left="200"
+        sl:scale_top="30"
+        sl:scale_width="50"
+        sl:scale_height="50"
+        android:src="@drawable/ic_launcher"
+        />
+    </com.jnm.android.widget.ScalableLayout>        
+
+
+
+
 Examples of ScalableLayout on different resolutions of Android devices.
 ====================
 From left. Samsung Galaxy S4 (1920 x 1080. 16:9), LG Optimus View2 (1024 x 768. 4:3), Samsung Galaxy Note 10.1 (1280 x 800. 8:5)<br/><br/>
