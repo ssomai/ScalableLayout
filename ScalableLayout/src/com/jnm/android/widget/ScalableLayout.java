@@ -32,6 +32,7 @@ public class ScalableLayout extends FrameLayout {
 	private float mScale_Full_Width 		= Default_Scale_Base_Width;
 	private float mScale_Full_Height 		= Default_Scale_Base_Height;
 	private float mRatioOfWidthHeight 	= mScale_Full_Height / mScale_Full_Width;
+	
 	public float getScaleWidth() { return mScale_Full_Width; }
 	public float getScaleHeight() { return mScale_Full_Height; }
 	
@@ -47,15 +48,17 @@ public class ScalableLayout extends FrameLayout {
 	public ScalableLayout(Context pContext) {
 		this(pContext, Default_Scale_Base_Width, Default_Scale_Base_Height);
 	}
+	
 	public ScalableLayout(Context pContext, AttributeSet pAttrs) {
 		this(pContext, pAttrs, 
 			pContext.obtainStyledAttributes(pAttrs, R.styleable.ScalableLayout).getFloat(R.styleable.ScalableLayout_scale_base_width, Default_Scale_Base_Width), 
 			pContext.obtainStyledAttributes(pAttrs, R.styleable.ScalableLayout).getFloat(R.styleable.ScalableLayout_scale_base_height, Default_Scale_Base_Height) );
 	}
+	
 	/**
 	 * @param pContext
-	 * @param pScale_Width Scale Width of ScaleLayout
-	 * @param pScale_Height Scale Height of ScaleLayout
+	 * @param pScale_Width Initial width of ScaleLayout.
+	 * @param pScale_Height Initial height of ScaleLayout.
 	 */
 	public ScalableLayout(Context pContext, float pScale_Width, float pScale_Height) {
 		this(pContext, null, pScale_Width, pScale_Height);
@@ -75,23 +78,24 @@ public class ScalableLayout extends FrameLayout {
 		return ret;
 	}
 	/**
-	 * TextView나 EdiText의 Text Size를 Scale할수 있게 지정함
+	 * sets TextSize of TextView and EdiText to scale automatically
 	 * @param pTextView
 	 * @param pScale_TextSize
 	 */
 	public void setScale_TextSize(TextView pTextView, float pScale_TextSize) {
 		getChildLayoutParams(pTextView).setScale_TextSize(pScale_TextSize);
 	}
+	
 	/** 
-	 * TextView 생성을 간편하게 해주는 함수
-	 * DuplicateState는 false
+	 * adds new TextView with (TextSize, Left, Top, Width, Height) parameters
+	 * DuplicateState is false by default.
 	 * @param pText
 	 * @param pScale_TextSize
 	 * @param pScale_Left
 	 * @param pScale_Top
 	 * @param pScale_Width
 	 * @param pScale_Height
-	 * @return
+	 * @return created TextView instance
 	 */
 	public TextView addNewTextView(String pText, 
 			float pScale_TextSize, 
@@ -99,16 +103,17 @@ public class ScalableLayout extends FrameLayout {
 			float pScale_Width, float pScale_Height) {
 		return addNewTextView(pText, pScale_TextSize, pScale_Left, pScale_Top, pScale_Width, pScale_Height, false);
 	}
+	
 	/**
-	 * TextView 생성을 간편하게 하고자 하는 함수
+	 * adds new TextView with (TextSize, Left, Top, Width, Height, duplicateState) parameters
 	 * @param pText
 	 * @param pScale_TextSize
 	 * @param pScale_Left
 	 * @param pScale_Top
 	 * @param pScale_Width
 	 * @param pScale_Height
-	 * @param pDuplicateState 생성되는 TextView의 setDuplicateParentStateEnabled에 넣어주는 파라미터
-	 * @return
+	 * @param pDuplicateState 
+	 * @return created TextView instance
 	 */
 	public TextView addNewTextView(String pText, 
 			float pScale_TextSize, 
@@ -128,13 +133,13 @@ public class ScalableLayout extends FrameLayout {
 	}
 	
 	/**
-	 * EditText 생성을 간편하게 하고자 하는 함수
+	 * adds new EditText with (TextSize, Left, Top, Width, Height) parameters
 	 * @param pScale_TextSize
 	 * @param pScale_Left
 	 * @param pScale_Top
 	 * @param pScale_Width
 	 * @param pScale_Height
-	 * @return
+	 * @return created EditText instance
 	 */
 	public EditText addNewEditText(float pScale_TextSize, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
 		EditText ret = new EditText(getContext());
@@ -147,57 +152,58 @@ public class ScalableLayout extends FrameLayout {
 	}
 	
 	/**
-	 * ImageView 생성을 간편하게 하고자 하는 함수
-	 * null Drawable로 세팅시킴
-	 * DuplicateState는 false
+	 * adds new ImageView with (Left, Top, Width, Height) parameters
+	 * Drawable is null by default.
+	 * DuplicateState is false by default.
 	 * @param pScale_Left
 	 * @param pScale_Top
 	 * @param pScale_Width
 	 * @param pScale_Height
-	 * @return
+	 * @return created ImageView instance
 	 */
 	public ImageView addNewImageView(float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
 		return addNewImageView((Drawable)null, pScale_Left, pScale_Top, pScale_Width, pScale_Height, false);
 	}
+	
 	/**
-	 * ImageView 생성을 간편하게 하고자 하는 함수
-	 * bitmap을 BitmapDrawable로 세팅시킴
-	 * DuplicateState는 false
+	 * adds new ImageView with (Bitmap, Left, Top, Width, Height) parameters
+	 * sets Image of ImageView with Bitmap parameter
+	 * DuplicateState is false by default.
 	 * @param pBitmap
 	 * @param pScale_Left
 	 * @param pScale_Top
 	 * @param pScale_Width
 	 * @param pScale_Height
-	 * @return
+	 * @return created ImageView instance
 	 */
 	public ImageView addNewImageView(Bitmap pBitmap, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
 		BitmapDrawable bm = new BitmapDrawable(getResources(), pBitmap);
 		return addNewImageView(bm, pScale_Left, pScale_Top, pScale_Width, pScale_Height, false);
 	}
 	/**
-	 * ImageView 생성을 간편하게 하고자 하는 함수
-	 * Resource를 가져와서 BitmapDrawable로 생성시킴
-	 * DuplicateState는 false
+	 * adds new ImageView with (ResourceID, Left, Top, Width, Height) parameters
+	 * sets Image of ImageView with ResourceID parameter
+	 * DuplicateState is false by default.
 	 * @param pResID
 	 * @param pScale_Left
 	 * @param pScale_Top
 	 * @param pScale_Width
 	 * @param pScale_Height
-	 * @return
+	 * @return created ImageView instance
 	 */
 	public ImageView addNewImageView(int pResID, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
 		return addNewImageView(pResID, pScale_Left, pScale_Top, pScale_Width, pScale_Height, false);
 	}
 	/**
-	 * ImageView 생성을 간편하게 하고자 하는 함수
-	 * Resource를 가져와서 BitmapDrawable로 생성시킴
+	 * adds new ImageView with (ResourceID, Left, Top, Width, Height, DuplicateState) parameters
+	 * sets Image of ImageView with ResourceID parameter
 	 * @param pResID
 	 * @param pScale_Left
 	 * @param pScale_Top
 	 * @param pScale_Width
 	 * @param pScale_Height
 	 * @param pDuplicateState
-	 * @return
+	 * @return created ImageView instance
 	 */
 	public ImageView addNewImageView(int pResID, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height, boolean pDuplicateState) {
 		BitmapFactory.Options options = new BitmapFactory.Options();
@@ -207,22 +213,22 @@ public class ScalableLayout extends FrameLayout {
 			pScale_Left, pScale_Top, pScale_Width, pScale_Height, pDuplicateState);
 	}
 	/**
-	 * ImageView 생성을 간편하게 하고자 하는 함수
-	 * drawable로 생성시킴
-	 * DuplicateState는 false
+	 * adds new ImageView with (Drawable, Left, Top, Width, Height) parameters
+	 * sets Image of ImageView with Drawable parameter
+	 * DuplicateState is false by default.
 	 * @param drawable
 	 * @param pScale_Left
 	 * @param pScale_Top
 	 * @param pScale_Width
 	 * @param pScale_Height
-	 * @return
+	 * @return created ImageView instance
 	 */
 	public ImageView addNewImageView(Drawable drawable, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
 		return addNewImageView(drawable, pScale_Left, pScale_Top, pScale_Width, pScale_Height, false);
 	}
 	/**
-	 * ImageView 생성을 간편하게 하고자 하는 함수
-	 * drawable로 생성시킴
+	 * adds new ImageView with (Drawable, Left, Top, Width, Height, DuplicateState) parameters
+	 * sets Image of ImageView with Drawable parameter
 	 * @param drawable
 	 * @param pScale_Left
 	 * @param pScale_Top
@@ -292,7 +298,8 @@ public class ScalableLayout extends FrameLayout {
 	
 	
 	/**
-	 * @param pChildView 재배치할 View (ScalableLayout안에 있는 View여야함)
+	 * move childView inside ScalableLayout
+	 * @param pChildView view to move. should be child of ScaleLayout
 	 * @param pScale_Left
 	 * @param pScale_Top
 	 */
@@ -304,8 +311,8 @@ public class ScalableLayout extends FrameLayout {
 	}
 	
 	/**
-	 * ChildView를 재배치함
-	 * @param pChildView 재배치할 View (ScalableLayout안에 있는 View여야함)
+	 * move and resize childView inside ScalableLayout
+	 * @param pChildView view to move. should be child of ScaleLayout
 	 * @param pScale_Left
 	 * @param pScale_Top
 	 * @param pScale_Width
