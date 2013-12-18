@@ -28,15 +28,17 @@ public class ScalableLayout extends FrameLayout {
 	private static final float Default_Scale_Height = 100f;
 	
 	private static final float Default_Scale_TextSize = 100f;
+	
 	public static class LayoutParams extends FrameLayout.LayoutParams {
-		public LayoutParams(Context pContext, AttributeSet pAttrs) {
-			super(pContext, pAttrs);
+		public LayoutParams(Context pContext, AttributeSet pAttrs) { super(pContext, pAttrs); }
+		public LayoutParams(
+				float pScale_Left, float pScale_Top, 
+				float pScale_Width, float pScale_Height) {
+			this(pScale_Left, pScale_Top, pScale_Width, pScale_Height, Default_Scale_TextSize);
 		}
-
-		public LayoutParams(float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
-			this(pScale_Left, pScale_Top, pScale_Width, pScale_Height, 10f);
-		}
-		private LayoutParams(float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height, float pScale_TextSize) {
+		private LayoutParams(
+				float pScale_Left, float pScale_Top, 
+				float pScale_Width, float pScale_Height, float pScale_TextSize) {
 			super(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP);
 			
 			setScale_Left(pScale_Left);
@@ -60,7 +62,6 @@ public class ScalableLayout extends FrameLayout {
 			gravity = Gravity.LEFT | Gravity.TOP;
 		}
 
-
 		private float mScale_Left = Default_Scale_Left;
 		public float getScale_Left() { return mScale_Left; }
 		public void setScale_Left(float pScale_Left) { mScale_Left = pScale_Left; }
@@ -82,10 +83,10 @@ public class ScalableLayout extends FrameLayout {
 		public void setScale_TextSize(float pScale_TextSize) { mScale_TextSize = pScale_TextSize; }
 	}
 	
-	//private static String sLogTag = "ScaledLayout";
+	//private static String sLogTag = "ScalableLayout";
 	private static String sLogTag = null;
 	public static void setLoggable() {
-		setLoggable("ScaledLayout");
+		setLoggable("ScalableLayout");
 	}
 	public static void setLoggable(String pLogTag) {
 		sLogTag = pLogTag;
@@ -119,6 +120,11 @@ public class ScalableLayout extends FrameLayout {
 			pContext.obtainStyledAttributes(pAttrs, R.styleable.ScalableLayout).getFloat(R.styleable.ScalableLayout_scale_base_width, Default_Scale_Base_Width), 
 			pContext.obtainStyledAttributes(pAttrs, R.styleable.ScalableLayout).getFloat(R.styleable.ScalableLayout_scale_base_height, Default_Scale_Base_Height) );
 	}
+	/**
+	 * @param pContext
+	 * @param pScale_Width Scale Width of ScaleLayout
+	 * @param pScale_Height Scale Height of ScaleLayout
+	 */
 	public ScalableLayout(Context pContext, float pScale_Width, float pScale_Height) {
 		this(pContext, null, pScale_Width, pScale_Height);
 	}
@@ -136,9 +142,23 @@ public class ScalableLayout extends FrameLayout {
 		}
 		return ret;
 	}
+	/**
+	 * TextView나 EdiText의 Text Size를 Scale할수 있게 지정함
+	 * @param pTextView
+	 * @param pScale_TextSize
+	 */
 	public void setScale_TextSize(TextView pTextView, float pScale_TextSize) {
 		getChildLayoutParams(pTextView).setScale_TextSize(pScale_TextSize);
 	}
+	/**
+	 * @param pText
+	 * @param pScale_TextSize
+	 * @param pScale_Left
+	 * @param pScale_Top
+	 * @param pScale_Width
+	 * @param pScale_Height
+	 * @return
+	 */
 	public TextView addNewTextView(String pText, float pScale_TextSize, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
 		return addNewTextView(pText, pScale_TextSize, pScale_Left, pScale_Top, pScale_Width, pScale_Height, false);
 	}
