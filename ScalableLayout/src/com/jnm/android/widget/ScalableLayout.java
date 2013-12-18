@@ -96,8 +96,6 @@ public class ScalableLayout extends FrameLayout {
 		}
 	}
 	
-	// private Vector<View> mViews = new Vector<View>();
-	
 	private float mScale_Full_Width 		= Default_Scale_Base_Width;
 	private float mScale_Full_Height 		= Default_Scale_Base_Height;
 	private float mRatioOfWidthHeight 	= mScale_Full_Height / mScale_Full_Width;
@@ -138,7 +136,7 @@ public class ScalableLayout extends FrameLayout {
 		}
 		return ret;
 	}
-	public void setTextSize(TextView pTextView, float pScale_TextSize) {
+	public void setScale_TextSize(TextView pTextView, float pScale_TextSize) {
 		getChildLayoutParams(pTextView).setScale_TextSize(pScale_TextSize);
 	}
 	public TextView addNewTextView(String pText, float pScale_TextSize, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
@@ -148,7 +146,7 @@ public class ScalableLayout extends FrameLayout {
 		TextView ret = new TextView(getContext());
 		addView(ret, pScale_Left, pScale_Top, pScale_Width, pScale_Height);
 		
-		setTextSize(ret, pScale_TextSize);
+		setScale_TextSize(ret, pScale_TextSize);
 		ret.setText(pText);
 		ret.setGravity(Gravity.CENTER);
 		ret.setTextColor(Color.BLACK);
@@ -161,7 +159,7 @@ public class ScalableLayout extends FrameLayout {
 		EditText ret = new EditText(getContext());
 		addView(ret, pScale_Left, pScale_Top, pScale_Width, pScale_Height);
 		
-		setTextSize(ret, pScale_TextSize);
+		setScale_TextSize(ret, pScale_TextSize);
 		ret.setGravity(Gravity.CENTER);
 		ret.setTextColor(Color.BLACK);
 		return ret;
@@ -216,9 +214,7 @@ public class ScalableLayout extends FrameLayout {
 	public void addView(View pChild, float pScale_Left, float pScale_Top, float pScale_Width, float pScale_Height) {
 		addView_Final(pChild, getChildCount(), new ScalableLayout.LayoutParams(pScale_Left, pScale_Top, pScale_Width, pScale_Height));
 	}
-	
 	private final void addView_Final(View pChild, int pIndex, ScalableLayout.LayoutParams pScaledLayoutParams) {
-		// mViews.add(pChild);
 		super.addView(pChild, pIndex, pScaledLayoutParams);
 	}
 	
@@ -319,7 +315,6 @@ public class ScalableLayout extends FrameLayout {
 		float lTopMarginFromWeight = (lBGHeight - (lBGWidth * mRatioOfWidthHeight))/4;
 		log("  onMeasure ("+lBGWidth+","+lBGHeight+") Ratio:"+mRatioOfWidthHeight+" Scale:"+lScale+" lTopMarginFromWeight:"+lTopMarginFromWeight);
 		
-		//for (View pView : mViews){
 		for (int i=0;i<getChildCount();i++) {
 			View lView = getChildAt(i);
 				

@@ -27,7 +27,8 @@ public class MainActivity extends Activity {
 		tv.setText("test");
 		tv.setBackgroundColor(Color.YELLOW);
 		sl.addView(tv, 20f, 40f, 100f, 30f);
-		sl.setTextSize(tv, 20f);
+	    // set text scale size of TextView 
+		sl.setScale_TextSize(tv, 20f);
 		
 	    // insert ImageView
 		ImageView iv = new ImageView(this);
