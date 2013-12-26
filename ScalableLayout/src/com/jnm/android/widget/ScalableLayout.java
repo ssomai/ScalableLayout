@@ -468,9 +468,34 @@ public class ScalableLayout extends FrameLayout {
 		public void setScale_TextSize(float pScale_TextSize) { mScale_TextSize = pScale_TextSize; }
 	}
 	
+	private void log(String pLog) {
+		if(sLogTag_World != null) {
+			Log.e(sLogTag_World, pLog);
+		}
+		if(mLogTag_This != null) {
+			Log.e(mLogTag_This, pLog);
+		}
+	}
 	
-	//private static String sLogTag = "ScalableLayout";
-	private static String sLogTag = null;
+	
+	private String mLogTag_This = null;
+	/**
+	 * setLoggable("ScalableLayout");
+	 */
+	public void setThisLoggable() {
+		setThisLoggable("ScalableLayout");
+	}
+	/**
+	 * Log를 출력할수 있게함
+	 * @param pLogTag DDMS Log Tag를 지정
+	 */
+	public void setThisLoggable(String pLogTag) {
+		mLogTag_This = pLogTag;
+	}
+	
+	
+	
+	private static String sLogTag_World = null;
 	/**
 	 * setLoggable("ScalableLayout");
 	 */
@@ -482,12 +507,7 @@ public class ScalableLayout extends FrameLayout {
 	 * @param pLogTag DDMS Log Tag를 지정
 	 */
 	public static void setLoggable(String pLogTag) {
-		sLogTag = pLogTag;
-	}
-	private static void log(String pLog) {
-		if(sLogTag != null) {
-			Log.e(sLogTag, pLog);
-		}
+		sLogTag_World = pLogTag;
 	}
 }
 
