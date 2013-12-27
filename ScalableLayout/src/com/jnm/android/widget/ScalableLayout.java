@@ -356,15 +356,37 @@ public class ScalableLayout extends FrameLayout {
 		
 		switch (lHeightMode) {
 		case MeasureSpec.EXACTLY:
-			lBGHeight = Math.min(lBGWidth * mRatioOfWidthHeight, lHeightSize);
+			switch (lWidthMode) {
+			case MeasureSpec.EXACTLY:
+				lBGHeight = Math.min(lBGWidth * mRatioOfWidthHeight, lHeightSize);
+				break;
+			case MeasureSpec.AT_MOST:
+				lBGHeight = Math.min(lBGWidth * mRatioOfWidthHeight, lHeightSize);
+				break;
+			default:
+				lBGHeight = lHeightSize;
+				lBGWidth = lBGHeight / mRatioOfWidthHeight;
+				break;
+			}
 			
 			log("  onMeasure Height Exactly "+lBGHeight+", "+lHeightSize);
 			break;
 		case MeasureSpec.AT_MOST:
-			lBGHeight = Math.min(lBGWidth * mRatioOfWidthHeight, lHeightSize);
+			
+			switch (lWidthMode) {
+			case MeasureSpec.EXACTLY:
+				lBGHeight = lBGWidth * mRatioOfWidthHeight;
+				break;
+			case MeasureSpec.AT_MOST:
+				lBGHeight = Math.min(lBGWidth * mRatioOfWidthHeight, lHeightSize);
+				break;
+			default:
+				lBGHeight = Math.min(lBGWidth * mRatioOfWidthHeight, lHeightSize);
+				break;
+			}
+			
 			log("  onMeasure Height AtMost "+lBGHeight+" = min("+(lBGWidth * mRatioOfWidthHeight)+", "+lHeightSize+")");
 			break;
-			
 		default:
 			lBGHeight = lBGWidth * mRatioOfWidthHeight;
 			log("  onMeasure Height Unspecified "+lBGHeight+" = "+lBGWidth+"*"+mRatioOfWidthHeight);
@@ -472,6 +494,7 @@ public class ScalableLayout extends FrameLayout {
 		if(sLogTag_World != null) {
 			Log.e(sLogTag_World, pLog);
 		}
+		// Log.e("뭐니", mLogTag_This+" "+pLog+", "+this);
 		if(mLogTag_This != null) {
 			Log.e(mLogTag_This, pLog);
 		}
@@ -479,6 +502,9 @@ public class ScalableLayout extends FrameLayout {
 	
 	
 	private String mLogTag_This = null;
+	public String getLogTag_This() {
+		return mLogTag_This;
+	}
 	/**
 	 * setLoggable("ScalableLayout");
 	 */
