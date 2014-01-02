@@ -494,7 +494,6 @@ public class ScalableLayout extends FrameLayout {
 		if(sLogTag_World != null) {
 			Log.e(sLogTag_World, pLog);
 		}
-		// Log.e("뭐니", mLogTag_This+" "+pLog+", "+this);
 		if(mLogTag_This != null) {
 			Log.e(mLogTag_This, pLog);
 		}
