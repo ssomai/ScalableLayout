@@ -19,8 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/main_textview"
         android:background="@android:color/darker_gray"
-        sl:scale_base_height="200"
-        sl:scale_base_width="400" >
+        sl:scale_base_width="400"
+        sl:scale_base_height="200" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,20 +28,20 @@
             android:background="@android:color/black"
             android:text="@string/hello_world"
             android:textColor="@android:color/white"
-            sl:scale_height="30"
             sl:scale_left="20"
-            sl:scale_textsize="20"
             sl:scale_top="40"
-            sl:scale_width="100" />
+            sl:scale_height="30"
+            sl:scale_width="100"
+            sl:scale_textsize="20" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_launcher"
-            sl:scale_height="50"
             sl:scale_left="200"
             sl:scale_top="30"
-            sl:scale_width="50" />
+            sl:scale_width="50"
+            sl:scale_height="50" />
     </com.jnm.android.widget.ScalableLayout>
 
 </RelativeLayout>
