@@ -331,7 +331,7 @@ public class ScalableLayout extends FrameLayout {
 	
 	@Override
 	protected void onMeasure(int pWidthMeasureSpec, int pHeightMeasureSpec) {
-		log("onMeasure ================ Start "+this.toString());
+//		log("onMeasure ================ Start "+this.toString());
 		float lBGWidth = 0;
 		int lWidthMode = MeasureSpec.getMode(pWidthMeasureSpec);
 		int lWidthSize = MeasureSpec.getSize(pWidthMeasureSpec);
@@ -341,15 +341,15 @@ public class ScalableLayout extends FrameLayout {
 		
 		switch (lWidthMode) {
 		case MeasureSpec.EXACTLY:
-			log("  onMeasure Width Exactly "+lBGWidth+" = min("+mScale_Full_Width+", "+lWidthSize+")");
+//			log("  onMeasure Width Exactly "+lBGWidth+" = min("+mScale_Full_Width+", "+lWidthSize+")");
 			lBGWidth = lWidthSize;
 			break;
 		case MeasureSpec.AT_MOST:
-			log("  onMeasure Width AtMost "+lBGWidth+" = min("+mScale_Full_Width+", "+lWidthSize+")");
+//			log("  onMeasure Width AtMost "+lBGWidth+" = min("+mScale_Full_Width+", "+lWidthSize+")");
 			lBGWidth = lWidthSize;
 			break;
 		default:
-			log("  onMeasure Width Unspecified "+lBGWidth+" = "+mScale_Full_Width);
+//			log("  onMeasure Width Unspecified "+lBGWidth+" = "+mScale_Full_Width);
 			lBGWidth = mScale_Full_Width;
 			break;
 		}
@@ -369,7 +369,7 @@ public class ScalableLayout extends FrameLayout {
 				break;
 			}
 			
-			log("  onMeasure Height Exactly "+lBGHeight+", "+lHeightSize);
+//			log("  onMeasure Height Exactly "+lBGHeight+", "+lHeightSize);
 			break;
 		case MeasureSpec.AT_MOST:
 			
@@ -385,16 +385,16 @@ public class ScalableLayout extends FrameLayout {
 				break;
 			}
 			
-			log("  onMeasure Height AtMost "+lBGHeight+" = min("+(lBGWidth * mRatioOfWidthHeight)+", "+lHeightSize+")");
+//			log("  onMeasure Height AtMost "+lBGHeight+" = min("+(lBGWidth * mRatioOfWidthHeight)+", "+lHeightSize+")");
 			break;
 		default:
 			lBGHeight = lBGWidth * mRatioOfWidthHeight;
-			log("  onMeasure Height Unspecified "+lBGHeight+" = "+lBGWidth+"*"+mRatioOfWidthHeight);
+//			log("  onMeasure Height Unspecified "+lBGHeight+" = "+lBGWidth+"*"+mRatioOfWidthHeight);
 			break;
 		}
 		
 		if(lBGHeight/mRatioOfWidthHeight < lBGWidth) {
-			log("  onMeasure Height Exactly Replace Width "+lBGWidth+" to "+(lBGHeight/mRatioOfWidthHeight));
+//			log("  onMeasure Height Exactly Replace Width "+lBGWidth+" to "+(lBGHeight/mRatioOfWidthHeight));
 			lBGWidth = lBGHeight/mRatioOfWidthHeight;
 		}
 		
@@ -402,7 +402,7 @@ public class ScalableLayout extends FrameLayout {
 		float lScale = lBGWidth / mScale_Full_Width;
 		
 		float lTopMarginFromWeight = (lBGHeight - (lBGWidth * mRatioOfWidthHeight))/4;
-		log("  onMeasure ("+lBGWidth+","+lBGHeight+") Ratio:"+mRatioOfWidthHeight+" Scale:"+lScale+" lTopMarginFromWeight:"+lTopMarginFromWeight);
+//		log("  onMeasure ("+lBGWidth+","+lBGHeight+") Ratio:"+mRatioOfWidthHeight+" Scale:"+lScale+" lTopMarginFromWeight:"+lTopMarginFromWeight);
 		
 		for (int i=0;i<getChildCount();i++) {
 			View lView = getChildAt(i);
@@ -426,7 +426,7 @@ public class ScalableLayout extends FrameLayout {
 			}
 		}
 		
-		log("onMeasure ================ End   "+this.toString());
+//		log("onMeasure ================ End   "+this.toString());
 		super.onMeasure(MeasureSpec.makeMeasureSpec(Math.round(lBGWidth), lWidthMode), MeasureSpec.makeMeasureSpec(Math.round(lBGHeight), lHeightMode));
 		setMeasuredDimension(Math.round(lBGWidth), Math.round(lBGHeight));
 	}
