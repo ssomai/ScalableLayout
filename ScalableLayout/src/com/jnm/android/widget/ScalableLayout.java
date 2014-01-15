@@ -412,10 +412,10 @@ public class ScalableLayout extends FrameLayout {
 			lParams.width = (int)(lScale * lParams.mScale_Width)+1;
 			lParams.height = (int)(lScale * lParams.mScale_Height)+1;
 			lParams.setMargins(Math.round(lScale * lParams.mScale_Left), Math.round(lScale * lParams.mScale_Top + lTopMarginFromWeight), 0, 0);
-			log("  "+lView.toString()+" "+
-				String.format("(%f, %f, %f, %f)", lParams.mScale_Left, lParams.mScale_Top, lParams.mScale_Width, lParams.mScale_Height)+
-				"->"+
-				String.format("(%d, %d, %d, %d)", lParams.leftMargin, lParams.topMargin, lParams.width, lParams.height));
+//			log("  "+lView.toString()+" "+
+//				String.format("(%f, %f, %f, %f)", lParams.mScale_Left, lParams.mScale_Top, lParams.mScale_Width, lParams.mScale_Height)+
+//				"->"+
+//				String.format("(%d, %d, %d, %d)", lParams.leftMargin, lParams.topMargin, lParams.width, lParams.height));
 			lView.setLayoutParams(lParams);
 			
 			if(lView instanceof TextView) {
