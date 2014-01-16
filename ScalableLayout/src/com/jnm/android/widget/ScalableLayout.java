@@ -408,21 +408,44 @@ public class ScalableLayout extends FrameLayout {
 			View lView = getChildAt(i);
 				
 			ScalableLayout.LayoutParams lParams = getChildLayoutParams(lView);
-			
+			boolean dif = false;
+			if(lParams.width != (int)(lScale * lParams.mScale_Width)+1)
+				dif = true;
 			lParams.width = (int)(lScale * lParams.mScale_Width)+1;
+			if(lParams.height != (int)(lScale * lParams.mScale_Height)+1)
+				dif = true;
 			lParams.height = (int)(lScale * lParams.mScale_Height)+1;
-			lParams.setMargins(Math.round(lScale * lParams.mScale_Left), Math.round(lScale * lParams.mScale_Top + lTopMarginFromWeight), 0, 0);
+			
+			if(lParams.leftMargin != Math.round(lScale * lParams.mScale_Left))
+				dif = true;
+			lParams.leftMargin = Math.round(lScale * lParams.mScale_Left);
+			
+			if(lParams.topMargin != Math.round(lScale * lParams.mScale_Top + lTopMarginFromWeight))
+				dif = true;
+			lParams.topMargin = Math.round(lScale * lParams.mScale_Top + lTopMarginFromWeight);
+			
+			
+			lParams.rightMargin = 0;
+			lParams.bottomMargin = 0;
+			
+//			lParams.setMargins(Math.round(lScale * lParams.mScale_Left), Math.round(lScale * lParams.mScale_Top + lTopMarginFromWeight), 0, 0);
 //			log("  "+lView.toString()+" "+
 //				String.format("(%f, %f, %f, %f)", lParams.mScale_Left, lParams.mScale_Top, lParams.mScale_Width, lParams.mScale_Height)+
 //				"->"+
 //				String.format("(%d, %d, %d, %d)", lParams.leftMargin, lParams.topMargin, lParams.width, lParams.height));
-			lView.setLayoutParams(lParams);
+			
+			if(dif) 
+				lView.setLayoutParams(lParams);
 			
 			if(lView instanceof TextView) {
-				((TextView)lView).setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale);
+				TextView v = (TextView) lView;
+				if(v.getTextSize() != lParams.mScale_TextSize * lScale)
+					v.setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale);
 			}
 			else if(lView instanceof EditText) {
-				((EditText)lView).setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale);
+				EditText v = (EditText) lView;
+				if(v.getTextSize() != lParams.mScale_TextSize * lScale)
+					v.setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale);
 			}
 		}
 		
