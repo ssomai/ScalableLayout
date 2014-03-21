@@ -67,7 +67,7 @@ public class ScalableLayout_OnlyJava extends FrameLayout {
 		setScaleHeight(pScale_Height);
 	}
 	
-	private ScalableLayout_OnlyJava.LayoutParams getChildLayoutParams(View pChild) {
+	public ScalableLayout_OnlyJava.LayoutParams getChildLayoutParams(View pChild) {
 		LayoutParams ret = (LayoutParams) pChild.getLayoutParams();
 		if(ret == null) {
 			ret = generateDefaultLayoutParams();

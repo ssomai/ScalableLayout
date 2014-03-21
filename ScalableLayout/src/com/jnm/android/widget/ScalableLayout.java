@@ -69,7 +69,7 @@ public class ScalableLayout extends FrameLayout {
 		setScaleHeight(pScale_Height);
 	}
 	
-	private ScalableLayout.LayoutParams getChildLayoutParams(View pChild) {
+	public ScalableLayout.LayoutParams getChildLayoutParams(View pChild) {
 		LayoutParams ret = (LayoutParams) pChild.getLayoutParams();
 		if(ret == null) {
 			ret = generateDefaultLayoutParams();
