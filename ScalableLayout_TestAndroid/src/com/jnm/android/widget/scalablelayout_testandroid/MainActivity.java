@@ -22,8 +22,9 @@ import com.jnm.android.widget.ScalableLayout;
 import com.jnm.android.widget.ScalableLayout.TextViewWrapContentMode;
 
 public class MainActivity extends Activity {
+	private static final String DebugTag = "ScalableLayout_TestAndroid";
 	private static void log(String pLog) {
-		Log.e("ScalableLayout_TestAndroid", "MainActivity] "+pLog);
+		Log.e(DebugTag, "MainActivity] "+pLog);
 	}
 	
 			
@@ -37,7 +38,7 @@ public class MainActivity extends Activity {
 		// init base width and height of scalable layout.
 		mSL = new ScalableLayout(this, 400, 400);
 		mSL.setBackgroundColor(Color.LTGRAY);
-		ScalableLayout.setLoggable();
+		ScalableLayout.setLoggable(DebugTag);
 		
 //		RelativeLayout rl = (RelativeLayout)findViewById(R.id.main_relativelayout);
 //		RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
