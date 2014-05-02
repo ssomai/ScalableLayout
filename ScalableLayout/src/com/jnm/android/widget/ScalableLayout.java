@@ -368,7 +368,7 @@ public class ScalableLayout extends FrameLayout {
 			lBGWidth = lBGHeight/mRatioOfWidthHeight;
 		}
 
-		log(String.format("onMeasure 1 lScale:%5.3f", (lBGWidth/mScale_Full_Width)));
+//		log(String.format("onMeasure 1 lScale:%5.3f", (lBGWidth/mScale_Full_Width)));
 		for (int i=0;i<getChildCount();i++) {
 			View lView = getChildAt(i);
 				
@@ -387,7 +387,7 @@ public class ScalableLayout extends FrameLayout {
 				}
 			}
 		}
-		log(String.format("onMeasure 2 lScale:%5.3f", (lBGWidth/mScale_Full_Width)));
+//		log(String.format("onMeasure 2 lScale:%5.3f", (lBGWidth/mScale_Full_Width)));
 		
 		float lScale = lBGWidth / mScale_Full_Width;
 		
