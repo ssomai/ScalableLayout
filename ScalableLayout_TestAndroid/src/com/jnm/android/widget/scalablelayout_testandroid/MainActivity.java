@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -59,7 +60,7 @@ public class MainActivity extends Activity {
 		mSL.addView(iv, 200f, 30f, 50f, 50f);
 		
 		
-		mTV_Text = new TextView(this) {
+		mTV_Text = new EditText(this) {
 //			@Override
 //			protected void onTextChanged(CharSequence pText, int pStart, int pLengthBefore, int pLengthAfter) {
 //			    super.onTextChanged(pText, pStart, pLengthBefore, pLengthAfter);
@@ -93,10 +94,9 @@ public class MainActivity extends Activity {
 //			 });
 		mSL.addView(mTV_Text, 100, 100, 200, 50);
 		mSL.setScale_TextSize(mTV_Text, 30);
-		mTV_Text.setSingleLine();
-//		mSL.setScale_TextViewWrapContent_Horizontal(mTV_Text);
+//		mTV_Text.setSingleLine();
 		
-		mSL.setScale_TextViewWrapContentMode(mTV_Text, TextViewWrapContentMode.Horizontal, true);
+		mSL.setScale_TextViewWrapContentMode(mTV_Text, TextViewWrapContentMode.Vertical, true);
 		
 //		mTV_Text.addTextChangedListener(new TextWatcher() {
 //			@Override
