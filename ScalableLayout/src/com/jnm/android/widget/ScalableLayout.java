@@ -206,27 +206,24 @@ public class ScalableLayout extends FrameLayout {
 //		textView.measure(widthMeasureSpec, heightMeasureSpec);
 //		return textView.getMeasuredHeight();
 //	}
-	private void updateTextViewWidth(TextView pTV_Text, ScalableLayout.LayoutParams pTV_SLLP, float pBGWidth, float pBGHeight) {
-		float lOldScaleWidth = pTV_SLLP.getScale_Width();
+	private float updateTextViewWidth(TextView pTV_Text, ScalableLayout.LayoutParams pTV_SLLP, float pBGWidth, float pBGHeight) {
+		float lOldViewScaleWidth = pTV_SLLP.getScale_Width();
 		float lOldViewWidth = pTV_Text.getWidth();
 		
-		if(lOldViewWidth <= 0 || lOldScaleWidth <= 0 || pBGWidth <= 0 || getScaleWidth() <= 0) {
-			return;
+		if(lOldViewWidth <= 0 || lOldViewScaleWidth <= 0 || pBGWidth <= 0 || getScaleWidth() <= 0) {
+			return pBGWidth;
 		}
 		
 		int widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 		int heightMeasureSpec = MeasureSpec.makeMeasureSpec(pTV_Text.getHeight(), MeasureSpec.AT_MOST);
 		pTV_Text.measure(widthMeasureSpec, heightMeasureSpec);
 		float lNewViewWidth = pTV_Text.getMeasuredWidth();
-		float lNewScaleWidth = (lNewViewWidth * getScaleWidth() / pBGWidth);
-		
-		if(lOldViewWidth <= 0 || lNewViewWidth <= 0) {
-			return;
-		}
+		float lNewViewScaleWidth = (lNewViewWidth * getScaleWidth() / pBGWidth);
 		
 //		if(lOldScaleWidth != lNewScaleWidth) {
-		if(Math.abs(lNewViewWidth - lOldViewWidth) * 100 > pBGWidth && Math.abs(lNewScaleWidth - lOldScaleWidth) > getScaleWidth() / 100f) {
-			moveChildView(pTV_Text, pTV_SLLP.getScale_Left(), pTV_SLLP.getScale_Top(), lNewScaleWidth, pTV_SLLP.getScale_Height());
+		float lOldScaleWidth = getScaleWidth();
+		if(Math.abs(lNewViewWidth - lOldViewWidth) * 100 > pBGWidth && Math.abs(lNewViewScaleWidth - lOldViewScaleWidth) > getScaleWidth() / 100f) {
+			moveChildView(pTV_Text, pTV_SLLP.getScale_Left(), pTV_SLLP.getScale_Top(), lNewViewScaleWidth, pTV_SLLP.getScale_Height());
 			
 			for(int i=0;i<getChildCount();i++) {
 				View v = getChildAt(i);
@@ -235,46 +232,49 @@ public class ScalableLayout extends FrameLayout {
 				}
 				ScalableLayout.LayoutParams lSLLP = (ScalableLayout.LayoutParams) v.getLayoutParams();
 				if(
-					lSLLP.getScale_Left() >= pTV_SLLP.getScale_Left()+lOldScaleWidth &&
+					lSLLP.getScale_Left() >= pTV_SLLP.getScale_Left()+lOldViewScaleWidth &&
 					(
 						( pTV_SLLP.getScale_Top() <= lSLLP.getScale_Top() && lSLLP.getScale_Top() <= pTV_SLLP.getScale_Top()+pTV_SLLP.getScale_Height() )
 						|| 
 						( pTV_SLLP.getScale_Top() <= lSLLP.getScale_Top()+lSLLP.getScale_Height() && lSLLP.getScale_Top()+lSLLP.getScale_Height() <= pTV_SLLP.getScale_Top()+pTV_SLLP.getScale_Height()) 
 						)) {
 					
-					moveChildView(v, lSLLP.getScale_Left()+lNewScaleWidth-lOldScaleWidth, lSLLP.getScale_Top());
+					moveChildView(v, lSLLP.getScale_Left()+lNewViewScaleWidth-lOldViewScaleWidth, lSLLP.getScale_Top());
 				}
 			}
 			if(pTV_SLLP.mScale_TextViewWrapContentTotally) {
-				setScaleSize(getScaleWidth()+lNewScaleWidth-lOldScaleWidth, getScaleHeight(), false);
+				setScaleSize(getScaleWidth()+lNewViewScaleWidth-lOldViewScaleWidth, getScaleHeight(), true);
 			}
 		}
+		return pBGWidth*getScaleWidth()/lOldScaleWidth;
 	}
-	private void updateTextViewHeight(TextView pTV_Text, ScalableLayout.LayoutParams pTV_SLLP, float pBGWidth, float pBGHeight) {
+	private float updateTextViewHeight(TextView pTV_Text, ScalableLayout.LayoutParams pTV_SLLP, float pBGWidth, float pBGHeight) {
 //		float lNewViewHeight = measureTextHeight(pTV_Text.getContext(), pTV_Text.getText().toString(), (int)pTV_Text.getTextSize(), pTV_Text.getWidth());
 		
-		float lOldScaleHeight = pTV_SLLP.getScale_Height();
+		float lOldViewScaleHeight = pTV_SLLP.getScale_Height();
 		float lOldViewHeight = pTV_Text.getHeight();
 		
-		if(lOldViewHeight <= 0 || lOldScaleHeight <= 0 || pBGHeight <= 0 || getScaleHeight() <= 0) {
+		if(lOldViewHeight <= 0 || lOldViewScaleHeight <= 0 || pBGHeight <= 0 || getScaleHeight() <= 0) {
 //		if(lOldScaleHeight <= 0 || getHeight() <= 0 || getScaleHeight() <= 0) {
-			return;
+			return pBGHeight;
 		}
 		
 		int widthMeasureSpec = MeasureSpec.makeMeasureSpec(pTV_Text.getWidth(), MeasureSpec.AT_MOST);
 		int heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 		pTV_Text.measure(widthMeasureSpec, heightMeasureSpec);
 		float lNewViewHeight = pTV_Text.getMeasuredHeight();
-		float lNewScaleHeight = (lNewViewHeight * getScaleHeight() / pBGHeight);
+		float lNewViewScaleHeight = (lNewViewHeight * getScaleHeight() / pBGHeight);
 		
 //		log("updateTextViewHeight "+lOldViewHeight+","+lNewViewHeight+" "+lOldScaleHeight+","+lNewScaleHeight);
 		
-//		log(String.format("updateTextViewHeight1 View: %5.3f -> %5.3f Scale: %5.3f -> %5.3f",lOldViewHeight,lNewViewHeight,lOldScaleHeight,lNewScaleHeight));
-//		log(String.format("updateTextViewHeight2 Scalable Scale: %5.3f,%5.3f ", getScaleWidth(), getScaleHeight()));
-//		log(String.format("updateTextViewHeight3 Scalable View: %5.3f,%5.3f", pBGWidth, pBGHeight));
+		log(String.format("updateTextViewHeight1 View: %5.3f -> %5.3f Scale: %5.3f -> %5.3f",lOldViewHeight,lNewViewHeight,lOldViewScaleHeight,lNewViewScaleHeight));
+		log(String.format("updateTextViewHeight2 Scalable Scale: %5.3f,%5.3f ", getScaleWidth(), getScaleHeight()));
+		log(String.format("updateTextViewHeight3 Scalable View: %5.3f,%5.3f", pBGWidth, pBGHeight));
 		
-		if(Math.abs(lNewViewHeight - lOldViewHeight) * 100 > pBGHeight && Math.abs(lNewScaleHeight - lOldScaleHeight) > getScaleHeight() / 100f) {
-			moveChildView(pTV_Text, pTV_SLLP.getScale_Left(), pTV_SLLP.getScale_Top(), pTV_SLLP.getScale_Width(), lNewScaleHeight);
+		float lOldScaleHeight = getScaleHeight();
+		
+		if(Math.abs(lNewViewHeight - lOldViewHeight) * 100 > pBGHeight && Math.abs(lNewViewScaleHeight - lOldViewScaleHeight) > getScaleHeight() / 100f) {
+			moveChildView(pTV_Text, pTV_SLLP.getScale_Left(), pTV_SLLP.getScale_Top(), pTV_SLLP.getScale_Width(), lNewViewScaleHeight);
 			
 			for(int i=0;i<getChildCount();i++) {
 				View v = getChildAt(i);
@@ -283,24 +283,30 @@ public class ScalableLayout extends FrameLayout {
 				}
 				ScalableLayout.LayoutParams lSLLP = (ScalableLayout.LayoutParams) v.getLayoutParams();
 				if(
-					lSLLP.getScale_Top() >= pTV_SLLP.getScale_Top()+lOldScaleHeight &&
+					lSLLP.getScale_Top() >= pTV_SLLP.getScale_Top()+lOldViewScaleHeight &&
 					(
 						( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Left() && lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left()+pTV_SLLP.getScale_Width() )
 						|| 
 						( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Left()+lSLLP.getScale_Width() && lSLLP.getScale_Left()+lSLLP.getScale_Width() <= pTV_SLLP.getScale_Left()+pTV_SLLP.getScale_Width()) 
 						)) {
 					
-					moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()+lNewScaleHeight-lOldScaleHeight);
+					log(String.format("moveChildView From:%5.3f,%5.3f To:%5.3f,%5.3f",
+						lSLLP.getScale_Left(),lSLLP.getScale_Top(),
+						lSLLP.getScale_Left(),lSLLP.getScale_Top()+lNewViewScaleHeight-lOldViewScaleHeight));
+					
+					moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()+lNewViewScaleHeight-lOldViewScaleHeight);
 				}
 			}
 			if(pTV_SLLP.mScale_TextViewWrapContentTotally) {
-				setScaleSize(getScaleWidth(), getScaleHeight()+lNewScaleHeight-lOldScaleHeight, false);
+				log(String.format("setScaleSize From:%5.3f To:%5.3f",
+					getScaleHeight(), getScaleHeight()+lNewViewScaleHeight-lOldViewScaleHeight));
+				setScaleSize(getScaleWidth(), getScaleHeight()+lNewViewScaleHeight-lOldViewScaleHeight, true);
 			}
 		}
+		return pBGHeight*getScaleHeight()/lOldScaleHeight;
 	}
 	@Override
 	protected void onMeasure(int pWidthMeasureSpec, int pHeightMeasureSpec) {
-		
 //		log("onMeasure ================ Start "+this.toString());
 		float lBGWidth = 0;
 		int lWidthMode = MeasureSpec.getMode(pWidthMeasureSpec);
@@ -368,7 +374,7 @@ public class ScalableLayout extends FrameLayout {
 			lBGWidth = lBGHeight/mRatioOfWidthHeight;
 		}
 
-//		log(String.format("onMeasure 1 lScale:%5.3f", (lBGWidth/mScale_Full_Width)));
+		log(String.format("onMeasure 1 lScale:%5.3f", (lBGWidth/mScale_Full_Width)));
 		for (int i=0;i<getChildCount();i++) {
 			View lView = getChildAt(i);
 				
@@ -379,15 +385,15 @@ public class ScalableLayout extends FrameLayout {
 				
 				switch (lParams.mScale_TextViewWrapContentMode) {
 				case Horizontal: {
-					updateTextViewWidth(v, lParams, lBGWidth, lBGHeight);
+					lBGWidth = updateTextViewWidth(v, lParams, lBGWidth, lBGHeight);
 				} break;
 				case Vertical: {
-					updateTextViewHeight(v, lParams, lBGWidth, lBGHeight);
+					lBGHeight = updateTextViewHeight(v, lParams, lBGWidth, lBGHeight);
 				} break;
 				}
 			}
 		}
-//		log(String.format("onMeasure 2 lScale:%5.3f", (lBGWidth/mScale_Full_Width)));
+		log(String.format("onMeasure 2 lScale:%5.3f", (lBGWidth/mScale_Full_Width)));
 		
 		float lScale = lBGWidth / mScale_Full_Width;
 		
