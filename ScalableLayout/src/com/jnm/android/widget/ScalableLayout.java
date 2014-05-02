@@ -225,7 +225,7 @@ public class ScalableLayout extends FrameLayout {
 		}
 		
 //		if(lOldScaleWidth != lNewScaleWidth) {
-		if(Math.abs(lNewViewWidth - lOldViewWidth) * 100 > getWidth() && Math.abs(lNewScaleWidth - lOldScaleWidth) > getScaleWidth() / 100f) {
+		if(Math.abs(lNewViewWidth - lOldViewWidth) * 100 > pBGWidth && Math.abs(lNewScaleWidth - lOldScaleWidth) > getScaleWidth() / 100f) {
 			moveChildView(pTV_Text, pTV_SLLP.getScale_Left(), pTV_SLLP.getScale_Top(), lNewScaleWidth, pTV_SLLP.getScale_Height());
 			
 			for(int i=0;i<getChildCount();i++) {
@@ -269,11 +269,11 @@ public class ScalableLayout extends FrameLayout {
 		
 //		log("updateTextViewHeight "+lOldViewHeight+","+lNewViewHeight+" "+lOldScaleHeight+","+lNewScaleHeight);
 		
-		log(String.format("updateTextViewHeight1 View: %5.3f -> %5.3f Scale: %5.3f -> %5.3f",lOldViewHeight,lNewViewHeight,lOldScaleHeight,lNewScaleHeight));
-		log(String.format("updateTextViewHeight2 Scalable Scale: %5.3f,%5.3f ", getScaleWidth(), getScaleHeight()));
-		log(String.format("updateTextViewHeight3 Scalable View: %5.3f,%5.3f", pBGWidth, pBGHeight));
+//		log(String.format("updateTextViewHeight1 View: %5.3f -> %5.3f Scale: %5.3f -> %5.3f",lOldViewHeight,lNewViewHeight,lOldScaleHeight,lNewScaleHeight));
+//		log(String.format("updateTextViewHeight2 Scalable Scale: %5.3f,%5.3f ", getScaleWidth(), getScaleHeight()));
+//		log(String.format("updateTextViewHeight3 Scalable View: %5.3f,%5.3f", pBGWidth, pBGHeight));
 		
-		if(Math.abs(lNewViewHeight - lOldViewHeight) * 100 > getHeight() && Math.abs(lNewScaleHeight - lOldScaleHeight) > getScaleHeight() / 100f) {
+		if(Math.abs(lNewViewHeight - lOldViewHeight) * 100 > pBGHeight && Math.abs(lNewScaleHeight - lOldScaleHeight) > getScaleHeight() / 100f) {
 			moveChildView(pTV_Text, pTV_SLLP.getScale_Left(), pTV_SLLP.getScale_Top(), pTV_SLLP.getScale_Width(), lNewScaleHeight);
 			
 			for(int i=0;i<getChildCount();i++) {
