@@ -234,8 +234,6 @@ public class ScalableLayout extends FrameLayout {
 //		if(lOldScaleWidth != lNewScaleWidth) {
 		float lOldScaleWidth = getScaleWidth();
 		if(Math.abs(lNewViewWidth - lOldViewWidth) * 100 > pBGWidth && Math.abs(lNewViewScaleWidth - lOldViewScaleWidth) > getScaleWidth() / 100f) {
-			moveChildView(pTV_Text, pTV_SLLP.getScale_Left(), pTV_SLLP.getScale_Top(), lNewViewScaleWidth, pTV_SLLP.getScale_Height());
-			
 			for(int i=0;i<getChildCount();i++) {
 				View v = getChildAt(i);
 				if(v == pTV_Text) {
@@ -264,7 +262,17 @@ public class ScalableLayout extends FrameLayout {
 //					
 //					moveChildView(v, lSLLP.getScale_Left()+lNewViewScaleWidth-lOldViewScaleWidth, lSLLP.getScale_Top());
 //				}
+				else if( 
+					lSLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
+					lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
+					lSLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
+					lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
+					
+					moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top(), lSLLP.getScale_Width()+lNewViewScaleWidth-lOldViewScaleWidth, lSLLP.getScale_Height());
+				}
 			}
+			moveChildView(pTV_Text, pTV_SLLP.getScale_Left(), pTV_SLLP.getScale_Top(), lNewViewScaleWidth, pTV_SLLP.getScale_Height());
+			
 			if(pTV_SLLP.mScale_TextViewWrapContentTotally) {
 				setScaleSize(getScaleWidth()+lNewViewScaleWidth-lOldViewScaleWidth, getScaleHeight(), true);
 			}
