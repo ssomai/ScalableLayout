@@ -244,7 +244,7 @@ public class ScalableLayout extends FrameLayout {
 						
 						moveChildView(v, lSLLP.getScale_Left()-lTextView_DiffScaleWidth, lSLLP.getScale_Top());
 					}
-					else if( 
+					else if( pTV_SLLP.mScale_TextViewWrapContentTotally &&
 						lSLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
 						lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
 						lSLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
@@ -265,7 +265,7 @@ public class ScalableLayout extends FrameLayout {
 						
 						moveChildView(v, lSLLP.getScale_Left()+lTextView_DiffScaleWidth, lSLLP.getScale_Top());
 					}
-					else if( 
+					else if( pTV_SLLP.mScale_TextViewWrapContentTotally &&
 						lSLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
 						lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
 						lSLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
@@ -348,7 +348,7 @@ public class ScalableLayout extends FrameLayout {
 						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()-lTextView_DiffScaleHeight);
 					}
 					// 자신을 포함하는 뷰들 크기 변경
-					else if( 
+					else if( pTV_SLLP.mScale_TextViewWrapContentTotally &&
 						lSLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
 						lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
 						lSLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
@@ -372,7 +372,7 @@ public class ScalableLayout extends FrameLayout {
 						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()+lTextView_DiffScaleHeight);
 					}
 					// 자신을 포함하는 뷰들 크기 변경
-					else if( 
+					else if( pTV_SLLP.mScale_TextViewWrapContentTotally &&
 						lSLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
 						lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
 						lSLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
