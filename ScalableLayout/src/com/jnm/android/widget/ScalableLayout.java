@@ -203,7 +203,7 @@ public class ScalableLayout extends FrameLayout {
 		float lTextView_OldScaleWidth = pTV_SLLP.getScale_Width();
 		float lTextView_OldWidth = pTV_Text.getWidth();
 		
-		log("updateTextViewWidth lOldViewWidth:"+lTextView_OldWidth+" lOldViewScaleWidth:"+lTextView_OldScaleWidth+" pBGWidth:"+pBGWidth+" getScaleWidth:"+getScaleWidth());
+		log("updateTextViewWidth lOldViewWidth:"+lTextView_OldWidth+" lOldViewScaleWidth:"+lTextView_OldScaleWidth+" pBGWidth:"+pBGWidth+" getScaleWidth:"+getScaleWidth() +"pTextView_WrapContent_Direction:"+pTextView_WrapContent_Direction);
 		if(lTextView_OldWidth <= 0 || lTextView_OldScaleWidth <= 0 || pBGWidth <= 0 || getScaleWidth() <= 0) {
 			getHandler().postDelayed(new Runnable() {
 				@Override
@@ -223,6 +223,7 @@ public class ScalableLayout extends FrameLayout {
 		
 		float lTextView_DiffScaleWidth = lTextView_NewScaleWidth - lTextView_OldScaleWidth;
 		
+				
 		float lRootView_OldScaleWidth = getScaleWidth();
 		if(Math.abs(lTextView_NewWidth - lTextView_OldWidth) * 100 > pBGWidth && Math.abs(lTextView_DiffScaleWidth) > getScaleWidth() / 100f) {
 			for(int i=0;i<getChildCount();i++) {
@@ -230,48 +231,52 @@ public class ScalableLayout extends FrameLayout {
 				if(v == pTV_Text) {
 					continue;
 				}
-				ScalableLayout.LayoutParams lSLLP = (ScalableLayout.LayoutParams) v.getLayoutParams();
+				ScalableLayout.LayoutParams lV_SLLP = (ScalableLayout.LayoutParams) v.getLayoutParams();
 				switch (pTextView_WrapContent_Direction) {
 				case Left: {
 					// 왼쪽에 있는 뷰들 위치 이동
 					if(
-						lSLLP.getScale_Right() <= pTV_SLLP.getScale_Right() &&
+						lV_SLLP.getScale_Right() <= pTV_SLLP.getScale_Right() &&
 						(
-							( pTV_SLLP.getScale_Top() <= lSLLP.getScale_Top() && lSLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
+							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Top() && lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
 							|| 
-							( pTV_SLLP.getScale_Top() <= lSLLP.getScale_Bottom() && lSLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
+							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Bottom() && lV_SLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
+							||
+							( pTV_SLLP.getScale_Top() >= lV_SLLP.getScale_Top() &&  lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
 							)) {
 						
-						moveChildView(v, lSLLP.getScale_Left()-lTextView_DiffScaleWidth, lSLLP.getScale_Top());
+						moveChildView(v, lV_SLLP.getScale_Left()-lTextView_DiffScaleWidth, lV_SLLP.getScale_Top());
 					}
 					else if( pTV_SLLP.mScale_TextViewWrapContentTotally &&
-						lSLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
-						lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
-						lSLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
-						lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
+						lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
+						lV_SLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
+						lV_SLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
+						lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
 						
-						moveChildView(v, lSLLP.getScale_Left()-lTextView_DiffScaleWidth, lSLLP.getScale_Top(), lSLLP.getScale_Width()+lTextView_DiffScaleWidth, lSLLP.getScale_Height());
+						moveChildView(v, lV_SLLP.getScale_Left()-lTextView_DiffScaleWidth, lV_SLLP.getScale_Top(), lV_SLLP.getScale_Width()+lTextView_DiffScaleWidth, lV_SLLP.getScale_Height());
 					}
 				} break;
 				case Right: {
-					// 오른쪽에 있는 뷰들 위치 이동
+					// 오른쪽에 있는 뷰들 위치 이동					
 					if(
-						lSLLP.getScale_Left() >= pTV_SLLP.getScale_Left() &&
+						lV_SLLP.getScale_Left() >= pTV_SLLP.getScale_Left() &&
 						(
-							( pTV_SLLP.getScale_Top() <= lSLLP.getScale_Top() && lSLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
+							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Top() && lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
 							|| 
-							( pTV_SLLP.getScale_Top() <= lSLLP.getScale_Bottom() && lSLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
-							)) {
+							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Bottom() && lV_SLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
+							||
+							( pTV_SLLP.getScale_Top() >= lV_SLLP.getScale_Top() &&  lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
+							)) {							
 						
-						moveChildView(v, lSLLP.getScale_Left()+lTextView_DiffScaleWidth, lSLLP.getScale_Top());
+						moveChildView(v, lV_SLLP.getScale_Left()+lTextView_DiffScaleWidth, lV_SLLP.getScale_Top());
 					}
 					else if( pTV_SLLP.mScale_TextViewWrapContentTotally &&
-						lSLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
-						lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
-						lSLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
-						lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
+						lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
+						lV_SLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
+						lV_SLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
+						lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
 						
-						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top(), lSLLP.getScale_Width()+lTextView_DiffScaleWidth, lSLLP.getScale_Height());
+						moveChildView(v, lV_SLLP.getScale_Left(), lV_SLLP.getScale_Top(), lV_SLLP.getScale_Width()+lTextView_DiffScaleWidth, lV_SLLP.getScale_Height());
 					}
 				} break;
 				}
@@ -343,6 +348,8 @@ public class ScalableLayout extends FrameLayout {
 							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Left() && lSLLP.getScale_Left() <= pTV_SLLP.getScale_Right())
 							|| 
 							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Right() && lSLLP.getScale_Right() <= pTV_SLLP.getScale_Right()) 
+							||
+							( pTV_SLLP.getScale_Top() >= lSLLP.getScale_Top() &&  lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
 							)) {
 						
 						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()-lTextView_DiffScaleHeight);
@@ -367,6 +374,8 @@ public class ScalableLayout extends FrameLayout {
 							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Left() && lSLLP.getScale_Left() <= pTV_SLLP.getScale_Right())
 							|| 
 							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Right() && lSLLP.getScale_Right() <= pTV_SLLP.getScale_Right()) 
+							||
+							( pTV_SLLP.getScale_Top() >= lSLLP.getScale_Top() &&  lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
 							)) {
 						
 						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()+lTextView_DiffScaleHeight);
@@ -646,10 +655,10 @@ public class ScalableLayout extends FrameLayout {
 	
 	private void log(String pLog) {
 		if(sLogTag_World != null) {
-			Log.e(sLogTag_World, this+"] "+pLog);
+			Log.e(sLogTag_World, "] "+pLog);
 		}
 		if(mLogTag_This != null) {
-			Log.e(mLogTag_This, this+"] "+pLog);
+			Log.e(mLogTag_This, "] "+pLog);
 		}
 	}
 	
