@@ -1,25 +1,18 @@
 package com.jnm.android.widget.scalablelayout_testandroid;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.MeasureSpec;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jnm.android.widget.ScalableLayout;
-import com.jnm.android.widget.ScalableLayout.TextViewWrapContentMode;
+import com.jnm.android.widget.ScalableLayout.TextView_WrapContent_Direction;
 
 public class MainActivity extends Activity {
 	private static final String DebugTag = "ScalableLayout_TestAndroid";
@@ -97,7 +90,7 @@ public class MainActivity extends Activity {
 		mSL.setScale_TextSize(mTV_Text, 30);
 //		mTV_Text.setSingleLine();
 		
-		mSL.setScale_TextViewWrapContentMode(mTV_Text, TextViewWrapContentMode.Vertical, true);
+		mSL.setScale_TextViewWrapContentMode(mTV_Text, TextView_WrapContent_Direction.Bottom, true);
 		
 //		mTV_Text.addTextChangedListener(new TextWatcher() {
 //			@Override
