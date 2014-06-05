@@ -349,7 +349,7 @@ public class ScalableLayout extends FrameLayout {
 							|| 
 							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Right() && lSLLP.getScale_Right() <= pTV_SLLP.getScale_Right()) 
 							||
-							( pTV_SLLP.getScale_Top() >= lSLLP.getScale_Top() &&  lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
+							( lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() && pTV_SLLP.getScale_Right() <= lSLLP.getScale_Right())
 							)) {
 						
 						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()-lTextView_DiffScaleHeight);
@@ -375,7 +375,8 @@ public class ScalableLayout extends FrameLayout {
 							|| 
 							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Right() && lSLLP.getScale_Right() <= pTV_SLLP.getScale_Right()) 
 							||
-							( pTV_SLLP.getScale_Top() >= lSLLP.getScale_Top() &&  lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
+							( lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() && pTV_SLLP.getScale_Right() <= lSLLP.getScale_Right())
+//							( pTV_SLLP.getScale_Top() >= lSLLP.getScale_Top() &&  lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
 							)) {
 						
 						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()+lTextView_DiffScaleHeight);
