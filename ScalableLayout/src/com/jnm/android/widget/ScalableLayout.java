@@ -1,5 +1,7 @@
 package com.jnm.android.widget;
 
+import com.jnm.android.widget.ScalableLayout.LayoutParams;
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -108,21 +110,34 @@ public class ScalableLayout extends FrameLayout {
 	 * @param pRescaleSurrounded 
 	 */
 	public void setTextView_WrapContent(TextView pTextView, TextView_WrapContent_Direction pDirection, boolean pRescaleSurrounded) {
-		pTextView.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void onTextChanged(CharSequence pS, int pStart, int pBefore, int pCount) {
-				requestLayout();
-				forceLayout();
-			}
-			@Override
-			public void beforeTextChanged(CharSequence pS, int pStart, int pCount, int pAfter) { }
-			@Override
-			public void afterTextChanged(Editable pS) {
-				requestLayout();
-				forceLayout();
-			}
-		});
 		getChildLayoutParams(pTextView).setTextView_WrapContent(pDirection, pRescaleSurrounded);
+		refreshTextChangedListener(pTextView);
+	}
+	private TextWatcher mTextWatcher = new TextWatcher() {
+		@Override
+		public void onTextChanged(CharSequence pS, int pStart, int pBefore, int pCount) {
+			requestLayout();
+			forceLayout();
+		}
+		@Override
+		public void beforeTextChanged(CharSequence pS, int pStart, int pCount, int pAfter) { }
+		@Override
+		public void afterTextChanged(Editable pS) {
+			requestLayout();
+			forceLayout();
+		}
+	};
+//	private void refreshTextChangedListener(TextView pTextView, TextView_WrapContent_Direction pDirection) {
+	private void refreshTextChangedListener(TextView pTextView) {
+		LayoutParams lSLLP = getChildLayoutParams(pTextView);
+		
+		try {
+			pTextView.removeTextChangedListener(mTextWatcher);
+		} catch (Throwable e) {
+		}
+		if(lSLLP.mTextView_WrapContent_Direction != TextView_WrapContent_Direction.None) {
+			pTextView.addTextChangedListener(mTextWatcher);
+		}
 	}
 	
 	@Override
@@ -518,6 +533,7 @@ public class ScalableLayout extends FrameLayout {
 				TextView v = (TextView) lView;
 				
 				ScalableLayout.LayoutParams lParams = getChildLayoutParams(lView);
+				refreshTextChangedListener(v);
 				
 				log(String.format("onMeasure 1.1 lParams:"+lParams.mTextView_WrapContent_Direction));
 				switch (lParams.mTextView_WrapContent_Direction) {
@@ -680,9 +696,9 @@ public class ScalableLayout extends FrameLayout {
 		
 		private TextView_WrapContent_Direction 		mTextView_WrapContent_Direction 		= TextView_WrapContent_Direction.None;
 		private boolean 							mTextView_WrapContent_ResizeSurrounded 	= false;
-		public void setTextView_WrapContent(TextView_WrapContent_Direction scale_TextViewWrapContentMode, boolean pTotally) { 
-			mTextView_WrapContent_Direction = scale_TextViewWrapContentMode; 
-			mTextView_WrapContent_ResizeSurrounded = pTotally;
+		public void setTextView_WrapContent(TextView_WrapContent_Direction pTextView_WrapContent_Direction, boolean pTextView_WrapContent_ResizeSurrounded) { 
+			mTextView_WrapContent_Direction 		= pTextView_WrapContent_Direction; 
+			mTextView_WrapContent_ResizeSurrounded 	= pTextView_WrapContent_ResizeSurrounded;
 		}
 	}
 	

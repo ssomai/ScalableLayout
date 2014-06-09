@@ -29,7 +29,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		// init base width and height of scalable layout.
-		mSL = new ScalableLayout(this, 400, 400);
+//		mSL = new ScalableLayout(this, 400, 400);
+		mSL = (ScalableLayout) findViewById(R.id.main_sl);
 		mSL.setBackgroundColor(Color.LTGRAY);
 		ScalableLayout.setLoggable(DebugTag);
 		
@@ -38,15 +39,15 @@ public class MainActivity extends Activity {
 //		rllp.addRule(RelativeLayout.BELOW, R.id.main_textview);
 //		rl.addView(mSL, rllp);
 		
-		setContentView(mSL);
+//		setContentView(mSL);
 		
 		
 		// insert TextView
-		TextView tv = new TextView(this);
-		tv.setText("test");
-		tv.setBackgroundColor(Color.YELLOW);
-		mSL.addView(tv, 20f, 40f, 100f, 30f);
-		mSL.setScale_TextSize(tv, 20f);
+//		TextView tv = new TextView(this);
+//		tv.setText("test");
+//		tv.setBackgroundColor(Color.YELLOW);
+//		mSL.addView(tv, 20f, 40f, 100f, 30f);
+//		mSL.setScale_TextSize(tv, 20f);
 		
 		// insert ImageView
 		ImageView iv = new ImageView(this);
@@ -59,43 +60,44 @@ public class MainActivity extends Activity {
 //		mSL.addView(mTV_Text, 100, 100, 200, 50);
 		
 		
-		mTV_Text = new EditText(this) {
-//			@Override
-//			protected void onTextChanged(CharSequence pText, int pStart, int pLengthBefore, int pLengthAfter) {
-//			    super.onTextChanged(pText, pStart, pLengthBefore, pLengthAfter);
-//				log("getHeight "+getHeight2(getContext(), (String)pText, (int)getTextSize(), getWidth()));
-//				log("aa "+pText);
-//			}
-		};
-		mTV_Text.setBackgroundColor(Color.RED);
-		mTV_Text.setText("test");
-//		mTV_Text.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-//			 @SuppressLint("NewApi")
-//			 @SuppressWarnings("deprecation")
-//			 @Override
-//			  public void onGlobalLayout() {
-//				log("onGlobalLayout "+mTV_Text.getWidth());
-//			   //now we can retrieve the width and height
-////			   int width = view.getWidth();
-////			   int height = view.getHeight();
-//			   //...
-//			   //do whatever you want with them
-//			   //...
-//			   //this is an important step not to keep receiving callbacks:
-//			   //we should remove this listener
-//			   //I use the function to remove it based on the api level!
-//
-////			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN)
-////			    view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-////			   else
-////			    view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-//			  }
-//			 });
-		mSL.addView(mTV_Text, 100, 100, 200, 50);
-		mSL.setScale_TextSize(mTV_Text, 30);
-//		mTV_Text.setSingleLine();
-		
-		mSL.setTextView_WrapContent(mTV_Text, TextView_WrapContent_Direction.Bottom, true);
+		mTV_Text = (TextView) findViewById(R.id.sl_textview);
+//		mTV_Text = new EditText(this) {
+////			@Override
+////			protected void onTextChanged(CharSequence pText, int pStart, int pLengthBefore, int pLengthAfter) {
+////			    super.onTextChanged(pText, pStart, pLengthBefore, pLengthAfter);
+////				log("getHeight "+getHeight2(getContext(), (String)pText, (int)getTextSize(), getWidth()));
+////				log("aa "+pText);
+////			}
+//		};
+//		mTV_Text.setBackgroundColor(Color.RED);
+//		mTV_Text.setText("test");
+////		mTV_Text.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+////			 @SuppressLint("NewApi")
+////			 @SuppressWarnings("deprecation")
+////			 @Override
+////			  public void onGlobalLayout() {
+////				log("onGlobalLayout "+mTV_Text.getWidth());
+////			   //now we can retrieve the width and height
+//////			   int width = view.getWidth();
+//////			   int height = view.getHeight();
+////			   //...
+////			   //do whatever you want with them
+////			   //...
+////			   //this is an important step not to keep receiving callbacks:
+////			   //we should remove this listener
+////			   //I use the function to remove it based on the api level!
+////
+//////			if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN)
+//////			    view.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+//////			   else
+//////			    view.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+////			  }
+////			 });
+//		mSL.addView(mTV_Text, 100, 100, 200, 50);
+//		mSL.setScale_TextSize(mTV_Text, 30);
+////		mTV_Text.setSingleLine();
+//		
+//		mSL.setTextView_WrapContent(mTV_Text, TextView_WrapContent_Direction.Bottom, true);
 		
 //		mTV_Text.addTextChangedListener(new TextWatcher() {
 //			@Override
