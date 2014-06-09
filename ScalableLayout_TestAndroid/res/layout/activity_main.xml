@@ -32,7 +32,9 @@
             sl:scale_top="40"
             sl:scale_height="30"
             sl:scale_width="100"
-            sl:scale_textsize="20" />
+            sl:scale_textsize="20" 
+            sl:textview_wrapcontent_direction="right" 
+            sl:textview_wrapcontent_resizesurrounded="true"/>
 
         <ImageView
             android:layout_width="wrap_content"

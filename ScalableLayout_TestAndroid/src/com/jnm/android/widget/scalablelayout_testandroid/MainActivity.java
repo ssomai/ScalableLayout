@@ -52,6 +52,11 @@ public class MainActivity extends Activity {
 		ImageView iv = new ImageView(this);
 		iv.setImageResource(R.drawable.ic_launcher);
 		mSL.addView(iv, 200f, 30f, 50f, 50f);
+
+		ImageView iv_surrounded = new ImageView(this);
+		iv_surrounded.setBackgroundColor(Color.BLUE);
+		mSL.addView(iv_surrounded, 80f, 80f, 240f, 90f);
+//		mSL.addView(mTV_Text, 100, 100, 200, 50);
 		
 		
 		mTV_Text = new EditText(this) {
@@ -90,7 +95,7 @@ public class MainActivity extends Activity {
 		mSL.setScale_TextSize(mTV_Text, 30);
 //		mTV_Text.setSingleLine();
 		
-		mSL.setScale_TextViewWrapContentMode(mTV_Text, TextView_WrapContent_Direction.Bottom, true);
+		mSL.setTextView_WrapContent(mTV_Text, TextView_WrapContent_Direction.Bottom, true);
 		
 //		mTV_Text.addTextChangedListener(new TextWatcher() {
 //			@Override
@@ -172,7 +177,7 @@ public class MainActivity extends Activity {
 					mTV_Text.setText(mTV_Text.getText()+"ㅁ디");
 				}
 			});
-			mSL.addView(btn, 300, 100, 100, 60);
+			mSL.addView(btn, 305, 100, 100, 60);
 			mSL.setScale_TextSize(btn, 20);
 		}
 		{
@@ -184,7 +189,7 @@ public class MainActivity extends Activity {
 					mTV_Text.setText(mTV_Text.getText().subSequence(0, mTV_Text.getText().length()/2));
 				}
 			});
-			mSL.addView(btn, 301, 170, 100, 60);
+			mSL.addView(btn, 305, 170, 100, 60);
 			mSL.setScale_TextSize(btn, 20);
 		}
 	}

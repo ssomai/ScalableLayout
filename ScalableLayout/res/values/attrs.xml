@@ -40,6 +40,8 @@
 		<attr name="scale_left" 		format="float" />
 		<attr name="scale_width" 		format="float" />
 		<attr name="scale_height" 		format="float" />
+		<attr name="textview_wrapcontent_direction" 		format="string" />
+		<attr name="textview_wrapcontent_resizesurrounded" 	format="boolean" />
 	</declare-styleable>  
 </resources> 
 
