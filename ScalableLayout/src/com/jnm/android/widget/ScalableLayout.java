@@ -1,7 +1,5 @@
 package com.jnm.android.widget;
 
-import com.jnm.android.widget.ScalableLayout.LayoutParams;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -52,15 +50,15 @@ public class ScalableLayout extends FrameLayout {
 		mRatioOfWidthHeight = mScale_Full_Height / mScale_Full_Width;
 		if(pWithInvalidate) {
 			postInvalidate();
+//			post(new Runnable() {
+//				@Override
+//				public void run() {
+//					log("setScaleSize Invalidate ");
+//					requestLayout();
+//					forceLayout();
+//				}
+//			});
 		}
-		
-//		postDelayed(new Runnable() {
-//			@Override
-//			public void run() {
-//				requestLayout();
-//				forceLayout();
-//			}
-//		}, 10);
 	}
 	
 	public ScalableLayout(Context pContext) {
@@ -249,9 +247,10 @@ public class ScalableLayout extends FrameLayout {
 		
 		log("updateTextViewWidth lOldViewWidth:"+lTextView_OldWidth+" lOldViewScaleWidth:"+lTextView_OldScaleWidth+" pBGWidth:"+pBGWidth+" getScaleWidth:"+getScaleWidth() +"pTextView_WrapContent_Direction:"+pTextView_WrapContent_Direction);
 		if(lTextView_OldWidth <= 0 || lTextView_OldScaleWidth <= 0 || pBGWidth <= 0 || getScaleWidth() <= 0) {
-			getHandler().postDelayed(new Runnable() {
+			postDelayed(new Runnable() {
 				@Override
 				public void run() {
+					log("updateTextViewWidth 2 ");
 					requestLayout();
 					forceLayout();
 				}
@@ -342,14 +341,15 @@ public class ScalableLayout extends FrameLayout {
 		return pBGWidth*getScaleWidth()/lRootView_OldScaleWidth;
 	}
 	private float updateTextViewHeight(TextView pTV_Text, TextView_WrapContent_Direction pTextView_WrapContent_Direction, ScalableLayout.LayoutParams pTV_SLLP, float pBGWidth, float pBGHeight) {
-		float lTextView_OldScaleHeight = pTV_SLLP.getScale_Height();
 		float lTextView_OldHeight = pTV_Text.getHeight();
+		float lTextView_OldScaleHeight = pTV_SLLP.getScale_Height();
 		
 		log("updateTextViewHeight lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
 		if(lTextView_OldHeight <= 0 || lTextView_OldScaleHeight <= 0 || pBGHeight <= 0 || getScaleHeight() <= 0) {
-			getHandler().postDelayed(new Runnable() {
+			postDelayed(new Runnable() {
 				@Override
 				public void run() {
+//					log("updateTextViewHeight 2 ");
 					requestLayout();
 					forceLayout();
 				}
@@ -365,9 +365,9 @@ public class ScalableLayout extends FrameLayout {
 		
 //		log("updateTextViewHeight "+lOldViewHeight+","+lNewViewHeight+" "+lOldScaleHeight+","+lNewScaleHeight);
 		
-		log(String.format("updateTextViewHeight1 View: %5.3f -> %5.3f Scale: %5.3f -> %5.3f",lTextView_OldHeight,lTextView_NewHeight,lTextView_OldScaleHeight,lTextView_NewScaleHeight));
-		log(String.format("updateTextViewHeight2 Scalable Scale: %5.3f,%5.3f ", getScaleWidth(), getScaleHeight()));
-		log(String.format("updateTextViewHeight3 Scalable View: %5.3f,%5.3f", pBGWidth, pBGHeight));
+//		log(String.format("updateTextViewHeight1 View: %5.3f -> %5.3f Scale: %5.3f -> %5.3f",lTextView_OldHeight,lTextView_NewHeight,lTextView_OldScaleHeight,lTextView_NewScaleHeight));
+//		log(String.format("updateTextViewHeight2 Scalable Scale: %5.3f,%5.3f ", getScaleWidth(), getScaleHeight()));
+//		log(String.format("updateTextViewHeight3 Scalable View: %5.3f,%5.3f", pBGWidth, pBGHeight));
 
 		float lTextView_DiffScaleHeight = lTextView_NewScaleHeight - lTextView_OldScaleHeight;
 		float lRootView_OldScaleHeight = getScaleHeight();
@@ -380,8 +380,8 @@ public class ScalableLayout extends FrameLayout {
 				}
 				ScalableLayout.LayoutParams lSLLP = (ScalableLayout.LayoutParams) v.getLayoutParams();
 
-				log(String.format("lSLLP:"+lSLLP.toString()));
-				log(String.format("pTV_SLLP:"+pTV_SLLP.toString()));
+//				log(String.format("lSLLP:"+lSLLP.toString()));
+//				log(String.format("pTV_SLLP:"+pTV_SLLP.toString()));
 //					getScaleHeight(), getScaleHeight()+lNewViewScaleHeight-lOldViewScaleHeight));
 				switch (pTextView_WrapContent_Direction) {
 				case Top: {
@@ -449,8 +449,7 @@ public class ScalableLayout extends FrameLayout {
 			}
 			
 			if(pTV_SLLP.mTextView_WrapContent_ResizeSurrounded) {
-				log(String.format("setScaleSize From:%5.3f To:%5.3f",
-					getScaleHeight(), getScaleHeight()+lTextView_DiffScaleHeight));
+//				log(String.format("setScaleSize From:%5.3f To:%5.3f", getScaleHeight(), getScaleHeight()+lTextView_DiffScaleHeight));
 				setScaleSize(getScaleWidth(), getScaleHeight()+lTextView_DiffScaleHeight, true);
 			}
 		}
@@ -499,7 +498,6 @@ public class ScalableLayout extends FrameLayout {
 //			log("  onMeasure Height Exactly "+lBGHeight+", "+lHeightSize);
 			break;
 		case MeasureSpec.AT_MOST:
-			
 			switch (lWidthMode) {
 			case MeasureSpec.EXACTLY:
 				lRootHeight = lRootWidth * mRatioOfWidthHeight;
@@ -525,7 +523,12 @@ public class ScalableLayout extends FrameLayout {
 			lRootWidth = lRootHeight/mRatioOfWidthHeight;
 		}
 
-		log(String.format("onMeasure 1 lScale:%5.3f ChildCount:%d", (lRootWidth/mScale_Full_Width), getChildCount()));
+		log(String.format("onMeasure 1 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f)", (lRootWidth/mScale_Full_Width), getChildCount(), lRootWidth, lRootHeight));
+//		log(String.format("onMeasure 1 lScale:%5.3f ChildCount:%d", (lRootWidth/mScale_Full_Width), getChildCount()));
+		
+		float lForTextViewRootWidth = lRootWidth;
+		float lForTextViewRootHeight = lRootHeight;
+		
 		for (int i=0;i<getChildCount();i++) {
 			View lView = getChildAt(i);
 				
@@ -535,24 +538,48 @@ public class ScalableLayout extends FrameLayout {
 				ScalableLayout.LayoutParams lParams = getChildLayoutParams(lView);
 				refreshTextChangedListener(v);
 				
-				log(String.format("onMeasure 1.1 lParams:"+lParams.mTextView_WrapContent_Direction));
+//				log(String.format("onMeasure 1.1 lParams:"+lParams.mTextView_WrapContent_Direction));
 				switch (lParams.mTextView_WrapContent_Direction) {
 				case Left: {
-					lRootWidth = updateTextViewWidth(v, lParams.mTextView_WrapContent_Direction, lParams, lRootWidth, lRootHeight);
+					lForTextViewRootWidth  = updateTextViewWidth( v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
 				} break;
 				case Top: {
-					lRootHeight = updateTextViewHeight(v, lParams.mTextView_WrapContent_Direction, lParams, lRootWidth, lRootHeight);
+					lForTextViewRootHeight = updateTextViewHeight(v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
 				} break;
 				case Right: {
-					lRootWidth = updateTextViewWidth(v, lParams.mTextView_WrapContent_Direction, lParams, lRootWidth, lRootHeight);
+					lForTextViewRootWidth  = updateTextViewWidth( v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
 				} break;
 				case Bottom: {
-					lRootHeight = updateTextViewHeight(v, lParams.mTextView_WrapContent_Direction, lParams, lRootWidth, lRootHeight);
+					lForTextViewRootHeight = updateTextViewHeight(v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
 				} break;
 				}
 			}
 		}
-		log(String.format("onMeasure 2 lScale:%5.3f", (lRootWidth/mScale_Full_Width)));
+		
+		if(lForTextViewRootWidth != lRootWidth || lForTextViewRootHeight != lRootHeight) {
+			if(lWidthMode == MeasureSpec.EXACTLY && lHeightMode == MeasureSpec.EXACTLY) {
+				// 둘중에 커진 놈 기준으로
+				if(lForTextViewRootWidth / lRootWidth > lForTextViewRootHeight / lRootHeight) {
+					lRootHeight /= (lForTextViewRootWidth / lRootWidth);
+//					lRootWidth = lForTextViewRootWidth;
+				} else {
+					lRootWidth /= (lForTextViewRootHeight / lRootHeight);
+//					lRootHeight = lForTextViewRootHeight;
+				}
+			} else if(lWidthMode == MeasureSpec.EXACTLY && lHeightMode != MeasureSpec.EXACTLY) {
+				lRootHeight /= (lForTextViewRootWidth / lRootWidth);
+//				lRootWidth = lForTextViewRootWidth;
+			} else if(lWidthMode != MeasureSpec.EXACTLY && lHeightMode == MeasureSpec.EXACTLY) {
+				lRootWidth /= (lForTextViewRootHeight / lRootHeight);
+//				lRootHeight = lForTextViewRootHeight;
+			} else {
+//				lRootWidth = lForTextViewRootWidth;
+//				lRootHeight = lForTextViewRootHeight;
+			}
+		}
+		
+//		log(String.format("onMeasure 2 lScale:%5.3f", (lRootWidth/mScale_Full_Width)));
+		log(String.format("onMeasure 2 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f)", (lRootWidth/mScale_Full_Width), getChildCount(), lRootWidth, lRootHeight));
 		
 		float lScale = lRootWidth / mScale_Full_Width;
 		
@@ -703,8 +730,8 @@ public class ScalableLayout extends FrameLayout {
 	}
 	
 	private void log(String pLog) {
-		if(sLogTag_World != null) {
-			Log.e(sLogTag_World, "] "+pLog);
+		if(sLogTag_Global != null) {
+			Log.e(sLogTag_Global, "] "+pLog);
 		}
 		if(mLogTag_This != null) {
 			Log.e(mLogTag_This, "] "+pLog);
@@ -732,7 +759,7 @@ public class ScalableLayout extends FrameLayout {
 	
 	
 	
-	private static String sLogTag_World = null;
+	private static String sLogTag_Global = null;
 	/**
 	 * setLoggable("ScalableLayout");
 	 */
@@ -744,7 +771,7 @@ public class ScalableLayout extends FrameLayout {
 	 * @param pLogTag DDMS Log Tag를 지정
 	 */
 	public static void setLoggable(String pLogTag) {
-		sLogTag_World = pLogTag;
+		sLogTag_Global = pLogTag;
 	}
 	
 	
