@@ -250,7 +250,7 @@ public class ScalableLayout extends FrameLayout {
 			postDelayed(new Runnable() {
 				@Override
 				public void run() {
-					log("updateTextViewWidth 2 ");
+//					log("updateTextViewWidth 2 ");
 					requestLayout();
 					forceLayout();
 				}
@@ -344,7 +344,7 @@ public class ScalableLayout extends FrameLayout {
 		float lTextView_OldHeight = pTV_Text.getHeight();
 		float lTextView_OldScaleHeight = pTV_SLLP.getScale_Height();
 		
-		log("updateTextViewHeight 1 lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
+//		log("updateTextViewHeight 1 lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
 		if(lTextView_OldHeight <= 0 || lTextView_OldScaleHeight <= 0 || pBGHeight <= 0 || getScaleHeight() <= 0) {
 //		if(lTextView_OldScaleHeight <= 0 || pBGHeight <= 0 || getScaleHeight() <= 0) {
 			postDelayed(new Runnable() {
@@ -355,7 +355,7 @@ public class ScalableLayout extends FrameLayout {
 					forceLayout();
 				}
 			}, 10);
-			log("updateTextViewHeight 1 ret "+(pBGHeight));
+//			log("updateTextViewHeight 1 ret "+(pBGHeight));
 			return pBGHeight;
 		}
 		
@@ -364,10 +364,10 @@ public class ScalableLayout extends FrameLayout {
 		pTV_Text.measure(widthMeasureSpec, heightMeasureSpec);
 		float lTextView_NewHeight = pTV_Text.getMeasuredHeight();
 		float lTextView_NewScaleHeight = (lTextView_NewHeight * getScaleHeight() / pBGHeight);
-		log(String.format("updateTextViewHeight %f = %f * %f / %f", lTextView_NewScaleHeight, lTextView_NewHeight, getScaleHeight(), pBGHeight));
+//		log(String.format("updateTextViewHeight %f = %f * %f / %f", lTextView_NewScaleHeight, lTextView_NewHeight, getScaleHeight(), pBGHeight));
 		
 //		log("updateTextViewHeight "+lOldViewHeight+","+lNewViewHeight+" "+lOldScaleHeight+","+lNewScaleHeight);
-		log("updateTextViewHeight 2 lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
+//		log("updateTextViewHeight 2 lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
 		
 //		log(String.format("updateTextViewHeight1 View: %5.3f -> %5.3f Scale: %5.3f -> %5.3f",lTextView_OldHeight,lTextView_NewHeight,lTextView_OldScaleHeight,lTextView_NewScaleHeight));
 //		log(String.format("updateTextViewHeight2 Scalable Scale: %5.3f,%5.3f ", getScaleWidth(), getScaleHeight()));
@@ -377,7 +377,7 @@ public class ScalableLayout extends FrameLayout {
 		float lRootView_OldScaleHeight = getScaleHeight();
 		
 		if(Math.abs(lTextView_NewHeight - lTextView_OldHeight) * 100 > pBGHeight && Math.abs(lTextView_DiffScaleHeight) > getScaleHeight() / 100f) {
-			log("updateTextViewHeight 3 lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
+//			log("updateTextViewHeight 3 lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
 			for(int i=0;i<getChildCount();i++) {
 				View v = getChildAt(i);
 				if(v == pTV_Text) {
@@ -454,11 +454,11 @@ public class ScalableLayout extends FrameLayout {
 			}
 			
 			if(pTV_SLLP.mTextView_WrapContent_ResizeSurrounded) {
-				log(String.format("setScaleSize From:%5.3f To:%5.3f", getScaleHeight(), getScaleHeight()+lTextView_DiffScaleHeight));
+//				log(String.format("setScaleSize From:%5.3f To:%5.3f", getScaleHeight(), getScaleHeight()+lTextView_DiffScaleHeight));
 				setScaleSize(getScaleWidth(), getScaleHeight()+lTextView_DiffScaleHeight, true);
 			}
 		}
-		log("updateTextViewHeight 4 ret "+(pBGHeight*getScaleHeight()/lRootView_OldScaleHeight)+" = "+pBGHeight+"*"+getScaleHeight()+"/"+lRootView_OldScaleHeight);
+//		log("updateTextViewHeight 4 ret "+(pBGHeight*getScaleHeight()/lRootView_OldScaleHeight)+" = "+pBGHeight+"*"+getScaleHeight()+"/"+lRootView_OldScaleHeight);
 		return pBGHeight*getScaleHeight()/lRootView_OldScaleHeight;
 	}
 	@Override
