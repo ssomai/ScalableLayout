@@ -322,15 +322,63 @@ public class ScalableLayout extends FrameLayout {
 						moveChildView(v, lV_SLLP.getScale_Left(), lV_SLLP.getScale_Top(), lV_SLLP.getScale_Width()+lTextView_DiffScaleWidth, lV_SLLP.getScale_Height());
 					}
 				} break;
+				case Center_Horizontal: {
+					// 왼쪽에 있는 뷰들 위치 이동
+					if(
+						lV_SLLP.getScale_Right() <= pTV_SLLP.getScale_Right() &&
+						(
+							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Top() && lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
+							|| 
+							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Bottom() && lV_SLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
+							||
+							( pTV_SLLP.getScale_Top() >= lV_SLLP.getScale_Top() &&  lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
+							)) {
+						
+						moveChildView(v, lV_SLLP.getScale_Left()-lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Top());
+					}
+					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+						lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
+						lV_SLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
+						lV_SLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
+						lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
+						
+						moveChildView(v, lV_SLLP.getScale_Left()-lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Top(), lV_SLLP.getScale_Width()+lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Height());
+					}
+					
+					// 오른쪽에 있는 뷰들 위치 이동					
+					if(
+						lV_SLLP.getScale_Left() >= pTV_SLLP.getScale_Left() &&
+						(
+							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Top() && lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
+							|| 
+							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Bottom() && lV_SLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
+							||
+							( pTV_SLLP.getScale_Top() >= lV_SLLP.getScale_Top() &&  lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
+							)) {							
+						
+						moveChildView(v, lV_SLLP.getScale_Left()+lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Top());
+					}
+					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+						lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
+						lV_SLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
+						lV_SLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
+						lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
+						
+						moveChildView(v, lV_SLLP.getScale_Left(), lV_SLLP.getScale_Top(), lV_SLLP.getScale_Width()+lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Height());
+					}
+				} break;
 				}
 			}
 			
 			switch (pTextView_WrapContent_Direction) {
 			case Left: {
-				moveChildView(pTV_Text, pTV_SLLP.getScale_Left()-lTextView_NewScaleWidth+lTextView_OldScaleWidth, pTV_SLLP.getScale_Top(), lTextView_NewScaleWidth, pTV_SLLP.getScale_Height());
+				moveChildView(pTV_Text, pTV_SLLP.getScale_Left()-(lTextView_DiffScaleWidth), pTV_SLLP.getScale_Top(), lTextView_NewScaleWidth, pTV_SLLP.getScale_Height());
 			} break;
 			case Right: {
 				moveChildView(pTV_Text, pTV_SLLP.getScale_Left(), pTV_SLLP.getScale_Top(), lTextView_NewScaleWidth, pTV_SLLP.getScale_Height());
+			} break;
+			case Center_Horizontal: {
+				moveChildView(pTV_Text, pTV_SLLP.getScale_Left()-(lTextView_DiffScaleWidth)/2, pTV_SLLP.getScale_Top(), lTextView_NewScaleWidth, pTV_SLLP.getScale_Height());
 			} break;
 			}
 			
@@ -554,11 +602,14 @@ public class ScalableLayout extends FrameLayout {
 				case Left: {
 					lForTextViewRootWidth  = updateTextViewWidth( v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
 				} break;
-				case Top: {
-					lForTextViewRootHeight = updateTextViewHeight(v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
-				} break;
 				case Right: {
 					lForTextViewRootWidth  = updateTextViewWidth( v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
+				} break;
+				case Center_Horizontal: {
+					lForTextViewRootWidth  = updateTextViewWidth( v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
+				} break;
+				case Top: {
+					lForTextViewRootHeight = updateTextViewHeight(v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
 				} break;
 				case Bottom: {
 					lForTextViewRootHeight = updateTextViewHeight(v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
@@ -667,7 +718,7 @@ public class ScalableLayout extends FrameLayout {
 
 	
 	public static enum TextView_WrapContent_Direction {
-		None, Left, Top, Right, Bottom,
+		None, Left, Right, Center_Horizontal, Top, Bottom,
 	}
 	/**
 	 * ScalableLayout.LayoutParams
