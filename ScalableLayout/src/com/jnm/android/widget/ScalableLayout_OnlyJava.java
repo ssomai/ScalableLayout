@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
+@Deprecated
 public class ScalableLayout_OnlyJava extends FrameLayout {
 	private static final float Default_Scale_Base_Width = 100f;
 	private static final float Default_Scale_Base_Height = 100f;
