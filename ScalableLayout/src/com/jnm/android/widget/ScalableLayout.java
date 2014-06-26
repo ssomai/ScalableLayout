@@ -259,10 +259,11 @@ public class ScalableLayout extends FrameLayout {
 		}
 		
 		int widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-		int heightMeasureSpec = MeasureSpec.makeMeasureSpec(pTV_Text.getHeight(), MeasureSpec.AT_MOST);
+//		int heightMeasureSpec = MeasureSpec.makeMeasureSpec(pTV_Text.getHeight(), MeasureSpec.AT_MOST);
+		int heightMeasureSpec = MeasureSpec.makeMeasureSpec(pTV_Text.getHeight(), MeasureSpec.EXACTLY);
 		pTV_Text.measure(widthMeasureSpec, heightMeasureSpec);
 		float lTextView_NewWidth = pTV_Text.getMeasuredWidth();
-		float lTextView_NewScaleWidth = (lTextView_NewWidth * getScaleWidth() / pBGWidth);
+		float lTextView_NewScaleWidth = (lTextView_NewWidth * getScaleWidth() / pBGWidth)*1.05f; // 정확하게 측정하지 못할때를 대비하기 위해서 공간을 좀 확보하기 위함이다. 그치만 안 좋은것같음
 		
 		float lTextView_DiffScaleWidth = lTextView_NewScaleWidth - lTextView_OldScaleWidth;
 		
