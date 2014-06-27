@@ -522,15 +522,15 @@ public class ScalableLayout extends FrameLayout {
 		
 		switch (lWidthMode) {
 		case MeasureSpec.EXACTLY:
-//			log("  onMeasure Width Exactly "+lBGWidth+" = min("+mScale_Full_Width+", "+lWidthSize+")");
+			log("  onMeasure Width Exactly "+lRootWidth+" = min("+mScale_Full_Width+", "+lWidthSize+")");
 			lRootWidth = lWidthSize;
 			break;
 		case MeasureSpec.AT_MOST:
-//			log("  onMeasure Width AtMost "+lBGWidth+" = min("+mScale_Full_Width+", "+lWidthSize+")");
+			log("  onMeasure Width AtMost "+lRootWidth+" = min("+mScale_Full_Width+", "+lWidthSize+")");
 			lRootWidth = lWidthSize;
 			break;
 		default:
-//			log("  onMeasure Width Unspecified "+lBGWidth+" = "+mScale_Full_Width);
+			log("  onMeasure Width Unspecified "+lRootWidth+" = "+mScale_Full_Width);
 			lRootWidth = mScale_Full_Width;
 			break;
 		}
@@ -539,6 +539,7 @@ public class ScalableLayout extends FrameLayout {
 		case MeasureSpec.EXACTLY:
 			switch (lWidthMode) {
 			case MeasureSpec.EXACTLY:
+				log("  onMeasure Height Exactly Width Exactly "+lRootHeight+" = min("+lRootWidth+"*"+mRatioOfWidthHeight+", "+lHeightSize+")");
 				lRootHeight = Math.min(lRootWidth * mRatioOfWidthHeight, lHeightSize);
 				break;
 			case MeasureSpec.AT_MOST:
@@ -550,7 +551,7 @@ public class ScalableLayout extends FrameLayout {
 				break;
 			}
 			
-//			log("  onMeasure Height Exactly "+lBGHeight+", "+lHeightSize);
+			log("  onMeasure Height Exactly "+lRootHeight+", "+lHeightSize);
 			break;
 		case MeasureSpec.AT_MOST:
 			switch (lWidthMode) {
@@ -565,11 +566,11 @@ public class ScalableLayout extends FrameLayout {
 				break;
 			}
 			
-//			log("  onMeasure Height AtMost "+lBGHeight+" = min("+(lBGWidth * mRatioOfWidthHeight)+", "+lHeightSize+")");
+			log("  onMeasure Height AtMost "+lRootHeight+" = min("+(lRootWidth * mRatioOfWidthHeight)+", "+lHeightSize+")");
 			break;
 		default:
 			lRootHeight = lRootWidth * mRatioOfWidthHeight;
-//			log("  onMeasure Height Unspecified "+lBGHeight+" = "+lBGWidth+"*"+mRatioOfWidthHeight);
+			log("  onMeasure Height Unspecified "+lRootHeight+" = "+lRootWidth+"*"+mRatioOfWidthHeight);
 			break;
 		}
 		
@@ -629,6 +630,14 @@ public class ScalableLayout extends FrameLayout {
 					lRootWidth /= (lForTextViewRootHeight / lRootHeight);
 //					lRootHeight = lForTextViewRootHeight;
 				}
+				postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						requestLayout();
+						forceLayout();
+					}
+				}, 10);
+				
 //			} else if(lWidthMode == MeasureSpec.EXACTLY && lHeightMode != MeasureSpec.EXACTLY) {
 //				lRootHeight /= (lForTextViewRootWidth / lRootWidth);
 //				lRootWidth = lForTextViewRootWidth;
