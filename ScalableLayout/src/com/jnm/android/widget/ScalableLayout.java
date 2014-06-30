@@ -666,12 +666,12 @@ public class ScalableLayout extends FrameLayout {
 			
 			boolean dif = false;
 			
-			if(lParams.width != (int)(lScale * lParams.mScale_Width)+1)
+			if(lParams.width != (int)Math.round(lScale * lParams.mScale_Width))
 				dif = true;
-			lParams.width = (int)(lScale * lParams.mScale_Width)+1;
-			if(lParams.height != (int)(lScale * lParams.mScale_Height)+1)
+			lParams.width = (int)Math.round(lScale * lParams.mScale_Width);
+			if(lParams.height != (int)Math.round(lScale * lParams.mScale_Height))
 				dif = true;
-			lParams.height = (int)(lScale * lParams.mScale_Height)+1;
+			lParams.height = (int)Math.round(lScale * lParams.mScale_Height);
 			
 			if(lParams.leftMargin != Math.round(lScale * lParams.mScale_Left))
 				dif = true;
