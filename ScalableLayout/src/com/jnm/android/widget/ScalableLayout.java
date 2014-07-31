@@ -1,7 +1,5 @@
 package com.jnm.android.widget;
 
-import com.jnm.android.widget.ScalableLayout.TextView_WrapContent_Direction;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -647,7 +645,7 @@ public class ScalableLayout extends FrameLayout {
 	
 	@Override
 	protected void onMeasure(int pWidthMeasureSpec, int pHeightMeasureSpec) {
-		log("onMeasure ================ Start ");
+//		log("onMeasure ================ Start ");
 		float lRootWidth = 0;
 		int lWidthMode = MeasureSpec.getMode(pWidthMeasureSpec);
 		int lWidthSize = MeasureSpec.getSize(pWidthMeasureSpec);
@@ -655,7 +653,7 @@ public class ScalableLayout extends FrameLayout {
 		int lHeightMode = MeasureSpec.getMode(pHeightMeasureSpec);
 		int lHeightSize = MeasureSpec.getSize(pHeightMeasureSpec);
 		
-		log("  onMeasure Size (%d,%d)", lWidthSize, lHeightSize);
+//		log("  onMeasure Size (%d,%d)", lWidthSize, lHeightSize);
 		boolean lIsScaleChanged = true;
 		while(lIsScaleChanged) {
 			float lRatioOfWidthHeight = getScaleHeight() / getScaleWidth();
@@ -663,15 +661,15 @@ public class ScalableLayout extends FrameLayout {
 			lIsScaleChanged = false;
 			switch (lWidthMode) {
 			case MeasureSpec.EXACTLY:
-				log("  onMeasure Width  Exactly "+lRootWidth+" = min("+mScale_Root_Width+", "+lWidthSize+")");
+//				log("  onMeasure Width  Exactly "+lRootWidth+" = min("+mScale_Root_Width+", "+lWidthSize+")");
 				lRootWidth = lWidthSize;
 				break;
 			case MeasureSpec.AT_MOST:
-				log("  onMeasure Width  AtMost "+lRootWidth+" = min("+mScale_Root_Width+", "+lWidthSize+")");
+//				log("  onMeasure Width  AtMost "+lRootWidth+" = min("+mScale_Root_Width+", "+lWidthSize+")");
 				lRootWidth = lWidthSize;
 				break;
 			default:
-				log("  onMeasure Width  Unspecified "+lRootWidth+" = "+mScale_Root_Width);
+//				log("  onMeasure Width  Unspecified "+lRootWidth+" = "+mScale_Root_Width);
 				lRootWidth = mScale_Root_Width;
 				break;
 			}
@@ -680,7 +678,7 @@ public class ScalableLayout extends FrameLayout {
 			case MeasureSpec.EXACTLY:
 				switch (lWidthMode) {
 				case MeasureSpec.EXACTLY:
-					log("    onMeasure Height Exactly Width Exactly "+lRootHeight+" = min("+lRootWidth+"*"+lRatioOfWidthHeight+", "+lHeightSize+")");
+//					log("    onMeasure Height Exactly Width Exactly "+lRootHeight+" = min("+lRootWidth+"*"+lRatioOfWidthHeight+", "+lHeightSize+")");
 					lRootHeight = Math.min(lRootWidth * lRatioOfWidthHeight, lHeightSize);
 					break;
 				case MeasureSpec.AT_MOST:
@@ -692,7 +690,7 @@ public class ScalableLayout extends FrameLayout {
 					break;
 				}
 				
-				log("  onMeasure Height Exactly "+lRootHeight+", "+lHeightSize);
+//				log("  onMeasure Height Exactly "+lRootHeight+", "+lHeightSize);
 				break;
 			case MeasureSpec.AT_MOST:
 				switch (lWidthMode) {
@@ -707,21 +705,21 @@ public class ScalableLayout extends FrameLayout {
 					break;
 				}
 				
-				log("  onMeasure Height AtMost "+lRootHeight+" = min("+(lRootWidth * lRatioOfWidthHeight)+", "+lHeightSize+")");
+//				log("  onMeasure Height AtMost "+lRootHeight+" = min("+(lRootWidth * lRatioOfWidthHeight)+", "+lHeightSize+")");
 				break;
 			default:
 				lRootHeight = lRootWidth * lRatioOfWidthHeight;
-				log("  onMeasure Height Unspecified "+lRootHeight+" = "+lRootWidth+"*"+lRatioOfWidthHeight);
+//				log("  onMeasure Height Unspecified "+lRootHeight+" = "+lRootWidth+"*"+lRatioOfWidthHeight);
 				break;
 			}
 			
 			if(lRootHeight / lRatioOfWidthHeight < lRootWidth) {
-				log("  onMeasure Height Exactly Replace Width "+lRootWidth+" to "+(lRootHeight / lRatioOfWidthHeight));
+//				log("  onMeasure Height Exactly Replace Width "+lRootWidth+" to "+(lRootHeight / lRatioOfWidthHeight));
 				lRootWidth = lRootHeight/lRatioOfWidthHeight;
 			}
 			
-			log("onMeasure 1 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f)", (lRootWidth/mScale_Root_Width), getChildCount(), lRootWidth, lRootHeight);
-			log("onMeasure 1 lScale:%5.3f ChildCount:%d", (lRootWidth/mScale_Root_Width), getChildCount());
+//			log("onMeasure 1 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f)", (lRootWidth/mScale_Root_Width), getChildCount(), lRootWidth, lRootHeight);
+//			log("onMeasure 1 lScale:%5.3f ChildCount:%d", (lRootWidth/mScale_Root_Width), getChildCount());
 			
 			float lScale = lRootWidth / mScale_Root_Width;
 			
@@ -741,7 +739,7 @@ public class ScalableLayout extends FrameLayout {
 					}
 					refreshTextChangedListener(v);
 					
-					log("onMeasure 1 lParams:%s TVIndex:%d lForTextViewRootHeight:%f", lParams.mTextView_WrapContent_Direction.name(), i, lForTextViewRootHeight);
+//					log("onMeasure 1 lParams:%s TVIndex:%d lForTextViewRootHeight:%f", lParams.mTextView_WrapContent_Direction.name(), i, lForTextViewRootHeight);
 					switch (lParams.mTextView_WrapContent_Direction) {
 					case Left: {
 						lForTextViewRootWidth  = updateTextViewWidth( v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
@@ -759,12 +757,12 @@ public class ScalableLayout extends FrameLayout {
 						lForTextViewRootHeight = updateTextViewHeight(v, lParams, lScale, lForTextViewRootWidth, lForTextViewRootHeight);
 					} break;
 					}
-					log("onMeasure 2 lParams:%s TVIndex:%d lForTextViewRootHeight:%f", lParams.mTextView_WrapContent_Direction.name(), i, lForTextViewRootHeight);
+//					log("onMeasure 2 lParams:%s TVIndex:%d lForTextViewRootHeight:%f", lParams.mTextView_WrapContent_Direction.name(), i, lForTextViewRootHeight);
 				}
 			}
 			
-			log("onMeasure 2 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f) ForTextView:(%5.3f, %5.3f)", 
-				(lRootWidth/mScale_Root_Width), getChildCount(), lRootWidth, lRootHeight, lForTextViewRootWidth, lForTextViewRootHeight);
+//			log("onMeasure 2 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f) ForTextView:(%5.3f, %5.3f)", 
+//				(lRootWidth/mScale_Root_Width), getChildCount(), lRootWidth, lRootHeight, lForTextViewRootWidth, lForTextViewRootHeight);
 			if(lForTextViewRootWidth != lRootWidth || lForTextViewRootHeight != lRootHeight) {
 //			if(lWidthMode == MeasureSpec.EXACTLY && lHeightMode == MeasureSpec.EXACTLY) {
 //				// 둘중에 커진 놈 기준으로
@@ -790,8 +788,8 @@ public class ScalableLayout extends FrameLayout {
 //			postDelayedRequestLayout();
 			}
 			
-			log("onMeasure 2 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f) ForTextView:(%5.3f, %5.3f)", 
-				(lRootWidth/mScale_Root_Width), getChildCount(), lRootWidth, lRootHeight, lForTextViewRootWidth, lForTextViewRootHeight);
+//			log("onMeasure 2 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f) ForTextView:(%5.3f, %5.3f)", 
+//				(lRootWidth/mScale_Root_Width), getChildCount(), lRootWidth, lRootHeight, lForTextViewRootWidth, lForTextViewRootHeight);
 			
 			if(lScale != lRootWidth / mScale_Root_Width) {
 				lIsScaleChanged = true;
@@ -799,7 +797,7 @@ public class ScalableLayout extends FrameLayout {
 			}
 			
 			float lTopMarginFromWeight = (lRootHeight - (lRootWidth * lRatioOfWidthHeight))/4;
-			log("onMeasure ("+lRootWidth+","+lRootHeight+") Ratio:"+lRatioOfWidthHeight+" Scale:"+lScale+" lTopMarginFromWeight:"+lTopMarginFromWeight);
+//			log("onMeasure ("+lRootWidth+","+lRootHeight+") Ratio:"+lRatioOfWidthHeight+" Scale:"+lScale+" lTopMarginFromWeight:"+lTopMarginFromWeight);
 			
 			for (int i=0;i<getChildCount();i++) {
 				View lView = getChildAt(i);
@@ -864,7 +862,7 @@ public class ScalableLayout extends FrameLayout {
 		}
 		
 //		log("onMeasure ================ End   "+this.toString());
-		log("onMeasure ================ End   ");
+//		log("onMeasure ================ End   ");
 		super.onMeasure(MeasureSpec.makeMeasureSpec(Math.round(lRootWidth), lWidthMode), MeasureSpec.makeMeasureSpec(Math.round(lRootHeight), lHeightMode));
 		setMeasuredDimension(Math.round(lRootWidth), Math.round(lRootHeight));
 	}
