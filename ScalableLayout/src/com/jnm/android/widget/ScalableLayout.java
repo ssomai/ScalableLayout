@@ -49,6 +49,7 @@ public class ScalableLayout extends FrameLayout {
 		mScale_Full_Height = pHeight;
 		mRatioOfWidthHeight = mScale_Full_Height / mScale_Full_Width;
 		if(pWithInvalidate) {
+			
 //			postInvalidate();
 			postDelayedRequestLayout();
 //			post(new Runnable() {
