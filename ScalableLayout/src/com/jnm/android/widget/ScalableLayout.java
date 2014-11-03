@@ -49,17 +49,7 @@ public class ScalableLayout extends FrameLayout {
 		mScale_Full_Height = pHeight;
 		mRatioOfWidthHeight = mScale_Full_Height / mScale_Full_Width;
 		if(pWithInvalidate) {
-			
-//			postInvalidate();
 			postDelayedRequestLayout();
-//			post(new Runnable() {
-//				@Override
-//				public void run() {
-//					log("setScaleSize Invalidate ");
-//					requestLayout();
-//					forceLayout();
-//				}
-//			});
 		}
 	}
 	
@@ -171,12 +161,6 @@ public class ScalableLayout extends FrameLayout {
 	}
 	@Override
 	public ScalableLayout.LayoutParams generateLayoutParams(AttributeSet pAttrs) {
-//		log("generateLayoutParams AttributeSet: "+pAttrs);
-//		for(int i=0;i<pAttrs.getAttributeCount();i++) { 
-//			log("attr["+i+"] "+pAttrs.getAttributeName(i)+":"+pAttrs.getAttributeValue(i));
-//			
-//		}
-		
 		TypedArray attrs = getContext().obtainStyledAttributes(pAttrs, R.styleable.ScalableLayout);
 		
 		TextView_WrapContent_Direction dir = TextView_WrapContent_Direction.None;
@@ -189,11 +173,6 @@ public class ScalableLayout extends FrameLayout {
 				}
 			}
 		}
-//		try {
-//			dir = TextView_WrapContent_Direction.valueOf(attrs.getString(R.styleable.ScalableLayout_textview_wrapcontent_direction));
-//		} catch (Throwable e) {
-//			dir = TextView_WrapContent_Direction.None;
-//		}
 		
 		return new ScalableLayout.LayoutParams(
 			attrs.getFloat(R.styleable.ScalableLayout_scale_left, Default_Scale_Left),
@@ -249,23 +228,14 @@ public class ScalableLayout extends FrameLayout {
 		float lTextView_OldScaleWidth = pTV_SLLP.getScale_Width();
 		float lTextView_OldWidth = pTV_Text.getWidth();
 		
-		log("updateTextViewWidth lOldViewWidth:"+lTextView_OldWidth+" lOldViewScaleWidth:"+lTextView_OldScaleWidth+" pBGWidth:"+pBGWidth+" getScaleWidth:"+getScaleWidth() +"pTextView_WrapContent_Direction:"+pTextView_WrapContent_Direction);
-		if(lTextView_OldWidth <= 0 || lTextView_OldScaleWidth <= 0 || pBGWidth <= 0 || getScaleWidth() <= 0) {
-//			postDelayed(new Runnable() {
-//				@Override
-//				public void run() {
-////					log("updateTextViewWidth 2 ");
-//					requestLayout();
-//					forceLayout();
-//				}
-//			}, 10);
+//		log("updateTextViewWidth 1 lOldViewWidth:"+lTextView_OldWidth+" lOldViewScaleWidth:"+lTextView_OldScaleWidth+" pBGWidth:"+pBGWidth+" getScaleWidth:"+getScaleWidth() +"pTextView_WrapContent_Direction:"+pTextView_WrapContent_Direction);
+		if(lTextView_OldScaleWidth <= 0 || pBGWidth <= 0 || getScaleWidth() <= 0) {
 			postDelayedRequestLayout();
 			
 			return pBGWidth;
 		}
 		
 		int widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-//		int heightMeasureSpec = MeasureSpec.makeMeasureSpec(pTV_Text.getHeight(), MeasureSpec.AT_MOST);
 		int heightMeasureSpec = MeasureSpec.makeMeasureSpec((int)(pTV_Text.getHeight()/1.1f), MeasureSpec.EXACTLY);
 		pTV_Text.measure(widthMeasureSpec, heightMeasureSpec);
 		float lTextView_NewWidth = pTV_Text.getMeasuredWidth();
@@ -273,9 +243,11 @@ public class ScalableLayout extends FrameLayout {
 		
 		float lTextView_DiffScaleWidth = lTextView_NewScaleWidth - lTextView_OldScaleWidth;
 		
+//		log("updateTextViewWidth 2 lOldViewWidth:"+lTextView_OldWidth+" lOldViewScaleWidth:"+lTextView_OldScaleWidth+" pBGWidth:"+pBGWidth+" getScaleWidth:"+getScaleWidth() +"pTextView_WrapContent_Direction:"+pTextView_WrapContent_Direction);
 				
 		float lRootView_OldScaleWidth = getScaleWidth();
 		if(Math.abs(lTextView_NewWidth - lTextView_OldWidth) * 100 > pBGWidth && Math.abs(lTextView_DiffScaleWidth) > getScaleWidth() / 100f) {
+//			log("updateTextViewWidth 3 lOldViewWidth:"+lTextView_OldWidth+" lOldViewScaleWidth:"+lTextView_OldScaleWidth+" pBGWidth:"+pBGWidth+" getScaleWidth:"+getScaleWidth() +"pTextView_WrapContent_Direction:"+pTextView_WrapContent_Direction);
 			for(int i=0;i<getChildCount();i++) {
 				View v = getChildAt(i);
 				if(v == pTV_Text) {
@@ -294,7 +266,6 @@ public class ScalableLayout extends FrameLayout {
 							||
 							( pTV_SLLP.getScale_Top() >= lV_SLLP.getScale_Top() &&  lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
 							)) {
-						
 						moveChildView(v, lV_SLLP.getScale_Left()-lTextView_DiffScaleWidth, lV_SLLP.getScale_Top());
 					}
 					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
@@ -393,6 +364,7 @@ public class ScalableLayout extends FrameLayout {
 				setScaleSize(getScaleWidth()+lTextView_NewScaleWidth-lTextView_OldScaleWidth, getScaleHeight(), true);
 			}
 		}
+//		log("updateTextViewWidth 4 ret "+(pBGHeight*getScaleHeight()/lRootView_OldScaleWidth)+" = "+pBGHeight+"*"+getScaleHeight()+"/"+lRootView_OldScaleWidth);
 		return pBGWidth*getScaleWidth()/lRootView_OldScaleWidth;
 	}
 	private float updateTextViewHeight(TextView pTV_Text, TextView_WrapContent_Direction pTextView_WrapContent_Direction, ScalableLayout.LayoutParams pTV_SLLP, float pBGWidth, float pBGHeight) {
@@ -400,18 +372,9 @@ public class ScalableLayout extends FrameLayout {
 		float lTextView_OldScaleHeight = pTV_SLLP.getScale_Height();
 		
 //		log("updateTextViewHeight 1 lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
-		if(lTextView_OldHeight <= 0 || lTextView_OldScaleHeight <= 0 || pBGHeight <= 0 || getScaleHeight() <= 0) {
-//		if(lTextView_OldScaleHeight <= 0 || pBGHeight <= 0 || getScaleHeight() <= 0) {
+//		if(lTextView_OldHeight <= 0 || lTextView_OldScaleHeight <= 0 || pBGHeight <= 0 || getScaleHeight() <= 0) {
+		if(lTextView_OldScaleHeight <= 0 || pBGHeight <= 0 || getScaleHeight() <= 0) {
 			postDelayedRequestLayout();
-//			postDelayed(new Runnable() {
-//				@Override
-//				public void run() {
-////					log("updateTextViewHeight 2 ");
-//					requestLayout();
-//					forceLayout();
-//				}
-//			}, 10);
-//			log("updateTextViewHeight 1 ret "+(pBGHeight));
 			return pBGHeight;
 		}
 		
@@ -525,6 +488,9 @@ public class ScalableLayout extends FrameLayout {
 		long now = System.currentTimeMillis();
 		if(mLastRequestPostTime < now - 50 || now < mLastRequestPostTime) {
 			mLastRequestPostTime = now;
+//			log("==== postDelayedRequestLayout Start");
+//			log(getStackTrace(Thread.currentThread().getStackTrace()));
+//			log("==== postDelayedRequestLayout End");
 			postDelayed(new Runnable() {
 				@Override
 				public void run() {
@@ -600,7 +566,7 @@ public class ScalableLayout extends FrameLayout {
 		}
 		
 		if(lRootHeight/mRatioOfWidthHeight < lRootWidth) {
-//			log("  onMeasure Height Exactly Replace Width "+lBGWidth+" to "+(lBGHeight/mRatioOfWidthHeight));
+//			log("  onMeasure Height Exactly Replace Width "+lRootWidth+" to "+(lRootHeight/mRatioOfWidthHeight));
 			lRootWidth = lRootHeight/mRatioOfWidthHeight;
 		}
 
@@ -647,9 +613,10 @@ public class ScalableLayout extends FrameLayout {
 			}
 		}
 
-//		log(String.format("onMeasure 2 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f) ForTextView:(%5.3f, %5.3f)", 
+//		log(String.format("onMeasure 2 lScale:%5.3f ChildCount:%d Root:(%10.7f, %10.7f) ForTextView:(%10.7f, %10.7f)", 
 //			(lRootWidth/mScale_Full_Width), getChildCount(), lRootWidth, lRootHeight, lForTextViewRootWidth, lForTextViewRootHeight));
-		if(lForTextViewRootWidth != lRootWidth || lForTextViewRootHeight != lRootHeight) {
+		if(Math.abs(lForTextViewRootWidth - lRootWidth) >= 1 || Math.abs(lForTextViewRootHeight - lRootHeight) >= 1) {
+//			log(String.format("onMeasure 2.1 %b %b", Math.abs(lForTextViewRootWidth - lRootWidth) >= 1,  Math.abs(lForTextViewRootHeight - lRootHeight) >= 1));
 			if(lWidthMode == MeasureSpec.EXACTLY && lHeightMode == MeasureSpec.EXACTLY) {
 				// 둘중에 커진 놈 기준으로
 				if(lForTextViewRootWidth / lRootWidth > lForTextViewRootHeight / lRootHeight) {
@@ -671,7 +638,6 @@ public class ScalableLayout extends FrameLayout {
 			}
 			
 			postDelayedRequestLayout();
-				
 		}
 		
 //		log(String.format("onMeasure 2 lScale:%5.3f", (lRootWidth/mScale_Full_Width)));
@@ -681,21 +647,13 @@ public class ScalableLayout extends FrameLayout {
 		lScale = lRootWidth / mScale_Full_Width;
 		
 		float lTopMarginFromWeight = (lRootHeight - (lRootWidth * mRatioOfWidthHeight))/4;
-//		log("  onMeasure ("+lBGWidth+","+lBGHeight+") Ratio:"+mRatioOfWidthHeight+" Scale:"+lScale+" lTopMarginFromWeight:"+lTopMarginFromWeight);
-		
+//		log("  onMeasure ("+lRootWidth+","+lRootHeight+") Ratio:"+mRatioOfWidthHeight+" Scale:"+lScale+" lTopMarginFromWeight:"+lTopMarginFromWeight);
 		for (int i=0;i<getChildCount();i++) {
 			View lView = getChildAt(i);
 				
 			ScalableLayout.LayoutParams lParams = getChildLayoutParams(lView);
 			
 			boolean dif = false;
-			
-			if(lParams.width != (int)Math.round(lScale * lParams.mScale_Width))
-				dif = true;
-			lParams.width = (int)Math.round(lScale * lParams.mScale_Width);
-			if(lParams.height != (int)Math.round(lScale * lParams.mScale_Height))
-				dif = true;
-			lParams.height = (int)Math.round(lScale * lParams.mScale_Height);
 			
 			if(lParams.leftMargin != Math.round(lScale * lParams.mScale_Left))
 				dif = true;
@@ -705,11 +663,34 @@ public class ScalableLayout extends FrameLayout {
 				dif = true;
 			lParams.topMargin = Math.round(lScale * lParams.mScale_Top + lTopMarginFromWeight);
 			
+			int nParamsWidth = Math.round(lScale * (lParams.mScale_Left + lParams.mScale_Width)) - lParams.leftMargin;
+			if(lParams.width != nParamsWidth)
+				dif = true;
+			lParams.width = nParamsWidth;
 			
-			lParams.rightMargin = 0;
-			lParams.bottomMargin = 0;
+			int nParamsHeight = Math.round(lScale * (lParams.mScale_Top + lParams.mScale_Height)) - lParams.topMargin;
+			if(lParams.height != nParamsHeight)
+				dif = true;
+			lParams.height = nParamsHeight;
 			
-//			lParams.setMargins(Math.round(lScale * lParams.mScale_Left), Math.round(lScale * lParams.mScale_Top + lTopMarginFromWeight), 0, 0);
+//			if(lView instanceof ScalableLayout) {
+//				ScalableLayout lSL = (ScalableLayout) lView;
+//				float lDif = ((float)lParams.width/(float)lParams.height) / lSL.mScale_Full_Width/lSL.mScale_Full_Height;
+//				if(0.98f < lDif && lDif < 1.02f) {
+//					
+//				}
+//			}
+			
+//			lParams.rightMargin = lWidthSize - lParams.width - lParams.leftMargin;
+//			lParams.bottomMargin = lHeightSize - lParams.height - lParams.topMargin;
+//			
+////			lParams.setMargins(Math.round(lScale * lParams.mScale_Left), Math.round(lScale * lParams.mScale_Top + lTopMarginFromWeight), 0, 0);
+//			log("  "+lView.toString()+" "+
+//				String.format("(%f, %f, %f, %f)", lParams.mScale_Left, lParams.mScale_Top, lParams.mScale_Width, lParams.mScale_Height)+
+//				"->"+
+//				String.format("(%f, %f, %f, %f)", 
+//					lScale * lParams.mScale_Left, lScale * lParams.mScale_Top + lTopMarginFromWeight, 
+//					lScale * lParams.mScale_Width, lScale * lParams.mScale_Height));
 //			log("  "+lView.toString()+" "+
 //				String.format("(%f, %f, %f, %f)", lParams.mScale_Left, lParams.mScale_Top, lParams.mScale_Width, lParams.mScale_Height)+
 //				"->"+
@@ -828,50 +809,6 @@ public class ScalableLayout extends FrameLayout {
 		}
 	}
 	
-	private void log(String pLog) {
-		if(sLogTag_Global != null) {
-			Log.e(sLogTag_Global, this+"] "+pLog);
-		}
-		if(mLogTag_This != null) {
-			Log.e(mLogTag_This, this+"] "+pLog);
-		}
-	}
-	
-	
-	private String mLogTag_This = null;
-	public String getLogTag_This() {
-		return mLogTag_This;
-	}
-	/**
-	 * setLoggable("ScalableLayout");
-	 */
-	public void setThisLoggable() {
-		setThisLoggable("ScalableLayout");
-	}
-	/**
-	 * Log를 출력할수 있게함
-	 * @param pLogTag DDMS Log Tag를 지정
-	 */
-	public void setThisLoggable(String pLogTag) {
-		mLogTag_This = pLogTag;
-	}
-	
-	
-	
-	private static String sLogTag_Global = null;
-	/**
-	 * setLoggable("ScalableLayout");
-	 */
-	public static void setLoggable() {
-		setLoggable("ScalableLayout");
-	}
-	/**
-	 * Log를 출력할수 있게함
-	 * @param pLogTag DDMS Log Tag를 지정
-	 */
-	public static void setLoggable(String pLogTag) {
-		sLogTag_Global = pLogTag;
-	}
 	
 	
 	
@@ -1042,5 +979,95 @@ public class ScalableLayout extends FrameLayout {
 		addView(lNewImageView, pScale_Left, pScale_Top, pScale_Width, pScale_Height);
 		return lNewImageView;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	////////////////////////// Log
+	void log(String pLog) {
+		if(sLogTag_Global != null) {
+			Log.e(sLogTag_Global, this+"] "+pLog);
+		}
+		if(mLogTag_This != null) {
+			Log.e(mLogTag_This, this+"] "+pLog);
+		}
+	}
+	
+	
+	private String mLogTag_This = null;
+	public String getLogTag_This() {
+		return mLogTag_This;
+	}
+	/**
+	 * setLoggable("ScalableLayout");
+	 */
+	public void setThisLoggable() {
+		setThisLoggable("ScalableLayout");
+	}
+	/**
+	 * Log를 출력할수 있게함
+	 * @param pLogTag DDMS Log Tag를 지정
+	 */
+	public void setThisLoggable(String pLogTag) {
+		mLogTag_This = pLogTag;
+	}
+	
+	private static String getStackTrace(StackTraceElement[] ste) {
+		StringBuilder sb = new StringBuilder();
+		for(int i=0;i<ste.length;i++){
+			sb.append("\t"+ste[i].toString()+"\n");
+		}
+		return sb.toString();
+	}
+	private static String getStackTrace(Throwable e) {
+		StringBuilder sb = new StringBuilder();
+		printStackTrace(sb, e);
+		while(e.getCause() != null){
+			e = e.getCause();
+			printStackTrace(sb, e);
+		}
+		return sb.toString();
+	}
+	private static void printStackTrace(StringBuilder sb, Throwable e) {
+		sb.append("Caused by: "+e.getClass().getName()+", "+e.getMessage()+"\n");
+		StackTraceElement[] ste = e.getStackTrace();
+		for(int i=0;i<ste.length;i++){
+			sb.append("\t"+ste[i].toString()+"\n");
+		}
+	}
+
+	
+	
+	private static String sLogTag_Global = null;
+	/**
+	 * setLoggable("ScalableLayout");
+	 */
+	public static void setLoggable() {
+		setLoggable("ScalableLayout");
+	}
+	/**
+	 * Log를 출력할수 있게함
+	 * @param pLogTag DDMS Log Tag를 지정
+	 */
+	public static void setLoggable(String pLogTag) {
+		sLogTag_Global = pLogTag;
+	}
+	
 }
 
