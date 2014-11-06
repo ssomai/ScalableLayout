@@ -1611,13 +1611,13 @@ public class ScalableLayout extends FrameLayout {
 //		}
 //		return sb.toString();
 //	}
-	private static void printStackTrace(StringBuilder sb, Throwable e) {
-		sb.append("Caused by: "+e.getClass().getName()+", "+e.getMessage()+"\n");
-		StackTraceElement[] ste = e.getStackTrace();
-		for(int i=0;i<ste.length;i++){
-			sb.append("\t"+ste[i].toString()+"\n");
-		}
-	}
+//	private static void printStackTrace(StringBuilder sb, Throwable e) {
+//		sb.append("Caused by: "+e.getClass().getName()+", "+e.getMessage()+"\n");
+//		StackTraceElement[] ste = e.getStackTrace();
+//		for(int i=0;i<ste.length;i++){
+//			sb.append("\t"+ste[i].toString()+"\n");
+//		}
+//	}
 
 	
 	
