@@ -1595,22 +1595,22 @@ public class ScalableLayout extends FrameLayout {
 		mLogTag_This = pLogTag;
 	}
 	
-	private static String getStackTrace(StackTraceElement[] ste) {
-		StringBuilder sb = new StringBuilder();
-		for(int i=0;i<ste.length;i++){
-			sb.append("\t"+ste[i].toString()+"\n");
-		}
-		return sb.toString();
-	}
-	private static String getStackTrace(Throwable e) {
-		StringBuilder sb = new StringBuilder();
-		printStackTrace(sb, e);
-		while(e.getCause() != null){
-			e = e.getCause();
-			printStackTrace(sb, e);
-		}
-		return sb.toString();
-	}
+//	private static String getStackTrace(StackTraceElement[] ste) {
+//		StringBuilder sb = new StringBuilder();
+//		for(int i=0;i<ste.length;i++){
+//			sb.append("\t"+ste[i].toString()+"\n");
+//		}
+//		return sb.toString();
+//	}
+//	private static String getStackTrace(Throwable e) {
+//		StringBuilder sb = new StringBuilder();
+//		printStackTrace(sb, e);
+//		while(e.getCause() != null){
+//			e = e.getCause();
+//			printStackTrace(sb, e);
+//		}
+//		return sb.toString();
+//	}
 	private static void printStackTrace(StringBuilder sb, Throwable e) {
 		sb.append("Caused by: "+e.getClass().getName()+", "+e.getMessage()+"\n");
 		StackTraceElement[] ste = e.getStackTrace();
