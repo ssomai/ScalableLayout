@@ -32,31 +32,65 @@ public class ScalableLayout extends FrameLayout {
 	
 	private static final float Default_Scale_TextSize = 100f;
 	
-	private float mScale_Full_Width 		= Default_Scale_Base_Width;
-	private float mScale_Full_Height 		= Default_Scale_Base_Height;
-	private float mRatioOfWidthHeight 	= mScale_Full_Height / mScale_Full_Width;
+	private float mScale_Root_Width 	= Default_Scale_Base_Width;
+	private float mScale_Root_Height 	= Default_Scale_Base_Height;
+	private float mRatioOfWidthHeight 	= mScale_Root_Height / mScale_Root_Width;
 	
-	public float getScaleWidth() { return mScale_Full_Width; }
-	public float getScaleHeight() { return mScale_Full_Height; }
+	public float getScaleWidth() { return mScale_Root_Width; }
+	public float getScaleHeight() { return mScale_Root_Height; }
 	
-	public void setScaleWidth(float pWidth) { setScaleSize(pWidth, mScale_Full_Height); }
-	public void setScaleHeight(float pHeight) { setScaleSize(mScale_Full_Width, pHeight); }
+	public void setScaleWidth(float pWidth) { setScaleSize(pWidth, mScale_Root_Height); }
+	public void setScaleHeight(float pHeight) { setScaleSize(mScale_Root_Width, pHeight); }
 	public void setScaleSize(float pWidth, float pHeight) {
 		setScaleSize(pWidth, pHeight, true);
 	}
 	private void setScaleSize(float pWidth, float pHeight, boolean pWithInvalidate) {
-		mScale_Full_Width = pWidth;
-		mScale_Full_Height = pHeight;
-		mRatioOfWidthHeight = mScale_Full_Height / mScale_Full_Width;
+		mScale_Root_Width = pWidth;
+		mScale_Root_Height = pHeight;
+		mRatioOfWidthHeight = mScale_Root_Height / mScale_Root_Width;
 		if(pWithInvalidate) {
 			postDelayedRequestLayout();
 		}
 	}
+	private long mLastRequestPostTime = 0;
+	private void postDelayedRequestLayout() {
+		long now = System.currentTimeMillis();
+		if(mLastRequestPostTime < now - 50 || now < mLastRequestPostTime) {
+			mLastRequestPostTime = now;
+//			log("==== postDelayedRequestLayout Start");
+//			log(getStackTrace(Thread.currentThread().getStackTrace()));
+//			log("==== postDelayedRequestLayout End");
+			postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					requestLayout();
+					forceLayout();
+				}
+			}, 10);
+		}
+	}
 	
+	/**
+	 * Simple constructor to use when creating a view from code. 
+	 * Scale_Width, Scale_Height uses a default value of 100. 
+	 * <p>
+	 * code에서 ScalableLayout을 생성할 때 사용하는 constructor.
+	 * Scale_Width, Scale_Height를 기본값인 100으로 세팅함.
+	 * 
+	 * @param pContext
+	 */
 	public ScalableLayout(Context pContext) {
 		this(pContext, Default_Scale_Base_Width, Default_Scale_Base_Height);
 	}
 	
+	/**
+	 * Constructor that is called when inflating a view from XML.
+	 * <p>
+	 * XML에서 ScalableLayout을 생성할 때 사용하는 constructor.
+	 * 
+	 * @param pContext
+	 * @param pAttrs
+	 */
 	public ScalableLayout(Context pContext, AttributeSet pAttrs) {
 		this(pContext, pAttrs, 
 			pContext.obtainStyledAttributes(pAttrs, R.styleable.ScalableLayout).getFloat(R.styleable.ScalableLayout_scale_base_width, Default_Scale_Base_Width), 
@@ -65,26 +99,37 @@ public class ScalableLayout extends FrameLayout {
 	}
 	
 	/**
+	 * Simple constructor to use when creating a view from code.
+	 * <p>
+	 * code에서 ScalableLayout을 생성할 때 사용하는 constructor.
+	 * 
 	 * @param pContext
-	 * @param pScale_Width Initial width of ScaleLayout.
-	 * @param pScale_Height Initial height of ScaleLayout.
+	 * @param pScale_Width Scale width of ScalableLayout.
+	 * @param pScale_Height Scale height of ScalableLayout.
 	 */
 	public ScalableLayout(Context pContext, float pScale_Width, float pScale_Height) {
 		this(pContext, null, pScale_Width, pScale_Height);
 	}
+	
 	private ScalableLayout(Context pContext, AttributeSet pAttrs, float pScale_Width, float pScale_Height) {
 		super(pContext, pAttrs);
-		setScaleWidth(pScale_Width);
-		setScaleHeight(pScale_Height);
+		setScaleSize(pScale_Width, pScale_Height, true);
 	}
 	
+	/**
+	 * @param pChild
+	 * @return Scalable.LayoutParams of pChild
+	 */
 	public ScalableLayout.LayoutParams getChildLayoutParams(View pChild) {
-		LayoutParams ret = (LayoutParams) pChild.getLayoutParams();
-		if(ret == null) {
-			ret = generateDefaultLayoutParams();
-			pChild.setLayoutParams(ret);
+		ViewGroup.LayoutParams lp = pChild.getLayoutParams();
+		if(lp == null) {
+			lp = generateDefaultLayoutParams();
+			pChild.setLayoutParams(lp);
 		}
-		return ret;
+		if(lp instanceof ScalableLayout.LayoutParams == false) {
+			throw new IllegalArgumentException("pChild has not ScalableLayout.LayoutParams "+pChild.getLayoutParams());
+		}
+		return (ScalableLayout.LayoutParams) pChild.getLayoutParams();
 	}
 	/**
 	 * sets TextSize of TextView and EdiText to scale automatically
@@ -107,19 +152,14 @@ public class ScalableLayout extends FrameLayout {
 		@Override
 		public void onTextChanged(CharSequence pS, int pStart, int pBefore, int pCount) {
 			postDelayedRequestLayout();
-//			requestLayout();
-//			forceLayout();
 		}
 		@Override
 		public void beforeTextChanged(CharSequence pS, int pStart, int pCount, int pAfter) { }
 		@Override
 		public void afterTextChanged(Editable pS) {
-//			requestLayout();
-//			forceLayout();
 			postDelayedRequestLayout();
 		}
 	};
-//	private void refreshTextChangedListener(TextView pTextView, TextView_WrapContent_Direction pDirection) {
 	private void refreshTextChangedListener(TextView pTextView) {
 		LayoutParams lSLLP = getChildLayoutParams(pTextView);
 		
@@ -224,516 +264,1039 @@ public class ScalableLayout extends FrameLayout {
 	}
 	
 	
-	private float updateTextViewWidth(TextView pTV_Text, TextView_WrapContent_Direction pTextView_WrapContent_Direction, ScalableLayout.LayoutParams pTV_SLLP, float pBGWidth, float pBGHeight) {
-		float lTextView_OldScaleWidth = pTV_SLLP.getScale_Width();
-		float lTextView_OldWidth = pTV_Text.getWidth();
+//	private float updateTextViewWidth(TextView pTV_Text, TextView_WrapContent_Direction pTextView_WrapContent_Direction, ScalableLayout.LayoutParams pTV_SLLP, float pBGWidth, float pBGHeight) {
+//		float lTextView_OldScaleWidth = pTV_SLLP.getScale_Width();
+//		float lTextView_OldWidth = pTV_Text.getWidth();
+//		
+////		log("updateTextViewWidth 1 lOldViewWidth:"+lTextView_OldWidth+" lOldViewScaleWidth:"+lTextView_OldScaleWidth+" pBGWidth:"+pBGWidth+" getScaleWidth:"+getScaleWidth() +"pTextView_WrapContent_Direction:"+pTextView_WrapContent_Direction);
+//		if(lTextView_OldScaleWidth <= 0 || pBGWidth <= 0 || getScaleWidth() <= 0) {
+//			postDelayedRequestLayout();
+//			
+//			return pBGWidth;
+//		}
+//		
+//		int widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+//		int heightMeasureSpec = MeasureSpec.makeMeasureSpec((int)(pTV_Text.getHeight()/1.1f), MeasureSpec.EXACTLY);
+//		pTV_Text.measure(widthMeasureSpec, heightMeasureSpec);
+//		float lTextView_NewWidth = pTV_Text.getMeasuredWidth();
+//		float lTextView_NewScaleWidth = (lTextView_NewWidth * getScaleWidth() / pBGWidth)*1.05f; // 정확하게 측정하지 못할때를 대비하기 위해서 공간을 좀 확보하기 위함이다. 그치만 안 좋은것같음
+//		
+//		float lTextView_DiffScaleWidth = lTextView_NewScaleWidth - lTextView_OldScaleWidth;
+//		
+////		log("updateTextViewWidth 2 lOldViewWidth:"+lTextView_OldWidth+" lOldViewScaleWidth:"+lTextView_OldScaleWidth+" pBGWidth:"+pBGWidth+" getScaleWidth:"+getScaleWidth() +"pTextView_WrapContent_Direction:"+pTextView_WrapContent_Direction);
+//				
+//		float lRootView_OldScaleWidth = getScaleWidth();
+//		if(Math.abs(lTextView_NewWidth - lTextView_OldWidth) * 100 > pBGWidth && Math.abs(lTextView_DiffScaleWidth) > getScaleWidth() / 100f) {
+////			log("updateTextViewWidth 3 lOldViewWidth:"+lTextView_OldWidth+" lOldViewScaleWidth:"+lTextView_OldScaleWidth+" pBGWidth:"+pBGWidth+" getScaleWidth:"+getScaleWidth() +"pTextView_WrapContent_Direction:"+pTextView_WrapContent_Direction);
+//			for(int i=0;i<getChildCount();i++) {
+//				View v = getChildAt(i);
+//				if(v == pTV_Text) {
+//					continue;
+//				}
+//				ScalableLayout.LayoutParams lV_SLLP = (ScalableLayout.LayoutParams) v.getLayoutParams();
+//				switch (pTextView_WrapContent_Direction) {
+//				case Left: {
+//					// move views on left
+//					// 왼쪽에 있는 뷰들 위치 이동
+//					if(
+//						lV_SLLP.getScale_Right() <= pTV_SLLP.getScale_Right() &&
+//						(
+//							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Top() && lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
+//							|| 
+//							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Bottom() && lV_SLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
+//							||
+//							( pTV_SLLP.getScale_Top() >= lV_SLLP.getScale_Top() &&  lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
+//							)) {
+//						moveChildView(v, lV_SLLP.getScale_Left()-lTextView_DiffScaleWidth, lV_SLLP.getScale_Top());
+//					}
+//					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+//						lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
+//						lV_SLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
+//						lV_SLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
+//						lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
+//						
+//						moveChildView(v, lV_SLLP.getScale_Left()-lTextView_DiffScaleWidth, lV_SLLP.getScale_Top(), lV_SLLP.getScale_Width()+lTextView_DiffScaleWidth, lV_SLLP.getScale_Height());
+//					}
+//				} break;
+//				case Right: {
+//					// move views on right
+//					// 오른쪽에 있는 뷰들 위치 이동					
+//					if(
+//						lV_SLLP.getScale_Left() >= pTV_SLLP.getScale_Left() &&
+//						(
+//							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Top() && lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
+//							|| 
+//							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Bottom() && lV_SLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
+//							||
+//							( pTV_SLLP.getScale_Top() >= lV_SLLP.getScale_Top() &&  lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
+//							)) {							
+//						
+//						moveChildView(v, lV_SLLP.getScale_Left()+lTextView_DiffScaleWidth, lV_SLLP.getScale_Top());
+//					}
+//					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+//						lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
+//						lV_SLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
+//						lV_SLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
+//						lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
+//						
+//						moveChildView(v, lV_SLLP.getScale_Left(), lV_SLLP.getScale_Top(), lV_SLLP.getScale_Width()+lTextView_DiffScaleWidth, lV_SLLP.getScale_Height());
+//					}
+//				} break;
+//				case Center_Horizontal: {
+//					// 왼쪽에 있는 뷰들 위치 이동
+//					if(
+//						lV_SLLP.getScale_Right() <= pTV_SLLP.getScale_Right() &&
+//						(
+//							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Top() && lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
+//							|| 
+//							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Bottom() && lV_SLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
+//							||
+//							( pTV_SLLP.getScale_Top() >= lV_SLLP.getScale_Top() &&  lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
+//							)) {
+//						
+//						moveChildView(v, lV_SLLP.getScale_Left()-lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Top());
+//					}
+//					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+//						lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
+//						lV_SLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
+//						lV_SLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
+//						lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
+//						
+//						moveChildView(v, lV_SLLP.getScale_Left()-lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Top(), lV_SLLP.getScale_Width()+lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Height());
+//					}
+//					
+//					// 오른쪽에 있는 뷰들 위치 이동					
+//					if(
+//						lV_SLLP.getScale_Left() >= pTV_SLLP.getScale_Left() &&
+//						(
+//							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Top() && lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
+//							|| 
+//							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Bottom() && lV_SLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
+//							||
+//							( pTV_SLLP.getScale_Top() >= lV_SLLP.getScale_Top() &&  lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
+//							)) {							
+//						
+//						moveChildView(v, lV_SLLP.getScale_Left()+lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Top());
+//					}
+//					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+//						lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
+//						lV_SLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
+//						lV_SLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
+//						lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
+//						
+//						moveChildView(v, lV_SLLP.getScale_Left(), lV_SLLP.getScale_Top(), lV_SLLP.getScale_Width()+lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Height());
+//					}
+//				} break;
+//				}
+//			}
+//			
+//			switch (pTextView_WrapContent_Direction) {
+//			case Left: {
+//				moveChildView(pTV_Text, pTV_SLLP.getScale_Left()-(lTextView_DiffScaleWidth), pTV_SLLP.getScale_Top(), lTextView_NewScaleWidth, pTV_SLLP.getScale_Height());
+//			} break;
+//			case Right: {
+//				moveChildView(pTV_Text, pTV_SLLP.getScale_Left(), pTV_SLLP.getScale_Top(), lTextView_NewScaleWidth, pTV_SLLP.getScale_Height());
+//			} break;
+//			case Center_Horizontal: {
+//				moveChildView(pTV_Text, pTV_SLLP.getScale_Left()-(lTextView_DiffScaleWidth)/2, pTV_SLLP.getScale_Top(), lTextView_NewScaleWidth, pTV_SLLP.getScale_Height());
+//			} break;
+//			}
+//			
+//			if(pTV_SLLP.mTextView_WrapContent_ResizeSurrounded) {
+//				setScaleSize(getScaleWidth()+lTextView_NewScaleWidth-lTextView_OldScaleWidth, getScaleHeight(), true);
+//			}
+//		}
+////		log("updateTextViewWidth 4 ret "+(pBGHeight*getScaleHeight()/lRootView_OldScaleWidth)+" = "+pBGHeight+"*"+getScaleHeight()+"/"+lRootView_OldScaleWidth);
+//		return pBGWidth*getScaleWidth()/lRootView_OldScaleWidth;
+//	}
+//	private float updateTextViewHeight(TextView pTV_Text, TextView_WrapContent_Direction pTextView_WrapContent_Direction, ScalableLayout.LayoutParams pTV_SLLP, float pBGWidth, float pBGHeight) {
+//		float lTextView_OldHeight = pTV_Text.getHeight();
+//		float lTextView_OldScaleHeight = pTV_SLLP.getScale_Height();
+//		
+//		log("updateTextViewHeight 1 lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
+//		
+////		return pBGHeight;
+//		
+//		
+////		if(lTextView_OldHeight <= 0 || lTextView_OldScaleHeight <= 0 || pBGHeight <= 0 || getScaleHeight() <= 0) {
+//		if(lTextView_OldScaleHeight <= 0 || pBGHeight <= 0 || getScaleHeight() <= 0) {
+//			postDelayedRequestLayout();
+//			return pBGHeight;
+//		}
+//		
+////		int widthMeasureSpec = MeasureSpec.makeMeasureSpec(pTV_Text.getWidth(), MeasureSpec.AT_MOST);
+//		int widthMeasureSpec = MeasureSpec.makeMeasureSpec((int)(pTV_Text.getWidth()/1.1f), MeasureSpec.EXACTLY);
+//		int heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+////		int heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.AT_MOST);
+//		pTV_Text.measure(widthMeasureSpec, heightMeasureSpec);
+//		float lTextView_NewHeight = pTV_Text.getMeasuredHeight();
+//		float lTextView_NewScaleHeight = (lTextView_NewHeight * getScaleHeight() / pBGHeight);
+////		log(String.format("updateTextViewHeight %f = %f * %f / %f TextSize:%f", lTextView_NewScaleHeight, lTextView_NewHeight, getScaleHeight(), pBGHeight, pTV_Text.getTextSize()));
+////		
+//////		log("updateTextViewHeight "+lOldViewHeight+","+lNewViewHeight+" "+lOldScaleHeight+","+lNewScaleHeight);
+//		log("updateTextViewHeight 2 lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
+////		
+////		log(String.format("updateTextViewHeight1 View: %5.3f -> %5.3f Scale: %5.3f -> %5.3f", lTextView_OldHeight, lTextView_NewHeight, lTextView_OldScaleHeight, lTextView_NewScaleHeight));
+////		log(String.format("updateTextViewHeight2 Scalable Scale: %5.3f,%5.3f ", getScaleWidth(), getScaleHeight()));
+////		log(String.format("updateTextViewHeight3 Scalable View: %5.3f,%5.3f", pBGWidth, pBGHeight));
+//
+//		float lTextView_DiffScaleHeight = lTextView_NewScaleHeight - lTextView_OldScaleHeight;
+//		float lRootView_OldScaleHeight = getScaleHeight();
+//		
+//		if(Math.abs(lTextView_NewHeight - lTextView_OldHeight) * 100 > pBGHeight && Math.abs(lTextView_DiffScaleHeight) > getScaleHeight() / 100f) {
+//			log("updateTextViewHeight 3 lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
+//			for(int i=0;i<getChildCount();i++) {
+//				View v = getChildAt(i);
+//				if(v == pTV_Text) {
+//					continue;
+//				}
+//				ScalableLayout.LayoutParams lSLLP = (ScalableLayout.LayoutParams) v.getLayoutParams();
+//
+////				log(String.format("lSLLP:"+lSLLP.toString()));
+////				log(String.format("pTV_SLLP:"+pTV_SLLP.toString()));
+////					getScaleHeight(), getScaleHeight()+lNewViewScaleHeight-lOldViewScaleHeight));
+//				switch (pTextView_WrapContent_Direction) {
+//				case Top: {
+//					// 자신의 위에 있는 뷰들 위치 이동
+//					if(
+//						lSLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom() &&
+//						(
+//							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Left() && lSLLP.getScale_Left() <= pTV_SLLP.getScale_Right())
+//							|| 
+//							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Right() && lSLLP.getScale_Right() <= pTV_SLLP.getScale_Right()) 
+//							||
+//							( lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() && pTV_SLLP.getScale_Right() <= lSLLP.getScale_Right())
+//							)) {
+//						
+//						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()-lTextView_DiffScaleHeight);
+//					}
+//					// 자신을 포함하는 뷰들 크기 변경
+//					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+//						lSLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
+//						lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
+//						lSLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
+//						lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
+//						
+//						moveChildView(v, 
+//							lSLLP.getScale_Left(), lSLLP.getScale_Top()-lTextView_DiffScaleHeight, 
+//							lSLLP.getScale_Width(), lSLLP.getScale_Height()+lTextView_DiffScaleHeight);
+//					}
+//				} break;
+//				case Bottom: {
+//					// 자신의 아래에 있는 뷰들 위치 이동
+//					if(
+//						lSLLP.getScale_Top() >= pTV_SLLP.getScale_Top() &&
+//						(
+//							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Left() && lSLLP.getScale_Left() <= pTV_SLLP.getScale_Right())
+//							|| 
+//							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Right() && lSLLP.getScale_Right() <= pTV_SLLP.getScale_Right()) 
+//							||
+//							( lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() && pTV_SLLP.getScale_Right() <= lSLLP.getScale_Right())
+////							( pTV_SLLP.getScale_Top() >= lSLLP.getScale_Top() &&  lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
+//							)) {
+//						
+//						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()+lTextView_DiffScaleHeight);
+//					}
+//					// 자신을 포함하는 뷰들 크기 변경
+//					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+//						lSLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
+//						lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
+//						lSLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
+//						lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
+//						
+//						moveChildView(v, 
+//							lSLLP.getScale_Left(), lSLLP.getScale_Top(), 
+//							lSLLP.getScale_Width(), lSLLP.getScale_Height()+lTextView_DiffScaleHeight);
+//					}
+//				} break;
+//				}
+//			}
+//			
+//			switch (pTextView_WrapContent_Direction) {
+//			case Top: {
+//			} break;
+//			case Bottom: {
+//				moveChildView(pTV_Text, pTV_SLLP.getScale_Left(), pTV_SLLP.getScale_Top(), pTV_SLLP.getScale_Width(), lTextView_NewScaleHeight);
+//			} break;
+//			}
+//			
+//			if(pTV_SLLP.mTextView_WrapContent_ResizeSurrounded) {
+//				log(String.format("setScaleSize From:%5.3f To:%5.3f", getScaleHeight(), getScaleHeight()+lTextView_DiffScaleHeight));
+//				setScaleSize(getScaleWidth(), getScaleHeight()+lTextView_DiffScaleHeight, true);
+//			}
+//		}
+//		log("updateTextViewHeight 4 ret "+(pBGHeight*getScaleHeight()/lRootView_OldScaleHeight)+" = "+pBGHeight+"*"+getScaleHeight()+"/"+lRootView_OldScaleHeight);
+//		return pBGHeight*getScaleHeight()/lRootView_OldScaleHeight;
+//	}
+	
+	@Override
+	protected void onMeasure(int pWidthMeasureSpec, int pHeightMeasureSpec) {
+		log("onMeasure ================ Start "+this.toString());
+
+//		float 	lRoot_Width 					= 0;
+		float 	lRoot_Width_Max 				= 0;
+		int 	lRoot_MeasureSpec_WidthMode 	= MeasureSpec.getMode(pWidthMeasureSpec);
 		
-//		log("updateTextViewWidth 1 lOldViewWidth:"+lTextView_OldWidth+" lOldViewScaleWidth:"+lTextView_OldScaleWidth+" pBGWidth:"+pBGWidth+" getScaleWidth:"+getScaleWidth() +"pTextView_WrapContent_Direction:"+pTextView_WrapContent_Direction);
-		if(lTextView_OldScaleWidth <= 0 || pBGWidth <= 0 || getScaleWidth() <= 0) {
-			postDelayedRequestLayout();
+//		float 	lRoot_Height 					= 0;
+		float 	lRoot_Height_Max 				= 0;
+		int 	lRoot_MeasureSpec_HeightMode 	= MeasureSpec.getMode(pHeightMeasureSpec);
+		
+		// get condition of ScalableLayout
+		// ScalableLayout이 지켜야 되는 조건들을 확인함
+		{
+			int lRoot_MeasureSpec_Width 	= MeasureSpec.getSize(pWidthMeasureSpec);
+			int lRoot_MeasureSpec_Height 	= MeasureSpec.getSize(pHeightMeasureSpec);
+			switch (lRoot_MeasureSpec_WidthMode) {
+			case MeasureSpec.EXACTLY:
+//				log("  onMeasure Width  Exactly "+lRoot_Width+" = min("+mScale_Root_Width+", "+lRoot_MeasureSpec_Width+")");
+				lRoot_Width_Max 	= lRoot_MeasureSpec_Width;
+				log("  onMeasure Width  Exactly = "+lRoot_Width_Max);
+//				lRoot_Width 		= lRoot_MeasureSpec_Width;
+				break;
+			case MeasureSpec.AT_MOST:
+				if(lRoot_MeasureSpec_HeightMode == MeasureSpec.EXACTLY) {
+//					lRoot_Width_Max 	= lRoot_MeasureSpec_Width;
+					lRoot_Width_Max 	= Float.MAX_VALUE;
+				} else {
+					lRoot_Width_Max 	= lRoot_MeasureSpec_Width;
+				}
+//				lRoot_Width 		= lRoot_MeasureSpec_Width;
+				log("  onMeasure Width  AtMost  = "+lRoot_Width_Max);
+				break;
+			default:
+//				log("  onMeasure Width  Unspecified "+lRoot_Width_Max+" = "+mScale_Root_Width);
+//				lRoot_Width 		= mScale_Root_Width;
+//				lRoot_Width_Max 	= Float.MAX_VALUE;
+//				lRoot_Width 		= lRoot_WidthSize;
+//				lRoot_Width_Max 	= lRoot_WidthSize;
+//				break;
+//				throw new IllegalArgumentException(String.format("  onMeasure Width  Unspecified %08X", lRoot_MeasureSpec_Width));
+				lRoot_Width_Max 	= Float.MAX_VALUE;
+//				throw new IllegalArgumentException(String.format("  onMeasure Width Unspecified %08X lRoot_MeasureSpec_WidthMode:%d lRoot_MeasureSpec_Width:%d", 
+//					lRoot_MeasureSpec_Width, lRoot_MeasureSpec_WidthMode, lRoot_MeasureSpec_Width));
+			}
 			
-			return pBGWidth;
+			switch (lRoot_MeasureSpec_HeightMode) {
+			case MeasureSpec.EXACTLY:
+				lRoot_Height_Max 	= lRoot_MeasureSpec_Height;
+				log("  onMeasure Height Exactly = "+lRoot_Height_Max);
+				break;
+			case MeasureSpec.AT_MOST:
+				if(lRoot_MeasureSpec_WidthMode == MeasureSpec.EXACTLY) {
+//					lRoot_Height_Max 	= lRoot_MeasureSpec_Height;
+					lRoot_Height_Max = Float.MAX_VALUE;
+				} else {
+					lRoot_Height_Max 	= lRoot_MeasureSpec_Height;
+				}
+				log("  onMeasure Height AtMost  = "+lRoot_Height_Max);
+				break;
+			default:
+//				lRoot_Height = lRoot_Width * mRatioOfWidthHeight;
+////			log("  onMeasure Height Unspecified "+lRootHeight+" = "+lRootWidth+"*"+mRatioOfWidthHeight);
+//				break;
+				lRoot_Height_Max = Float.MAX_VALUE;
+//				throw new IllegalArgumentException(String.format("  onMeasure Height Unspecified %08X lRoot_MeasureSpec_HeightMode:%d lRoot_MeasureSpec_Height:%d", 
+//					lRoot_MeasureSpec_Height, lRoot_MeasureSpec_HeightMode, lRoot_MeasureSpec_Height));
+			}
 		}
 		
-		int widthMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-		int heightMeasureSpec = MeasureSpec.makeMeasureSpec((int)(pTV_Text.getHeight()/1.1f), MeasureSpec.EXACTLY);
-		pTV_Text.measure(widthMeasureSpec, heightMeasureSpec);
-		float lTextView_NewWidth = pTV_Text.getMeasuredWidth();
-		float lTextView_NewScaleWidth = (lTextView_NewWidth * getScaleWidth() / pBGWidth)*1.05f; // 정확하게 측정하지 못할때를 대비하기 위해서 공간을 좀 확보하기 위함이다. 그치만 안 좋은것같음
-		
-		float lTextView_DiffScaleWidth = lTextView_NewScaleWidth - lTextView_OldScaleWidth;
-		
-//		log("updateTextViewWidth 2 lOldViewWidth:"+lTextView_OldWidth+" lOldViewScaleWidth:"+lTextView_OldScaleWidth+" pBGWidth:"+pBGWidth+" getScaleWidth:"+getScaleWidth() +"pTextView_WrapContent_Direction:"+pTextView_WrapContent_Direction);
+//		log(String.format("onMeasure 1 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f)", (lRootWidth/mScale_Full_Width), getChildCount(), lRootWidth, lRootHeight));
+//		log(String.format("onMeasure 1 lScale:%5.3f ChildCount:%d", (lRootWidth/mScale_Full_Width), getChildCount()));
+
+		float 	lRoot_Width 					= 0;
+		float 	lRoot_Height 					= 0;
+		for(int tryi = 0 ; tryi < 3 ; tryi++) {
+			float lScale_Ratio_Pre = Math.min(lRoot_Width_Max / mScale_Root_Width, lRoot_Height_Max / mScale_Root_Height);
+			log(String.format("onMeasure 1 lScale_Ratio:%5.3f Scale_Ratio:(%5.3f, %5.3f) Scale:(%5.3f, %5.3f)", 
+				lScale_Ratio_Pre, (lRoot_Width_Max/mScale_Root_Width), (lRoot_Height_Max / mScale_Root_Height), mScale_Root_Width, mScale_Root_Height));
+			
+			//////////////////////// Text Measure
+			// TODO english
+			// ScalableLayout내의 TextView중에 TextView_WrapContent_Direction 세팅되어 있을 경우 ScalableLayout의 Scale Size와 이웃한 View들의 Scalable LayoutParams를 재계산 
+			for (int i=0;i<getChildCount();i++) {
+				View lView = getChildAt(i);
 				
-		float lRootView_OldScaleWidth = getScaleWidth();
-		if(Math.abs(lTextView_NewWidth - lTextView_OldWidth) * 100 > pBGWidth && Math.abs(lTextView_DiffScaleWidth) > getScaleWidth() / 100f) {
-//			log("updateTextViewWidth 3 lOldViewWidth:"+lTextView_OldWidth+" lOldViewScaleWidth:"+lTextView_OldScaleWidth+" pBGWidth:"+pBGWidth+" getScaleWidth:"+getScaleWidth() +"pTextView_WrapContent_Direction:"+pTextView_WrapContent_Direction);
-			for(int i=0;i<getChildCount();i++) {
-				View v = getChildAt(i);
-				if(v == pTV_Text) {
-					continue;
+				if(lView instanceof TextView) {
+					updateTextViewSize((TextView)lView, lScale_Ratio_Pre);
 				}
-				ScalableLayout.LayoutParams lV_SLLP = (ScalableLayout.LayoutParams) v.getLayoutParams();
-				switch (pTextView_WrapContent_Direction) {
-				case Left: {
-					// 왼쪽에 있는 뷰들 위치 이동
-					if(
-						lV_SLLP.getScale_Right() <= pTV_SLLP.getScale_Right() &&
-						(
-							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Top() && lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
-							|| 
-							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Bottom() && lV_SLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
-							||
-							( pTV_SLLP.getScale_Top() >= lV_SLLP.getScale_Top() &&  lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
-							)) {
-						moveChildView(v, lV_SLLP.getScale_Left()-lTextView_DiffScaleWidth, lV_SLLP.getScale_Top());
-					}
-					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
-						lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
-						lV_SLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
-						lV_SLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
-						lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
-						
-						moveChildView(v, lV_SLLP.getScale_Left()-lTextView_DiffScaleWidth, lV_SLLP.getScale_Top(), lV_SLLP.getScale_Width()+lTextView_DiffScaleWidth, lV_SLLP.getScale_Height());
-					}
-				} break;
-				case Right: {
-					// 오른쪽에 있는 뷰들 위치 이동					
-					if(
-						lV_SLLP.getScale_Left() >= pTV_SLLP.getScale_Left() &&
-						(
-							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Top() && lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
-							|| 
-							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Bottom() && lV_SLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
-							||
-							( pTV_SLLP.getScale_Top() >= lV_SLLP.getScale_Top() &&  lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
-							)) {							
-						
-						moveChildView(v, lV_SLLP.getScale_Left()+lTextView_DiffScaleWidth, lV_SLLP.getScale_Top());
-					}
-					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
-						lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
-						lV_SLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
-						lV_SLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
-						lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
-						
-						moveChildView(v, lV_SLLP.getScale_Left(), lV_SLLP.getScale_Top(), lV_SLLP.getScale_Width()+lTextView_DiffScaleWidth, lV_SLLP.getScale_Height());
-					}
-				} break;
-				case Center_Horizontal: {
-					// 왼쪽에 있는 뷰들 위치 이동
-					if(
-						lV_SLLP.getScale_Right() <= pTV_SLLP.getScale_Right() &&
-						(
-							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Top() && lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
-							|| 
-							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Bottom() && lV_SLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
-							||
-							( pTV_SLLP.getScale_Top() >= lV_SLLP.getScale_Top() &&  lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
-							)) {
-						
-						moveChildView(v, lV_SLLP.getScale_Left()-lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Top());
-					}
-					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
-						lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
-						lV_SLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
-						lV_SLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
-						lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
-						
-						moveChildView(v, lV_SLLP.getScale_Left()-lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Top(), lV_SLLP.getScale_Width()+lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Height());
+			}
+			
+			
+			
+			// calculate final size of ScalableLayout
+			// ScalableLayout의 최종적인 크기를 결정지음
+			float lScale_Ratio_Post = Math.min(lRoot_Width_Max / mScale_Root_Width, lRoot_Height_Max / mScale_Root_Height);
+			
+//			if(mHaveBeenLayouted == true && isDifferentSufficiently(lScale_Ratio_Post, lScale_Ratio_Pre) == false) {
+//				break;
+//			}
+			
+			log(String.format("onMeasure 2 lScale_Ratio:%5.3f->%5.3f Scale_Ratio:(%5.3f, %5.3f) Scale:(%5.3f, %5.3f)", 
+				lScale_Ratio_Pre, lScale_Ratio_Post, (lRoot_Width_Max/mScale_Root_Width), (lRoot_Height_Max / mScale_Root_Height), mScale_Root_Width, mScale_Root_Height));
+			{
+				lRoot_Width 	= mScale_Root_Width * lScale_Ratio_Post;
+				lRoot_Height 	= mScale_Root_Height * lScale_Ratio_Post;
+				log(String.format("onMeasure 2 Root_Max:(%10.7f, %10.7f) Root:(%10.7f, %10.7f)", lRoot_Width_Max, lRoot_Height_Max, lRoot_Width, lRoot_Height));
+				
+//			if(Math.abs(lForTextViewRootWidth - lRoot_Width) >= 1 || Math.abs(lForTextViewRootHeight - lRoot_Height) >= 1) {
+//				log(String.format("onMeasure 2.1 %b %b", Math.abs(lForTextViewRootWidth - lRoot_Width) >= 1,  Math.abs(lForTextViewRootHeight - lRoot_Height) >= 1));
+//				if(lRoot_MeasureSpec_WidthMode == MeasureSpec.EXACTLY && lRoot_MeasureSpec_HeightMode == MeasureSpec.EXACTLY) {
+//					// 둘중에 커진 놈 기준으로
+//					if(lForTextViewRootWidth / lRoot_Width > lForTextViewRootHeight / lRoot_Height) {
+//						lRoot_Height /= (lForTextViewRootWidth / lRoot_Width);
+//						lRoot_Width = lForTextViewRootWidth;
+//						log(String.format("onMeasure 2.1.1 %b %b", Math.abs(lForTextViewRootWidth - lRoot_Width) >= 1,  Math.abs(lForTextViewRootHeight - lRoot_Height) >= 1));
+//					} else {
+//						lRoot_Width /= (lForTextViewRootHeight / lRoot_Height);
+//						lRoot_Height = lForTextViewRootHeight;
+//						log(String.format("onMeasure 2.1.2 %b %b", Math.abs(lForTextViewRootWidth - lRoot_Width) >= 1,  Math.abs(lForTextViewRootHeight - lRoot_Height) >= 1));
+//					}
+////			} else if(lWidthMode == MeasureSpec.EXACTLY && lHeightMode != MeasureSpec.EXACTLY) {
+////				lRootHeight /= (lForTextViewRootWidth / lRootWidth);
+////				lRootWidth = lForTextViewRootWidth;
+////			} else if(lWidthMode != MeasureSpec.EXACTLY && lHeightMode == MeasureSpec.EXACTLY) {
+////				lRootWidth /= (lForTextViewRootHeight / lRootHeight);
+////				lRootHeight = lForTextViewRootHeight;
+//				} else {
+//					lRoot_Width = lForTextViewRootWidth;
+//					lRoot_Height = lForTextViewRootHeight;
+//					log(String.format("onMeasure 2.1.3 %b %b", Math.abs(lForTextViewRootWidth - lRoot_Width) >= 1,  Math.abs(lForTextViewRootHeight - lRoot_Height) >= 1));
+//				}
+//				
+////			postDelayedRequestLayout();
+//			}
+			}
+			
+			{
+//			log(String.format("onMeasure 2 lScale:%5.3f", (lRoot_Width/mScale_Root_Width)));
+//			log(String.format("onMeasure 3 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f) ForTextView:(%5.3f, %5.3f)", 
+//				(lRoot_Width/mScale_Root_Width), getChildCount(), lRoot_Width, lRoot_Height, lForTextViewRootWidth, lForTextViewRootHeight));
+				
+//			float lScale_TextViewMeasure_Post = Math.min(lRoot_Width_Max / mScale_Root_Width, lRoot_Height_Max / mScale_Root_Height);
+//			float lScale_TextViewMeasure_Post = Math.min(lRoot_Width / mScale_Root_Width, lRoot_Height / mScale_Root_Height);
+//			float lScale_TextViewMeasure_Post = lRoot_Width / mScale_Root_Width;
+				
+				
+				
+				// 최종적으로 배치 위치를 세팅하기 위해 각 자식 뷰들의 layoutparams를 업데이트함
+				// update layoutparams of each child view to arrange finally 
+				float lTopMarginFromWeight = (lRoot_Height - (lRoot_Width * mRatioOfWidthHeight))/4;
+				log("  onMeasure ("+lRoot_Width+","+lRoot_Height+") Ratio:"+mRatioOfWidthHeight+" lScale_TextViewMeasure_Post:"+lScale_Ratio_Post+" lTopMarginFromWeight:"+lTopMarginFromWeight);
+				for (int i=0;i<getChildCount();i++) {
+					View lView = getChildAt(i);
+					
+					ScalableLayout.LayoutParams lParams = getChildLayoutParams(lView);
+					
+					boolean dif = false;
+					
+					if(lParams.leftMargin != Math.round(lScale_Ratio_Post * lParams.mScale_Left))
+						dif = true;
+					lParams.leftMargin = Math.round(lScale_Ratio_Post * lParams.mScale_Left);
+					
+					if(lParams.topMargin != Math.round(lScale_Ratio_Post * lParams.mScale_Top + lTopMarginFromWeight))
+						dif = true;
+					lParams.topMargin = Math.round(lScale_Ratio_Post * lParams.mScale_Top + lTopMarginFromWeight);
+					
+					int nParamsWidth = Math.round(lScale_Ratio_Post * (lParams.mScale_Left + lParams.mScale_Width)) - lParams.leftMargin;
+					if(lParams.width != nParamsWidth)
+						dif = true;
+					lParams.width = nParamsWidth;
+					
+					int nParamsHeight = Math.round(lScale_Ratio_Post * (lParams.mScale_Top + lParams.mScale_Height)) - lParams.topMargin;
+					if(lParams.height != nParamsHeight)
+						dif = true;
+					lParams.height = nParamsHeight;
+					
+					
+//				if(lParams.mScale_TextSize != -1 && lParams.mTextView_WrapContent_Direction == TextView_WrapContent_Direction.None) {
+					if(lParams.mScale_TextSize != -1) {
+						if(lView instanceof TextView) {
+							TextView v = (TextView) lView;
+//						if(v.getTextSize() != lParams.mScale_TextSize * lScale_Ratio_Post) {
+							if(isDifferentSufficiently(lParams.mScale_TextSize * lScale_Ratio_Post, v.getTextSize())) {
+								v.setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale_Ratio_Post);
+							}
+						}
 					}
 					
-					// 오른쪽에 있는 뷰들 위치 이동					
-					if(
-						lV_SLLP.getScale_Left() >= pTV_SLLP.getScale_Left() &&
-						(
-							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Top() && lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Bottom())
-							|| 
-							( pTV_SLLP.getScale_Top() <= lV_SLLP.getScale_Bottom() && lV_SLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom()) 
-							||
-							( pTV_SLLP.getScale_Top() >= lV_SLLP.getScale_Top() &&  lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
-							)) {							
-						
-						moveChildView(v, lV_SLLP.getScale_Left()+lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Top());
+					if(dif) {
+						lView.setLayoutParams(lParams);
 					}
-					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
-						lV_SLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
-						lV_SLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
-						lV_SLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
-						lV_SLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
-						
-						moveChildView(v, lV_SLLP.getScale_Left(), lV_SLLP.getScale_Top(), lV_SLLP.getScale_Width()+lTextView_DiffScaleWidth/2, lV_SLLP.getScale_Height());
-					}
-				} break;
 				}
 			}
-			
-			switch (pTextView_WrapContent_Direction) {
-			case Left: {
-				moveChildView(pTV_Text, pTV_SLLP.getScale_Left()-(lTextView_DiffScaleWidth), pTV_SLLP.getScale_Top(), lTextView_NewScaleWidth, pTV_SLLP.getScale_Height());
-			} break;
-			case Right: {
-				moveChildView(pTV_Text, pTV_SLLP.getScale_Left(), pTV_SLLP.getScale_Top(), lTextView_NewScaleWidth, pTV_SLLP.getScale_Height());
-			} break;
-			case Center_Horizontal: {
-				moveChildView(pTV_Text, pTV_SLLP.getScale_Left()-(lTextView_DiffScaleWidth)/2, pTV_SLLP.getScale_Top(), lTextView_NewScaleWidth, pTV_SLLP.getScale_Height());
-			} break;
-			}
-			
-			if(pTV_SLLP.mTextView_WrapContent_ResizeSurrounded) {
-				setScaleSize(getScaleWidth()+lTextView_NewScaleWidth-lTextView_OldScaleWidth, getScaleHeight(), true);
+			log(String.format("onMeasure end lScale_Ratio:%5.3f->%5.3f Root:(%5.3f,%5.3f) Scale_Root:(%5.3f,%5.3f) ",
+				lScale_Ratio_Pre, lScale_Ratio_Post, 
+				lRoot_Width, lRoot_Height,
+				mScale_Root_Width, mScale_Root_Height));
+			if(isDifferentSufficiently(lScale_Ratio_Post, lScale_Ratio_Pre, 1.01f) == false) {
+				break;
 			}
 		}
-//		log("updateTextViewWidth 4 ret "+(pBGHeight*getScaleHeight()/lRootView_OldScaleWidth)+" = "+pBGHeight+"*"+getScaleHeight()+"/"+lRootView_OldScaleWidth);
-		return pBGWidth*getScaleWidth()/lRootView_OldScaleWidth;
+		
+		log("onMeasure ================ End   "+this.toString());
+		super.onMeasure(MeasureSpec.makeMeasureSpec(Math.round(lRoot_Width), lRoot_MeasureSpec_WidthMode), MeasureSpec.makeMeasureSpec(Math.round(lRoot_Height), lRoot_MeasureSpec_HeightMode));
+		setMeasuredDimension(Math.round(lRoot_Width), Math.round(lRoot_Height));
 	}
-	private float updateTextViewHeight(TextView pTV_Text, TextView_WrapContent_Direction pTextView_WrapContent_Direction, ScalableLayout.LayoutParams pTV_SLLP, float pBGWidth, float pBGHeight) {
-		float lTextView_OldHeight = pTV_Text.getHeight();
-		float lTextView_OldScaleHeight = pTV_SLLP.getScale_Height();
+	
+	
+//	@Override
+//	protected void onMeasure(int pWidthMeasureSpec, int pHeightMeasureSpec) {
+//		log("onMeasure ================ Start "+this.toString());
+//
+//		float 	lRoot_Width 					= 0;
+//		float 	lRoot_Width_Max 				= 0;
+//		int 	lRoot_MeasureSpec_WidthMode 	= MeasureSpec.getMode(pWidthMeasureSpec);
+//		
+//		float 	lRoot_Height 					= 0;
+//		float 	lRoot_Height_Max 				= 0;
+//		int 	lRoot_MeasureSpec_HeightMode 	= MeasureSpec.getMode(pHeightMeasureSpec);
+//		
+//		// get condition of ScalableLayout
+//		// ScalableLayout이 지켜야 되는 조건들을 확인함
+//		{
+//			int lRoot_MeasureSpec_Width 	= MeasureSpec.getSize(pWidthMeasureSpec);
+//			int lRoot_MeasureSpec_Height 	= MeasureSpec.getSize(pHeightMeasureSpec);
+//			switch (lRoot_MeasureSpec_WidthMode) {
+//			case MeasureSpec.EXACTLY:
+//				log("  onMeasure Width  Exactly "+lRoot_Width+" = min("+mScale_Root_Width+", "+lRoot_MeasureSpec_Width+")");
+//				lRoot_Width 		= lRoot_MeasureSpec_Width;
+//				lRoot_Width_Max 	= lRoot_MeasureSpec_Width;
+//				break;
+//			case MeasureSpec.AT_MOST:
+//				log("  onMeasure Width  AtMost  "+lRoot_Width+" = min("+mScale_Root_Width+", "+lRoot_MeasureSpec_Width+")");
+//				lRoot_Width 		= lRoot_MeasureSpec_Width;
+//				lRoot_Width_Max 	= lRoot_MeasureSpec_Width;
+//				break;
+//			default:
+//				log("  onMeasure Width  Unspecified "+lRoot_Width+" = "+mScale_Root_Width);
+//				// TODO 이건 제대로 체크해야 함
+////				lRoot_Width 		= mScale_Root_Width;
+////				lRoot_Width_Max 	= Float.MAX_VALUE;
+////				lRoot_Width 		= lRoot_WidthSize;
+////				lRoot_Width_Max 	= lRoot_WidthSize;
+////				break;
+//				throw new IllegalArgumentException("  onMeasure Width  Unspecified "+lRoot_MeasureSpec_Width);
+//			}
+//			
+//			switch (lRoot_MeasureSpec_HeightMode) {
+//			case MeasureSpec.EXACTLY:
+//				switch (lRoot_MeasureSpec_WidthMode) {
+//				case MeasureSpec.EXACTLY:
+//					log("  onMeasure Height Exactly Width Exactly "+lRoot_Height+" = min("+lRoot_Width+"*"+mRatioOfWidthHeight+", "+lRoot_MeasureSpec_Height+")");
+//					lRoot_Height = Math.min(lRoot_Width * mRatioOfWidthHeight, lRoot_MeasureSpec_Height);
+//					lRoot_Height_Max = lRoot_MeasureSpec_Height;
+//					break;
+//				case MeasureSpec.AT_MOST:
+//					log("  onMeasure Height AtMost  Width Exactly "+lRoot_Height+" = min("+lRoot_Width+"*"+mRatioOfWidthHeight+", "+lRoot_MeasureSpec_Height+")");
+//					lRoot_Height = Math.min(lRoot_Width * mRatioOfWidthHeight, lRoot_MeasureSpec_Height);
+//					lRoot_Height_Max = lRoot_MeasureSpec_Height;
+//					break;
+//				default:
+//					log("  onMeasure Height Unspecified "+lRoot_Height+" = min("+lRoot_Width+"*"+mRatioOfWidthHeight+", "+lRoot_MeasureSpec_Height+")");
+//					lRoot_Height = lRoot_MeasureSpec_Height;
+//					lRoot_Width = lRoot_Height / mRatioOfWidthHeight;
+//					lRoot_Height_Max = Float.MAX_VALUE;
+//					break;
+//				}
+//				
+//				break;
+//			case MeasureSpec.AT_MOST:
+//				switch (lRoot_MeasureSpec_WidthMode) {
+//				case MeasureSpec.EXACTLY:
+//					lRoot_Height = lRoot_Width * mRatioOfWidthHeight;
+//					break;
+//				case MeasureSpec.AT_MOST:
+//					lRoot_Height = Math.min(lRoot_Width * mRatioOfWidthHeight, lRoot_MeasureSpec_Height);
+//					break;
+//				default:
+//					lRoot_Height = Math.min(lRoot_Width * mRatioOfWidthHeight, lRoot_MeasureSpec_Height);
+//					break;
+//				}
+//				
+////			log("  onMeasure Height AtMost "+lRootHeight+" = min("+(lRootWidth * mRatioOfWidthHeight)+", "+lHeightSize+")");
+//				break;
+//			default:
+//				lRoot_Height = lRoot_Width * mRatioOfWidthHeight;
+////			log("  onMeasure Height Unspecified "+lRootHeight+" = "+lRootWidth+"*"+mRatioOfWidthHeight);
+//				break;
+//			}
+//			
+//			if(lRoot_Height/mRatioOfWidthHeight < lRoot_Width) {
+////			log("  onMeasure Height Exactly Replace Width "+lRootWidth+" to "+(lRootHeight/mRatioOfWidthHeight));
+//				lRoot_Width = lRoot_Height/mRatioOfWidthHeight;
+//			}
+//		}
+//		
+////		log(String.format("onMeasure 1 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f)", (lRootWidth/mScale_Full_Width), getChildCount(), lRootWidth, lRootHeight));
+////		log(String.format("onMeasure 1 lScale:%5.3f ChildCount:%d", (lRootWidth/mScale_Full_Width), getChildCount()));
+//		
+////		float lScale = lRootWidth / mScale_Full_Width;
+//		float lScale_TextViewMeasure_Pre = lRoot_Width / mScale_Root_Width;
+//		
+//		float lForTextViewRootWidth = lRoot_Width;
+//		float lForTextViewRootHeight = lRoot_Height;
+//		
+//		//////////////////////// Text Measure
+//		for (int i=0;i<getChildCount();i++) {
+//			View lView = getChildAt(i);
+//			
+//			if(lView instanceof TextView) {
+//				lForTextViewRootHeight = updateTextViewSize((TextView)lView, lForTextViewRootWidth, lForTextViewRootHeight, lScale_TextViewMeasure_Pre);
+//				
+////				TextView v = (TextView) lView;
+////
+////				ScalableLayout.LayoutParams lParams = getChildLayoutParams(v);
+//////				float lNewTextSize = lParams.mScale_TextSize * lScale_TextViewMeasure_Pre;
+//////				if( lNewTextSize < v.getTextSize() / 1.1f || v.getTextSize() * 1.1f < lNewTextSize ) {
+//////					v.setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale_TextViewMeasure_Pre);
+//////				}
+//////				refreshTextChangedListener(v);
+////				
+//////				log(String.format("onMeasure 1 lParams:%s TVIndex:%d lForTextViewRootHeight:%f", lParams.mTextView_WrapContent_Direction.name(), i, lForTextViewRootHeight));
+////				switch (lParams.mTextView_WrapContent_Direction) {
+////				case Left: {
+////					lForTextViewRootWidth  = updateTextViewWidth( v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
+////				} break;
+////				case Right: {
+////					lForTextViewRootWidth  = updateTextViewWidth( v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
+////				} break;
+////				case Center_Horizontal: {
+////					lForTextViewRootWidth  = updateTextViewWidth( v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
+////				} break;
+////				case Top: {
+////					lForTextViewRootHeight = updateTextViewSize(v, lForTextViewRootWidth, lForTextViewRootHeight, lScale_TextViewMeasure_Pre);
+////				} break;
+////				case Bottom: {
+////					lForTextViewRootHeight = updateTextViewSize(v, lForTextViewRootWidth, lForTextViewRootHeight, lScale_TextViewMeasure_Pre);
+////				} break;
+////				}
+//////				log(String.format("onMeasure 2 lParams:%s TVIndex:%d lForTextViewRootHeight:%f", lParams.mTextView_WrapContent_Direction.name(), i, lForTextViewRootHeight));
+//			}
+//		}
+//		
+//		
+//		
+//		// calculate final size of ScalableLayout
+//		// ScalableLayout의 최종적인 크기를 결정지음
+//		{
+//			log(String.format("onMeasure 2 lScale:%5.3f ChildCount:%d Root:(%10.7f, %10.7f) ForTextView:(%10.7f, %10.7f)", 
+//				(lRoot_Width/mScale_Root_Width), getChildCount(), lRoot_Width, lRoot_Height, lForTextViewRootWidth, lForTextViewRootHeight));
+//			if(Math.abs(lForTextViewRootWidth - lRoot_Width) >= 1 || Math.abs(lForTextViewRootHeight - lRoot_Height) >= 1) {
+//				log(String.format("onMeasure 2.1 %b %b", Math.abs(lForTextViewRootWidth - lRoot_Width) >= 1,  Math.abs(lForTextViewRootHeight - lRoot_Height) >= 1));
+//				if(lRoot_MeasureSpec_WidthMode == MeasureSpec.EXACTLY && lRoot_MeasureSpec_HeightMode == MeasureSpec.EXACTLY) {
+//					// 둘중에 커진 놈 기준으로
+//					if(lForTextViewRootWidth / lRoot_Width > lForTextViewRootHeight / lRoot_Height) {
+//						lRoot_Height /= (lForTextViewRootWidth / lRoot_Width);
+//						lRoot_Width = lForTextViewRootWidth;
+//						log(String.format("onMeasure 2.1.1 %b %b", Math.abs(lForTextViewRootWidth - lRoot_Width) >= 1,  Math.abs(lForTextViewRootHeight - lRoot_Height) >= 1));
+//					} else {
+//						lRoot_Width /= (lForTextViewRootHeight / lRoot_Height);
+//						lRoot_Height = lForTextViewRootHeight;
+//						log(String.format("onMeasure 2.1.2 %b %b", Math.abs(lForTextViewRootWidth - lRoot_Width) >= 1,  Math.abs(lForTextViewRootHeight - lRoot_Height) >= 1));
+//					}
+////			} else if(lWidthMode == MeasureSpec.EXACTLY && lHeightMode != MeasureSpec.EXACTLY) {
+////				lRootHeight /= (lForTextViewRootWidth / lRootWidth);
+////				lRootWidth = lForTextViewRootWidth;
+////			} else if(lWidthMode != MeasureSpec.EXACTLY && lHeightMode == MeasureSpec.EXACTLY) {
+////				lRootWidth /= (lForTextViewRootHeight / lRootHeight);
+////				lRootHeight = lForTextViewRootHeight;
+//				} else {
+//					lRoot_Width = lForTextViewRootWidth;
+//					lRoot_Height = lForTextViewRootHeight;
+//					log(String.format("onMeasure 2.1.3 %b %b", Math.abs(lForTextViewRootWidth - lRoot_Width) >= 1,  Math.abs(lForTextViewRootHeight - lRoot_Height) >= 1));
+//				}
+//				
+////			postDelayedRequestLayout();
+//			}
+//		}
+//		
+//		{
+//			log(String.format("onMeasure 2 lScale:%5.3f", (lRoot_Width/mScale_Root_Width)));
+//			log(String.format("onMeasure 3 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f) ForTextView:(%5.3f, %5.3f)", 
+//				(lRoot_Width/mScale_Root_Width), getChildCount(), lRoot_Width, lRoot_Height, lForTextViewRootWidth, lForTextViewRootHeight));
+//			
+//			float lScale_TextViewMeasure_Post = lRoot_Width / mScale_Root_Width;
+//			
+//			
+//			
+//			// 최종적으로 배치 위치를 세팅하기 위해 각 자식 뷰들의 layoutparams를 업데이트함
+//			// update layoutparams of each child view to arrange finally 
+//			float lTopMarginFromWeight = (lRoot_Height - (lRoot_Width * mRatioOfWidthHeight))/4;
+//			log("  onMeasure ("+lRoot_Width+","+lRoot_Height+") Ratio:"+mRatioOfWidthHeight+" lScale_TextViewMeasure_Post:"+lScale_TextViewMeasure_Post+" lTopMarginFromWeight:"+lTopMarginFromWeight);
+//			for (int i=0;i<getChildCount();i++) {
+//				View lView = getChildAt(i);
+//				
+//				ScalableLayout.LayoutParams lParams = getChildLayoutParams(lView);
+//				
+//				boolean dif = false;
+//				
+//				if(lParams.leftMargin != Math.round(lScale_TextViewMeasure_Post * lParams.mScale_Left))
+//					dif = true;
+//				lParams.leftMargin = Math.round(lScale_TextViewMeasure_Post * lParams.mScale_Left);
+//				
+//				if(lParams.topMargin != Math.round(lScale_TextViewMeasure_Post * lParams.mScale_Top + lTopMarginFromWeight))
+//					dif = true;
+//				lParams.topMargin = Math.round(lScale_TextViewMeasure_Post * lParams.mScale_Top + lTopMarginFromWeight);
+//				
+//				int nParamsWidth = Math.round(lScale_TextViewMeasure_Post * (lParams.mScale_Left + lParams.mScale_Width)) - lParams.leftMargin;
+//				if(lParams.width != nParamsWidth)
+//					dif = true;
+//				lParams.width = nParamsWidth;
+//				
+//				int nParamsHeight = Math.round(lScale_TextViewMeasure_Post * (lParams.mScale_Top + lParams.mScale_Height)) - lParams.topMargin;
+//				if(lParams.height != nParamsHeight)
+//					dif = true;
+//				lParams.height = nParamsHeight;
+//				
+////			if(lView instanceof ScalableLayout) {
+////				ScalableLayout lSL = (ScalableLayout) lView;
+////				float lDif = ((float)lParams.width/(float)lParams.height) / lSL.mScale_Full_Width/lSL.mScale_Full_Height;
+////				if(0.98f < lDif && lDif < 1.02f) {
+////					
+////				}
+////			}
+//				
+////			lParams.rightMargin = lWidthSize - lParams.width - lParams.leftMargin;
+////			lParams.bottomMargin = lHeightSize - lParams.height - lParams.topMargin;
+////			
+//////			lParams.setMargins(Math.round(lScale * lParams.mScale_Left), Math.round(lScale * lParams.mScale_Top + lTopMarginFromWeight), 0, 0);
+////			log("  "+lView.toString()+" "+
+////				String.format("(%f, %f, %f, %f)", lParams.mScale_Left, lParams.mScale_Top, lParams.mScale_Width, lParams.mScale_Height)+
+////				"->"+
+////				String.format("(%f, %f, %f, %f)", 
+////					lScale * lParams.mScale_Left, lScale * lParams.mScale_Top + lTopMarginFromWeight, 
+////					lScale * lParams.mScale_Width, lScale * lParams.mScale_Height));
+////			log("  "+lView.toString()+" "+
+////				String.format("(%f, %f, %f, %f)", lParams.mScale_Left, lParams.mScale_Top, lParams.mScale_Width, lParams.mScale_Height)+
+////				"->"+
+////				String.format("(%d, %d, %d, %d)", lParams.leftMargin, lParams.topMargin, lParams.width, lParams.height));
+//				
+//				
+//				
+//				if(dif) {
+//					lView.setLayoutParams(lParams);
+//				}
+//				
+////			if(lView instanceof TextView) {
+//////				TextView v = (TextView) lView;
+//////				if(v.getTextSize() != lParams.mScale_TextSize * lScale) {
+//////					v.setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale);
+//////				}
+////				
+////				
+//////				switch (lParams.mScale_TextViewWrapContentMode) {
+//////				case Horizontal: {
+//////				} break;
+//////				case Vertical: {
+//////					dif = updateTextViewHeight(v, lParams);
+//////				} break;
+//////				}
+////			}
+////			
+//////			else if(lView instanceof EditText) {
+//////				EditText v = (EditText) lView;
+//////				if(v.getTextSize() != lParams.mScale_TextSize * lScale) {
+//////					v.setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale);
+//////				}
+//////			}
+//			}
+//		}
+//		
+//		log("onMeasure ================ End   "+this.toString());
+//		super.onMeasure(MeasureSpec.makeMeasureSpec(Math.round(lRoot_Width), lRoot_MeasureSpec_WidthMode), MeasureSpec.makeMeasureSpec(Math.round(lRoot_Height), lRoot_MeasureSpec_HeightMode));
+//		setMeasuredDimension(Math.round(lRoot_Width), Math.round(lRoot_Height));
+//	}
+	
+	
+	private boolean isDifferentSufficiently(float pNew, float pOld) {
+		return isDifferentSufficiently(pNew, pOld, 1.1f);
+	}
+	private boolean isDifferentSufficiently(float pNew, float pOld, float pDiffDelta) {
+		if( pNew < pOld / pDiffDelta || pOld * pDiffDelta < pNew ) {
+			return true;
+		}
+		return false;
+//		float val = (Math.abs(pNew - pOld)*100f/Math.max(pNew + pOld, 200f));
+//		boolean ret = val >= 5f;
+//		log("isDifferentSufficiently pNew:"+pNew+" pOld:"+pOld+" val:"+val+" ret:"+ret);
+//		return ret;
+	}
+	
+	private void updateTextViewSize(TextView pTV_Text, float pScale_TextViewMeasure_Pre) {
+		refreshTextChangedListener(pTV_Text);
 		
-//		log("updateTextViewHeight 1 lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
-//		if(lTextView_OldHeight <= 0 || lTextView_OldScaleHeight <= 0 || pBGHeight <= 0 || getScaleHeight() <= 0) {
-		if(lTextView_OldScaleHeight <= 0 || pBGHeight <= 0 || getScaleHeight() <= 0) {
-			postDelayedRequestLayout();
-			return pBGHeight;
+		ScalableLayout.LayoutParams lTV_SLLP = getChildLayoutParams(pTV_Text);
+		TextView_WrapContent_Direction lTextView_WrapContent_Direction = lTV_SLLP.mTextView_WrapContent_Direction;
+		if(lTextView_WrapContent_Direction == TextView_WrapContent_Direction.None) {
+			return;
 		}
 		
-//		int widthMeasureSpec = MeasureSpec.makeMeasureSpec(pTV_Text.getWidth(), MeasureSpec.AT_MOST);
-		int widthMeasureSpec = MeasureSpec.makeMeasureSpec((int)(pTV_Text.getWidth()/1.1f), MeasureSpec.EXACTLY);
-		int heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
-//		int heightMeasureSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.AT_MOST);
-		pTV_Text.measure(widthMeasureSpec, heightMeasureSpec);
-		float lTextView_NewHeight = pTV_Text.getMeasuredHeight();
-		float lTextView_NewScaleHeight = (lTextView_NewHeight * getScaleHeight() / pBGHeight);
-//		log(String.format("updateTextViewHeight %f = %f * %f / %f TextSize:%f", lTextView_NewScaleHeight, lTextView_NewHeight, getScaleHeight(), pBGHeight, pTV_Text.getTextSize()));
-//		
-////		log("updateTextViewHeight "+lOldViewHeight+","+lNewViewHeight+" "+lOldScaleHeight+","+lNewScaleHeight);
-//		log("updateTextViewHeight 2 lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
-//		
-//		log(String.format("updateTextViewHeight1 View: %5.3f -> %5.3f Scale: %5.3f -> %5.3f", lTextView_OldHeight, lTextView_NewHeight, lTextView_OldScaleHeight, lTextView_NewScaleHeight));
-//		log(String.format("updateTextViewHeight2 Scalable Scale: %5.3f,%5.3f ", getScaleWidth(), getScaleHeight()));
-//		log(String.format("updateTextViewHeight3 Scalable View: %5.3f,%5.3f", pBGWidth, pBGHeight));
+//		switch (lTV_SLLP.mTextView_WrapContent_Direction) {
+//		case Left: {
+//			lForTextViewRootWidth  = updateTextViewWidth( v, lTV_SLLP.mTextView_WrapContent_Direction, lTV_SLLP, lForTextViewRootWidth, lForTextViewRootHeight);
+//		} break;
+//		case Right: {
+//			lForTextViewRootWidth  = updateTextViewWidth( v, lTV_SLLP.mTextView_WrapContent_Direction, lTV_SLLP, lForTextViewRootWidth, lForTextViewRootHeight);
+//		} break;
+//		case Center_Horizontal: {
+//			lForTextViewRootWidth  = updateTextViewWidth( v, lTV_SLLP.mTextView_WrapContent_Direction, lTV_SLLP, lForTextViewRootWidth, lForTextViewRootHeight);
+//		} break;
+//		case Top: {
+//			lForTextViewRootHeight = updateTextViewSize(v, lForTextViewRootWidth, lForTextViewRootHeight, lScale_TextViewMeasure_Pre);
+//		} break;
+//		case Bottom: {
+//			lForTextViewRootHeight = updateTextViewSize(v, lForTextViewRootWidth, lForTextViewRootHeight, lScale_TextViewMeasure_Pre);
+//		} break;
+//		}
 
-		float lTextView_DiffScaleHeight = lTextView_NewScaleHeight - lTextView_OldScaleHeight;
-		float lRootView_OldScaleHeight = getScaleHeight();
+		float lTextView_ScaleWidth_Old 		= lTV_SLLP.getScale_Width();
+		float lTextView_ScaleHeight_Old 	= lTV_SLLP.getScale_Height();
 		
-		if(Math.abs(lTextView_NewHeight - lTextView_OldHeight) * 100 > pBGHeight && Math.abs(lTextView_DiffScaleHeight) > getScaleHeight() / 100f) {
-//			log("updateTextViewHeight 3 lOldViewHeight:"+lTextView_OldHeight+" lOldViewScaleHeight:"+lTextView_OldScaleHeight+" pBGHeight:"+pBGHeight+" getScaleHeight:"+getScaleHeight());
-			for(int i=0;i<getChildCount();i++) {
+		float lTextView_ScaleWidth_New 		= lTextView_ScaleWidth_Old;
+		float lTextView_ScaleHeight_New 	= lTextView_ScaleHeight_Old;
+		{
+			// get new scale size
+			// 새로운 Scale 크기를 가져옴
+			float lTextSize_New = lTV_SLLP.mScale_TextSize * pScale_TextViewMeasure_Pre;
+			log("updateTextViewHeight 1.1 lTextView_ScaleHeight_Old:"+lTextView_ScaleHeight_Old+" getScaleHeight():"+getScaleHeight()+" pScale_TextViewMeasure_Pre:"+pScale_TextViewMeasure_Pre);
+			log("updateTextViewHeight 1.2 lTextSize_New:"+lTextSize_New+" pTV_Text.getTextSize():"+pTV_Text.getTextSize());
+			if(isDifferentSufficiently(lTextSize_New, pTV_Text.getTextSize())) {
+				log("updateTextViewHeight 1.2.1 TextSize:"+pTV_Text.getTextSize()+"->"+lTextSize_New);
+				pTV_Text.setTextSize(TypedValue.COMPLEX_UNIT_PX, lTextSize_New);
+			}
+			
+			switch (lTextView_WrapContent_Direction) {
+			case Top:
+			case Bottom: {
+				int widthMeasureSpec 		= MeasureSpec.makeMeasureSpec((int) (lTextView_ScaleWidth_Old * pScale_TextViewMeasure_Pre), MeasureSpec.EXACTLY);
+				int heightMeasureSpec 		= MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+				pTV_Text.measure(widthMeasureSpec, heightMeasureSpec);
+				
+				float lTextView_Height_New 	= pTV_Text.getMeasuredHeight();
+				lTextView_ScaleHeight_New 	= lTextView_Height_New / pScale_TextViewMeasure_Pre;
+				log("updateTextViewHeight 1.3 lTextSize:"+pTV_Text.getTextSize()+"->"+lTextSize_New);
+				log("updateTextViewHeight 1.4 lTextView_ScaleHeight:"+lTextView_ScaleHeight_Old+"->"+lTextView_ScaleHeight_New);
+				log("updateTextViewHeight 1.5 lTextView_Height:"+pTV_Text.getHeight()+"->"+lTextView_Height_New);
+//				" getScaleHeight:"+getScaleHeight()+" pScale_TextViewMeasure_Pre:"+pScale_TextViewMeasure_Pre);
+				// +" lTextView_ScaleHeight_New:"+lTextView_ScaleHeight_New+" getScaleHeight:"+getScaleHeight()+" pScale_TextViewMeasure_Pre:"+pScale_TextViewMeasure_Pre);
+			} break;
+			case Center_Horizontal:
+			case Left:
+			case Right: {
+				int widthMeasureSpec 		= MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+				int heightMeasureSpec 		= MeasureSpec.makeMeasureSpec((int) (lTextView_ScaleHeight_Old * pScale_TextViewMeasure_Pre), MeasureSpec.EXACTLY);
+				pTV_Text.measure(widthMeasureSpec, heightMeasureSpec);
+				
+				float lTextView_Width_New 	= pTV_Text.getMeasuredWidth();
+				lTextView_ScaleWidth_New 	= lTextView_Width_New / pScale_TextViewMeasure_Pre;
+				log("updateTextViewWidth 1.3 lTextView_NewWidth:"+lTextView_Width_New+" lTextView_ScaleWidth_New:"+lTextView_ScaleWidth_New);
+			} break;
+			}
+		}
+		log("updateTextViewWidth 1.4 " +
+			" lTextView_ScaleWidth_New:"+lTextView_ScaleWidth_New+" lTextView_ScaleWidth_Old:"+lTextView_ScaleWidth_Old+
+			" lTextView_ScaleHeight_New:"+lTextView_ScaleHeight_New+" lTextView_ScaleHeight_Old:"+lTextView_ScaleHeight_Old);
+		
+		if(	isDifferentSufficiently(lTextView_ScaleWidth_New, lTextView_ScaleWidth_Old) == false && 
+			isDifferentSufficiently(lTextView_ScaleHeight_New, lTextView_ScaleHeight_Old) == false) {
+			return;
+		}
+		
+		float lTextView_ScaleWidth_Diff 	= lTextView_ScaleWidth_New - lTextView_ScaleWidth_Old;
+		float lTextView_ScaleHeight_Diff 	= lTextView_ScaleHeight_New - lTextView_ScaleHeight_Old;
+		{
+//			log("updateTextViewHeight 1.3 lTextSize_New:"+lTextSize_New+" lTextView_OldScaleHeight:"+lTextView_ScaleHeight_Old+" lTextView_ScaleHeight_New:"+lTextView_ScaleHeight_New+" getScaleHeight:"+getScaleHeight()+" pScale_TextViewMeasure_Pre:"+pScale_TextViewMeasure_Pre);
+//			log("updateTextViewHeight 3 lTextSize_New:"+lTextSize_New+" lTextView_Width:"+lTextView_Width+" lTextView_OldScaleHeight:"+lTextView_ScaleHeight_Old+" pRootHeight:"+pRootHeight+" getScaleHeight:"+getScaleHeight()+" pScale_TextViewMeasure_Pre:"+pScale_TextViewMeasure_Pre);
+//			log("updateTextViewHeight 3 (lTextView_NewHeight - lTextView_OldHeight):"+(lTextView_NewHeight+"-"+lTextView_Height_Old));
+//			log("updateTextViewHeight 3 (lTextView_NewHeight - lTextView_OldHeight):"+(lTextView_NewHeight - lTextView_Height_Old));
+//			log("updateTextViewHeight 3 (lTextView_NewHeight - lTextView_OldHeight):"+(Math.abs(lTextView_NewHeight - lTextView_Height_Old)*100f/Math.max(lTextView_NewHeight + lTextView_Height_Old, 200f)));
+			
+			for(int i = 0; i < getChildCount(); i++) {
 				View v = getChildAt(i);
 				if(v == pTV_Text) {
 					continue;
 				}
-				ScalableLayout.LayoutParams lSLLP = (ScalableLayout.LayoutParams) v.getLayoutParams();
-
-//				log(String.format("lSLLP:"+lSLLP.toString()));
-//				log(String.format("pTV_SLLP:"+pTV_SLLP.toString()));
-//					getScaleHeight(), getScaleHeight()+lNewViewScaleHeight-lOldViewScaleHeight));
-				switch (pTextView_WrapContent_Direction) {
+				ScalableLayout.LayoutParams lSLLP = getChildLayoutParams(v);
+				
+				switch (lTextView_WrapContent_Direction) {
 				case Top: {
 					// 자신의 위에 있는 뷰들 위치 이동
 					if(
-						lSLLP.getScale_Bottom() <= pTV_SLLP.getScale_Bottom() &&
+						lSLLP.getScale_Bottom() <= lTV_SLLP.getScale_Bottom() &&
 						(
-							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Left() && lSLLP.getScale_Left() <= pTV_SLLP.getScale_Right())
+							( lTV_SLLP.getScale_Left() <= lSLLP.getScale_Left() && lSLLP.getScale_Left() <= lTV_SLLP.getScale_Right())
 							|| 
-							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Right() && lSLLP.getScale_Right() <= pTV_SLLP.getScale_Right()) 
+							( lTV_SLLP.getScale_Left() <= lSLLP.getScale_Right() && lSLLP.getScale_Right() <= lTV_SLLP.getScale_Right()) 
 							||
-							( lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() && pTV_SLLP.getScale_Right() <= lSLLP.getScale_Right())
+							( lSLLP.getScale_Left() <= lTV_SLLP.getScale_Left() && lTV_SLLP.getScale_Right() <= lSLLP.getScale_Right())
 							)) {
-						
-						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()-lTextView_DiffScaleHeight);
+						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()-lTextView_ScaleHeight_Diff);
 					}
 					// 자신을 포함하는 뷰들 크기 변경
-					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
-						lSLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
-						lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
-						lSLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
-						lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
+					else if( lTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+						lSLLP.getScale_Top() <= lTV_SLLP.getScale_Top() &&
+						lSLLP.getScale_Left() <= lTV_SLLP.getScale_Left() &&
+						lSLLP.getScale_Right() >= lTV_SLLP.getScale_Right() &&
+						lSLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom()) {
 						
 						moveChildView(v, 
-							lSLLP.getScale_Left(), lSLLP.getScale_Top()-lTextView_DiffScaleHeight, 
-							lSLLP.getScale_Width(), lSLLP.getScale_Height()+lTextView_DiffScaleHeight);
+							lSLLP.getScale_Left(), lSLLP.getScale_Top()-lTextView_ScaleHeight_Diff, 
+							lSLLP.getScale_Width(), lSLLP.getScale_Height()+lTextView_ScaleHeight_Diff);
 					}
 				} break;
 				case Bottom: {
 					// 자신의 아래에 있는 뷰들 위치 이동
 					if(
-						lSLLP.getScale_Top() >= pTV_SLLP.getScale_Top() &&
+						lSLLP.getScale_Top() >= lTV_SLLP.getScale_Top() &&
 						(
-							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Left() && lSLLP.getScale_Left() <= pTV_SLLP.getScale_Right())
+							( lTV_SLLP.getScale_Left() <= lSLLP.getScale_Left() && lSLLP.getScale_Left() <= lTV_SLLP.getScale_Right())
 							|| 
-							( pTV_SLLP.getScale_Left() <= lSLLP.getScale_Right() && lSLLP.getScale_Right() <= pTV_SLLP.getScale_Right()) 
+							( lTV_SLLP.getScale_Left() <= lSLLP.getScale_Right() && lSLLP.getScale_Right() <= lTV_SLLP.getScale_Right()) 
 							||
-							( lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() && pTV_SLLP.getScale_Right() <= lSLLP.getScale_Right())
-//							( pTV_SLLP.getScale_Top() >= lSLLP.getScale_Top() &&  lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom())
+							( lSLLP.getScale_Left() <= lTV_SLLP.getScale_Left() && lTV_SLLP.getScale_Right() <= lSLLP.getScale_Right())
 							)) {
-						
-						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()+lTextView_DiffScaleHeight);
+						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()+lTextView_ScaleHeight_Diff);
 					}
 					// 자신을 포함하는 뷰들 크기 변경
-					else if( pTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
-						lSLLP.getScale_Top() <= pTV_SLLP.getScale_Top() &&
-						lSLLP.getScale_Left() <= pTV_SLLP.getScale_Left() &&
-						lSLLP.getScale_Right() >= pTV_SLLP.getScale_Right() &&
-						lSLLP.getScale_Bottom() >= pTV_SLLP.getScale_Bottom()) {
+					else if( lTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+						lSLLP.getScale_Top() <= lTV_SLLP.getScale_Top() &&
+						lSLLP.getScale_Left() <= lTV_SLLP.getScale_Left() &&
+						lSLLP.getScale_Right() >= lTV_SLLP.getScale_Right() &&
+						lSLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom()) {
 						
 						moveChildView(v, 
 							lSLLP.getScale_Left(), lSLLP.getScale_Top(), 
-							lSLLP.getScale_Width(), lSLLP.getScale_Height()+lTextView_DiffScaleHeight);
+							lSLLP.getScale_Width(), lSLLP.getScale_Height()+lTextView_ScaleHeight_Diff);
+					}
+				} break;
+				case Left: {
+					// move views on left
+					// 왼쪽에 있는 뷰들 위치 이동
+					if(
+						lSLLP.getScale_Right() <= lTV_SLLP.getScale_Right() &&
+						(
+							( lTV_SLLP.getScale_Top() <= lSLLP.getScale_Top() && lSLLP.getScale_Top() <= lTV_SLLP.getScale_Bottom())
+							|| 
+							( lTV_SLLP.getScale_Top() <= lSLLP.getScale_Bottom() && lSLLP.getScale_Bottom() <= lTV_SLLP.getScale_Bottom()) 
+							||
+							( lTV_SLLP.getScale_Top() >= lSLLP.getScale_Top() &&  lSLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom())
+							)) {
+						moveChildView(v, lSLLP.getScale_Left()-lTextView_ScaleWidth_Diff, lSLLP.getScale_Top());
+					}
+					else if( lTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+						lSLLP.getScale_Top() <= lTV_SLLP.getScale_Top() &&
+						lSLLP.getScale_Left() <= lTV_SLLP.getScale_Left() &&
+						lSLLP.getScale_Right() >= lTV_SLLP.getScale_Right() &&
+						lSLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom()) {
+						
+						moveChildView(v, lSLLP.getScale_Left()-lTextView_ScaleWidth_Diff, lSLLP.getScale_Top(), lSLLP.getScale_Width()+lTextView_ScaleWidth_Diff, lSLLP.getScale_Height());
+					}
+				} break;
+				case Right: {
+					// move views on right
+					// 오른쪽에 있는 뷰들 위치 이동					
+					if(
+						lSLLP.getScale_Left() >= lTV_SLLP.getScale_Left() &&
+						(
+							( lTV_SLLP.getScale_Top() <= lSLLP.getScale_Top() && lSLLP.getScale_Top() <= lTV_SLLP.getScale_Bottom())
+							|| 
+							( lTV_SLLP.getScale_Top() <= lSLLP.getScale_Bottom() && lSLLP.getScale_Bottom() <= lTV_SLLP.getScale_Bottom()) 
+							||
+							( lTV_SLLP.getScale_Top() >= lSLLP.getScale_Top() &&  lSLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom())
+							)) {							
+						
+						moveChildView(v, lSLLP.getScale_Left()+lTextView_ScaleWidth_Diff, lSLLP.getScale_Top());
+					}
+					else if( lTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+						lSLLP.getScale_Top() <= lTV_SLLP.getScale_Top() &&
+						lSLLP.getScale_Left() <= lTV_SLLP.getScale_Left() &&
+						lSLLP.getScale_Right() >= lTV_SLLP.getScale_Right() &&
+						lSLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom()) {
+						
+						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top(), lSLLP.getScale_Width()+lTextView_ScaleWidth_Diff, lSLLP.getScale_Height());
+					}
+				} break;
+				case Center_Horizontal: {
+					// 왼쪽에 있는 뷰들 위치 이동
+					if(
+						lSLLP.getScale_Right() <= lTV_SLLP.getScale_Right() &&
+						(
+							( lTV_SLLP.getScale_Top() <= lSLLP.getScale_Top() && lSLLP.getScale_Top() <= lTV_SLLP.getScale_Bottom())
+							|| 
+							( lTV_SLLP.getScale_Top() <= lSLLP.getScale_Bottom() && lSLLP.getScale_Bottom() <= lTV_SLLP.getScale_Bottom()) 
+							||
+							( lTV_SLLP.getScale_Top() >= lSLLP.getScale_Top() &&  lSLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom())
+							)) {
+						
+						moveChildView(v, lSLLP.getScale_Left()-lTextView_ScaleWidth_Diff/2, lSLLP.getScale_Top());
+					}
+					else if( lTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+						lSLLP.getScale_Top() <= lTV_SLLP.getScale_Top() &&
+						lSLLP.getScale_Left() <= lTV_SLLP.getScale_Left() &&
+						lSLLP.getScale_Right() >= lTV_SLLP.getScale_Right() &&
+						lSLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom()) {
+						
+						moveChildView(v, lSLLP.getScale_Left()-lTextView_ScaleWidth_Diff/2, lSLLP.getScale_Top(), lSLLP.getScale_Width()+lTextView_ScaleWidth_Diff/2, lSLLP.getScale_Height());
+					}
+					
+					// 오른쪽에 있는 뷰들 위치 이동
+					if(
+						lSLLP.getScale_Left() >= lTV_SLLP.getScale_Left() &&
+						(
+							( lTV_SLLP.getScale_Top() <= lTV_SLLP.getScale_Top() && lSLLP.getScale_Top() <= lTV_SLLP.getScale_Bottom())
+							|| 
+							( lTV_SLLP.getScale_Top() <= lTV_SLLP.getScale_Bottom() && lTV_SLLP.getScale_Bottom() <= lTV_SLLP.getScale_Bottom()) 
+							||
+							( lTV_SLLP.getScale_Top() >= lTV_SLLP.getScale_Top() &&  lTV_SLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom())
+							)) {
+						
+						moveChildView(v, lTV_SLLP.getScale_Left()+lTextView_ScaleWidth_Diff/2, lTV_SLLP.getScale_Top());
+					}
+					else if( lTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+						lTV_SLLP.getScale_Top() <= lTV_SLLP.getScale_Top() &&
+						lTV_SLLP.getScale_Left() <= lTV_SLLP.getScale_Left() &&
+						lTV_SLLP.getScale_Right() >= lTV_SLLP.getScale_Right() &&
+						lTV_SLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom()) {
+						
+						moveChildView(v, lTV_SLLP.getScale_Left(), lTV_SLLP.getScale_Top(), lTV_SLLP.getScale_Width()+lTextView_ScaleWidth_Diff/2, lTV_SLLP.getScale_Height());
 					}
 				} break;
 				}
 			}
-			
-			switch (pTextView_WrapContent_Direction) {
-			case Top: {
-			} break;
-			case Bottom: {
-				moveChildView(pTV_Text, pTV_SLLP.getScale_Left(), pTV_SLLP.getScale_Top(), pTV_SLLP.getScale_Width(), lTextView_NewScaleHeight);
-			} break;
-			}
-			
-			if(pTV_SLLP.mTextView_WrapContent_ResizeSurrounded) {
-//				log(String.format("setScaleSize From:%5.3f To:%5.3f", getScaleHeight(), getScaleHeight()+lTextView_DiffScaleHeight));
-				setScaleSize(getScaleWidth(), getScaleHeight()+lTextView_DiffScaleHeight, true);
-			}
 		}
-//		log("updateTextViewHeight 4 ret "+(pBGHeight*getScaleHeight()/lRootView_OldScaleHeight)+" = "+pBGHeight+"*"+getScaleHeight()+"/"+lRootView_OldScaleHeight);
-		return pBGHeight*getScaleHeight()/lRootView_OldScaleHeight;
+		
+		switch (lTextView_WrapContent_Direction) {
+		case Top: {
+			moveChildView(pTV_Text, lTV_SLLP.getScale_Left(), lTV_SLLP.getScale_Top()-lTextView_ScaleHeight_Diff, lTV_SLLP.getScale_Width(), lTextView_ScaleHeight_New);
+		} break;
+		case Bottom: {
+			moveChildView(pTV_Text, lTV_SLLP.getScale_Left(), lTV_SLLP.getScale_Top(), lTV_SLLP.getScale_Width(), lTextView_ScaleHeight_New);
+		} break;
+		case Left: {
+			moveChildView(pTV_Text, lTV_SLLP.getScale_Left()-lTextView_ScaleWidth_Diff, lTV_SLLP.getScale_Top(), lTextView_ScaleWidth_New, lTV_SLLP.getScale_Height());
+		} break;
+		case Right: {
+			moveChildView(pTV_Text, lTV_SLLP.getScale_Left(), lTV_SLLP.getScale_Top(), lTextView_ScaleWidth_New, lTV_SLLP.getScale_Height());
+		} break;
+		case Center_Horizontal: {
+			moveChildView(pTV_Text, lTV_SLLP.getScale_Left()-lTextView_ScaleWidth_Diff/2, lTV_SLLP.getScale_Top(), lTextView_ScaleWidth_New, lTV_SLLP.getScale_Height());
+		} break;
+		}
+		
+		if(lTV_SLLP.mTextView_WrapContent_ResizeSurrounded) {
+//			log("setScaleSize From:"+getScaleHeight()+" To:"+(getScaleHeight()+lTextView_ScaleHeight_Diff)+" pScale_TextViewMeasure_Pre:"+pScale_TextViewMeasure_Pre);
+			setScaleSize(getScaleWidth()+lTextView_ScaleWidth_Diff, getScaleHeight()+lTextView_ScaleHeight_Diff, false);
+		}
+		
+		log("updateTextViewHeight 4 lTextView_ScaleHeight_Old:"+lTextView_ScaleHeight_Old+" getScaleHeight():"+getScaleHeight()+" pScale_TextViewMeasure_Pre:"+pScale_TextViewMeasure_Pre);
+//		log("updateTextViewHeight ret "+(pRootHeight+"*"+getScaleHeight()+"/"+lRootView_OldScaleHeight));
+//		log("updateTextViewHeight ret "+(pRootHeight*getScaleHeight()/lRootView_OldScaleHeight));
+//		return pRootHeight*getScaleHeight()/lRootView_OldScaleHeight;
 	}
-	
-	private long mLastRequestPostTime = 0;
-	private void postDelayedRequestLayout() {
-		long now = System.currentTimeMillis();
-		if(mLastRequestPostTime < now - 50 || now < mLastRequestPostTime) {
-			mLastRequestPostTime = now;
-//			log("==== postDelayedRequestLayout Start");
-//			log(getStackTrace(Thread.currentThread().getStackTrace()));
-//			log("==== postDelayedRequestLayout End");
-			postDelayed(new Runnable() {
-				@Override
-				public void run() {
-					requestLayout();
-					forceLayout();
-				}
-			}, 10);
-		}
-	}
-	
-	@Override
-	protected void onMeasure(int pWidthMeasureSpec, int pHeightMeasureSpec) {
-//		log("onMeasure ================ Start "+this.toString());
-		float lRootWidth = 0;
-		int lWidthMode = MeasureSpec.getMode(pWidthMeasureSpec);
-		int lWidthSize = MeasureSpec.getSize(pWidthMeasureSpec);
-		float lRootHeight = 0;
-		int lHeightMode = MeasureSpec.getMode(pHeightMeasureSpec);
-		int lHeightSize = MeasureSpec.getSize(pHeightMeasureSpec);
-		
-		switch (lWidthMode) {
-		case MeasureSpec.EXACTLY:
-//			log("  onMeasure Width  Exactly "+lRootWidth+" = min("+mScale_Full_Width+", "+lWidthSize+")");
-			lRootWidth = lWidthSize;
-			break;
-		case MeasureSpec.AT_MOST:
-//			log("  onMeasure Width  AtMost "+lRootWidth+" = min("+mScale_Full_Width+", "+lWidthSize+")");
-			lRootWidth = lWidthSize;
-			break;
-		default:
-//			log("  onMeasure Width  Unspecified "+lRootWidth+" = "+mScale_Full_Width);
-			lRootWidth = mScale_Full_Width;
-			break;
-		}
-		
-		switch (lHeightMode) {
-		case MeasureSpec.EXACTLY:
-			switch (lWidthMode) {
-			case MeasureSpec.EXACTLY:
-//				log("  onMeasure Height Exactly Width Exactly "+lRootHeight+" = min("+lRootWidth+"*"+mRatioOfWidthHeight+", "+lHeightSize+")");
-				lRootHeight = Math.min(lRootWidth * mRatioOfWidthHeight, lHeightSize);
-				break;
-			case MeasureSpec.AT_MOST:
-				lRootHeight = Math.min(lRootWidth * mRatioOfWidthHeight, lHeightSize);
-				break;
-			default:
-				lRootHeight = lHeightSize;
-				lRootWidth = lRootHeight / mRatioOfWidthHeight;
-				break;
-			}
-			
-//			log("  onMeasure Height Exactly "+lRootHeight+", "+lHeightSize);
-			break;
-		case MeasureSpec.AT_MOST:
-			switch (lWidthMode) {
-			case MeasureSpec.EXACTLY:
-				lRootHeight = lRootWidth * mRatioOfWidthHeight;
-				break;
-			case MeasureSpec.AT_MOST:
-				lRootHeight = Math.min(lRootWidth * mRatioOfWidthHeight, lHeightSize);
-				break;
-			default:
-				lRootHeight = Math.min(lRootWidth * mRatioOfWidthHeight, lHeightSize);
-				break;
-			}
-			
-//			log("  onMeasure Height AtMost "+lRootHeight+" = min("+(lRootWidth * mRatioOfWidthHeight)+", "+lHeightSize+")");
-			break;
-		default:
-			lRootHeight = lRootWidth * mRatioOfWidthHeight;
-//			log("  onMeasure Height Unspecified "+lRootHeight+" = "+lRootWidth+"*"+mRatioOfWidthHeight);
-			break;
-		}
-		
-		if(lRootHeight/mRatioOfWidthHeight < lRootWidth) {
-//			log("  onMeasure Height Exactly Replace Width "+lRootWidth+" to "+(lRootHeight/mRatioOfWidthHeight));
-			lRootWidth = lRootHeight/mRatioOfWidthHeight;
-		}
 
-//		log(String.format("onMeasure 1 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f)", (lRootWidth/mScale_Full_Width), getChildCount(), lRootWidth, lRootHeight));
-//		log(String.format("onMeasure 1 lScale:%5.3f ChildCount:%d", (lRootWidth/mScale_Full_Width), getChildCount()));
 
-		float lScale = lRootWidth / mScale_Full_Width;
-		
-		float lForTextViewRootWidth = lRootWidth;
-		float lForTextViewRootHeight = lRootHeight;
-		
-		for (int i=0;i<getChildCount();i++) {
-			View lView = getChildAt(i);
-				
-			if(lView instanceof TextView) {
-				TextView v = (TextView) lView;
 
-				ScalableLayout.LayoutParams lParams = getChildLayoutParams(lView);
-				float lNewTextSize = lParams.mScale_TextSize * lScale;
-				if( lNewTextSize < v.getTextSize() / 1.1f || v.getTextSize() * 1.1f < lNewTextSize ) {
-					v.setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale);
-				}
-				refreshTextChangedListener(v);
-				
-//				log(String.format("onMeasure 1 lParams:%s TVIndex:%d lForTextViewRootHeight:%f", lParams.mTextView_WrapContent_Direction.name(), i, lForTextViewRootHeight));
-				switch (lParams.mTextView_WrapContent_Direction) {
-				case Left: {
-					lForTextViewRootWidth  = updateTextViewWidth( v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
-				} break;
-				case Right: {
-					lForTextViewRootWidth  = updateTextViewWidth( v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
-				} break;
-				case Center_Horizontal: {
-					lForTextViewRootWidth  = updateTextViewWidth( v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
-				} break;
-				case Top: {
-					lForTextViewRootHeight = updateTextViewHeight(v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
-				} break;
-				case Bottom: {
-					lForTextViewRootHeight = updateTextViewHeight(v, lParams.mTextView_WrapContent_Direction, lParams, lForTextViewRootWidth, lForTextViewRootHeight);
-				} break;
-				}
-//				log(String.format("onMeasure 2 lParams:%s TVIndex:%d lForTextViewRootHeight:%f", lParams.mTextView_WrapContent_Direction.name(), i, lForTextViewRootHeight));
-			}
-		}
 
-//		log(String.format("onMeasure 2 lScale:%5.3f ChildCount:%d Root:(%10.7f, %10.7f) ForTextView:(%10.7f, %10.7f)", 
-//			(lRootWidth/mScale_Full_Width), getChildCount(), lRootWidth, lRootHeight, lForTextViewRootWidth, lForTextViewRootHeight));
-		if(Math.abs(lForTextViewRootWidth - lRootWidth) >= 1 || Math.abs(lForTextViewRootHeight - lRootHeight) >= 1) {
-//			log(String.format("onMeasure 2.1 %b %b", Math.abs(lForTextViewRootWidth - lRootWidth) >= 1,  Math.abs(lForTextViewRootHeight - lRootHeight) >= 1));
-			if(lWidthMode == MeasureSpec.EXACTLY && lHeightMode == MeasureSpec.EXACTLY) {
-				// 둘중에 커진 놈 기준으로
-				if(lForTextViewRootWidth / lRootWidth > lForTextViewRootHeight / lRootHeight) {
-					lRootHeight /= (lForTextViewRootWidth / lRootWidth);
-					lRootWidth = lForTextViewRootWidth;
-				} else {
-					lRootWidth /= (lForTextViewRootHeight / lRootHeight);
-					lRootHeight = lForTextViewRootHeight;
-				}
-//			} else if(lWidthMode == MeasureSpec.EXACTLY && lHeightMode != MeasureSpec.EXACTLY) {
-//				lRootHeight /= (lForTextViewRootWidth / lRootWidth);
-//				lRootWidth = lForTextViewRootWidth;
-//			} else if(lWidthMode != MeasureSpec.EXACTLY && lHeightMode == MeasureSpec.EXACTLY) {
-//				lRootWidth /= (lForTextViewRootHeight / lRootHeight);
-//				lRootHeight = lForTextViewRootHeight;
-			} else {
-				lRootWidth = lForTextViewRootWidth;
-				lRootHeight = lForTextViewRootHeight;
-			}
-			
-			postDelayedRequestLayout();
-		}
-		
-//		log(String.format("onMeasure 2 lScale:%5.3f", (lRootWidth/mScale_Full_Width)));
-//		log(String.format("onMeasure 3 lScale:%5.3f ChildCount:%d Root:(%5.3f, %5.3f) ForTextView:(%5.3f, %5.3f)", 
-//			(lRootWidth/mScale_Full_Width), getChildCount(), lRootWidth, lRootHeight, lForTextViewRootWidth, lForTextViewRootHeight));
-		
-		lScale = lRootWidth / mScale_Full_Width;
-		
-		float lTopMarginFromWeight = (lRootHeight - (lRootWidth * mRatioOfWidthHeight))/4;
-//		log("  onMeasure ("+lRootWidth+","+lRootHeight+") Ratio:"+mRatioOfWidthHeight+" Scale:"+lScale+" lTopMarginFromWeight:"+lTopMarginFromWeight);
-		for (int i=0;i<getChildCount();i++) {
-			View lView = getChildAt(i);
-				
-			ScalableLayout.LayoutParams lParams = getChildLayoutParams(lView);
-			
-			boolean dif = false;
-			
-			if(lParams.leftMargin != Math.round(lScale * lParams.mScale_Left))
-				dif = true;
-			lParams.leftMargin = Math.round(lScale * lParams.mScale_Left);
-			
-			if(lParams.topMargin != Math.round(lScale * lParams.mScale_Top + lTopMarginFromWeight))
-				dif = true;
-			lParams.topMargin = Math.round(lScale * lParams.mScale_Top + lTopMarginFromWeight);
-			
-			int nParamsWidth = Math.round(lScale * (lParams.mScale_Left + lParams.mScale_Width)) - lParams.leftMargin;
-			if(lParams.width != nParamsWidth)
-				dif = true;
-			lParams.width = nParamsWidth;
-			
-			int nParamsHeight = Math.round(lScale * (lParams.mScale_Top + lParams.mScale_Height)) - lParams.topMargin;
-			if(lParams.height != nParamsHeight)
-				dif = true;
-			lParams.height = nParamsHeight;
-			
-//			if(lView instanceof ScalableLayout) {
-//				ScalableLayout lSL = (ScalableLayout) lView;
-//				float lDif = ((float)lParams.width/(float)lParams.height) / lSL.mScale_Full_Width/lSL.mScale_Full_Height;
-//				if(0.98f < lDif && lDif < 1.02f) {
-//					
-//				}
-//			}
-			
-//			lParams.rightMargin = lWidthSize - lParams.width - lParams.leftMargin;
-//			lParams.bottomMargin = lHeightSize - lParams.height - lParams.topMargin;
-//			
-////			lParams.setMargins(Math.round(lScale * lParams.mScale_Left), Math.round(lScale * lParams.mScale_Top + lTopMarginFromWeight), 0, 0);
-//			log("  "+lView.toString()+" "+
-//				String.format("(%f, %f, %f, %f)", lParams.mScale_Left, lParams.mScale_Top, lParams.mScale_Width, lParams.mScale_Height)+
-//				"->"+
-//				String.format("(%f, %f, %f, %f)", 
-//					lScale * lParams.mScale_Left, lScale * lParams.mScale_Top + lTopMarginFromWeight, 
-//					lScale * lParams.mScale_Width, lScale * lParams.mScale_Height));
-//			log("  "+lView.toString()+" "+
-//				String.format("(%f, %f, %f, %f)", lParams.mScale_Left, lParams.mScale_Top, lParams.mScale_Width, lParams.mScale_Height)+
-//				"->"+
-//				String.format("(%d, %d, %d, %d)", lParams.leftMargin, lParams.topMargin, lParams.width, lParams.height));
-
-			
-			
-			if(dif) {
-				lView.setLayoutParams(lParams);
-			}
-			
-//			if(lView instanceof TextView) {
-////				TextView v = (TextView) lView;
-////				if(v.getTextSize() != lParams.mScale_TextSize * lScale) {
-////					v.setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale);
-////				}
-//				
-//				
-////				switch (lParams.mScale_TextViewWrapContentMode) {
-////				case Horizontal: {
-////				} break;
-////				case Vertical: {
-////					dif = updateTextViewHeight(v, lParams);
-////				} break;
-////				}
-//			}
-//			
-////			else if(lView instanceof EditText) {
-////				EditText v = (EditText) lView;
-////				if(v.getTextSize() != lParams.mScale_TextSize * lScale) {
-////					v.setTextSize(TypedValue.COMPLEX_UNIT_PX, lParams.mScale_TextSize * lScale);
-////				}
-////			}
-		}
-		
-//		log("onMeasure ================ End   "+this.toString());
-		super.onMeasure(MeasureSpec.makeMeasureSpec(Math.round(lRootWidth), lWidthMode), MeasureSpec.makeMeasureSpec(Math.round(lRootHeight), lHeightMode));
-		setMeasuredDimension(Math.round(lRootWidth), Math.round(lRootHeight));
-	}
-	
-	
-
-	
 	public static enum TextView_WrapContent_Direction {
 		None, Left, Right, Center_Horizontal, Top, Bottom,
 	}
@@ -797,7 +1360,7 @@ public class ScalableLayout extends FrameLayout {
 		public float getScale_Height() { return mScale_Height; }
 		public void setScale_Height(float pScale_Height) { mScale_Height = pScale_Height; }
 
-		private float mScale_TextSize = Default_Scale_TextSize;
+		private float mScale_TextSize = -1f;
 		public float getScale_TextSize() { return mScale_TextSize; }
 		public void setScale_TextSize(float pScale_TextSize) { mScale_TextSize = pScale_TextSize; }
 		
@@ -1000,6 +1563,10 @@ public class ScalableLayout extends FrameLayout {
 	
 	
 	////////////////////////// Log
+	@Override
+	public String toString() {
+		return String.format("{ScalableLayout:%08X}", this.hashCode());
+	}
 	void log(String pLog) {
 		if(sLogTag_Global != null) {
 			Log.e(sLogTag_Global, this+"] "+pLog);
