@@ -270,13 +270,13 @@ public class MainActivity extends Activity {
 //);
 		mTV_Text.setText("test\n2233\nqw\nel\nkqj\nwelkqwje\n\n\n\nwelkrjqw"
 			+"\n" +
-			"1ㅁㅈ디ㅏ더가" +
-			"2ㅁㅈ디ㅏ더ㅏ" +
+			"1qwelkjlaske" +
+			"2aa409203kkl" +
 //			"3ㅁㅈ디ㅏ더가" +
 //			"4ㅁㅈ디ㅏ밎더ㅏ" +
 //			"5ㅁㅈ디ㅏ미더가" +
-			"6ㅁㅈ디ㅏ밎더ㅏ" +
-			"7ㅁ기ㅏㅓㅎㅁ디가ㅓㅅㅎ미ㅓ\n"
+			"6aaaaawww" +
+			"7zzzzzzz\n"
 			);
 		mTV_Text.setBackgroundColor(Color.RED);
 		mSL.addView(mTV_Text, 40f, 170f, 100f, 100f);
