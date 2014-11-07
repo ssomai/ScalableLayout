@@ -64,7 +64,6 @@
      -->
     <!-- 
      -->
-    <!-- 
     <com.jnm.android.widget.ScalableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -98,6 +97,5 @@
             sl:scale_width="50"
             sl:scale_height="50" />
     </com.jnm.android.widget.ScalableLayout>
-     -->
 
 </RelativeLayout>
