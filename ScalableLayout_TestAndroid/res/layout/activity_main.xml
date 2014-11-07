@@ -13,15 +13,66 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="@string/hello_world" />
-
+        
+    <!-- 
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/main_textview">
+        <com.jnm.android.widget.ScalableLayout
+            android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_sl2"
+        android:background="@android:color/background_dark"
+        sl:scale_base_width="900"
+        sl:scale_base_height="600"
+            <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="라디오1"
+            android:textColor="@android:color/white"
+            sl:scale_left="20"
+            sl:scale_top="40"
+            sl:scale_height="100"
+            sl:scale_width="600"
+            sl:scale_textsize="60" 
+              />
+            <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="라디오2"
+            android:textColor="@android:color/white"
+            sl:scale_left="20"
+            sl:scale_top="140"
+            sl:scale_height="100"
+            sl:scale_width="600"
+            sl:scale_textsize="70" 
+              />
+            <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="라디오3"
+            android:textColor="@android:color/white"
+            sl:scale_left="20"
+            sl:scale_top="240"
+            sl:scale_height="100"
+            sl:scale_width="600"
+            sl:scale_textsize="80" 
+              />
+        </com.jnm.android.widget.ScalableLayout>
+    </RadioGroup>
+     -->
+    <!-- 
+     -->
+    <!-- 
     <com.jnm.android.widget.ScalableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/main_textview"
         android:id="@+id/main_sl"
         android:background="@android:color/darker_gray"
-        sl:scale_base_width="400"
-        sl:scale_base_height="200" >
+        sl:scale_base_width="900"
+        sl:scale_base_height="800" >
 
         <TextView
             android:id="@+id/sl_textview"
@@ -47,5 +98,6 @@
             sl:scale_width="50"
             sl:scale_height="50" />
     </com.jnm.android.widget.ScalableLayout>
+     -->
 
 </RelativeLayout>
