@@ -1239,26 +1239,49 @@ public class ScalableLayout extends FrameLayout {
 						moveChildView(v, lSLLP.getScale_Left()-lTextView_ScaleWidth_Diff/2, lSLLP.getScale_Top(), lSLLP.getScale_Width()+lTextView_ScaleWidth_Diff/2, lSLLP.getScale_Height());
 					}
 					
-					// 오른쪽에 있는 뷰들 위치 이동
+//					// 오른쪽에 있는 뷰들 위치 이동
+//					if(
+//						lSLLP.getScale_Left() >= lTV_SLLP.getScale_Left() &&
+//						(
+//							( lTV_SLLP.getScale_Top() <= lTV_SLLP.getScale_Top() && lSLLP.getScale_Top() <= lTV_SLLP.getScale_Bottom())
+//							|| 
+//							( lTV_SLLP.getScale_Top() <= lTV_SLLP.getScale_Bottom() && lTV_SLLP.getScale_Bottom() <= lTV_SLLP.getScale_Bottom()) 
+//							||
+//							( lTV_SLLP.getScale_Top() >= lTV_SLLP.getScale_Top() &&  lTV_SLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom())
+//							)) {
+//						
+//						moveChildView(v, lTV_SLLP.getScale_Left()+lTextView_ScaleWidth_Diff/2, lTV_SLLP.getScale_Top());
+//					}
+//					else if( lTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
+//						lTV_SLLP.getScale_Top() <= lTV_SLLP.getScale_Top() &&
+//						lTV_SLLP.getScale_Left() <= lTV_SLLP.getScale_Left() &&
+//						lTV_SLLP.getScale_Right() >= lTV_SLLP.getScale_Right() &&
+//						lTV_SLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom()) {
+//						
+////						moveChildView(v, lTV_SLLP.getScale_Left(), lTV_SLLP.getScale_Top(), lTV_SLLP.getScale_Width()+lTextView_ScaleWidth_Diff/2, lTV_SLLP.getScale_Height());
+//						moveChildView(v, lSLLP.getScale_Left()-lTextView_ScaleWidth_Diff/2, lSLLP.getScale_Top(), lSLLP.getScale_Width()+lTextView_ScaleWidth_Diff/2, lSLLP.getScale_Height());
+//					}
+					
+
+					// 오른쪽에 있는 뷰들 위치 이동					
 					if(
 						lSLLP.getScale_Left() >= lTV_SLLP.getScale_Left() &&
 						(
-							( lTV_SLLP.getScale_Top() <= lTV_SLLP.getScale_Top() && lSLLP.getScale_Top() <= lTV_SLLP.getScale_Bottom())
+							( lTV_SLLP.getScale_Top() <= lSLLP.getScale_Top() && lSLLP.getScale_Top() <= lTV_SLLP.getScale_Bottom())
 							|| 
-							( lTV_SLLP.getScale_Top() <= lTV_SLLP.getScale_Bottom() && lTV_SLLP.getScale_Bottom() <= lTV_SLLP.getScale_Bottom()) 
+							( lTV_SLLP.getScale_Top() <= lSLLP.getScale_Bottom() && lSLLP.getScale_Bottom() <= lTV_SLLP.getScale_Bottom()) 
 							||
-							( lTV_SLLP.getScale_Top() >= lTV_SLLP.getScale_Top() &&  lTV_SLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom())
+							( lTV_SLLP.getScale_Top() >= lSLLP.getScale_Top() &&  lSLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom())
 							)) {
-						
-						moveChildView(v, lTV_SLLP.getScale_Left()+lTextView_ScaleWidth_Diff/2, lTV_SLLP.getScale_Top());
+						moveChildView(v, lSLLP.getScale_Left()+lTextView_ScaleWidth_Diff/2, lSLLP.getScale_Top());
 					}
 					else if( lTV_SLLP.mTextView_WrapContent_ResizeSurrounded &&
-						lTV_SLLP.getScale_Top() <= lTV_SLLP.getScale_Top() &&
-						lTV_SLLP.getScale_Left() <= lTV_SLLP.getScale_Left() &&
-						lTV_SLLP.getScale_Right() >= lTV_SLLP.getScale_Right() &&
-						lTV_SLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom()) {
+						lSLLP.getScale_Top() <= lTV_SLLP.getScale_Top() &&
+						lSLLP.getScale_Left() <= lTV_SLLP.getScale_Left() &&
+						lSLLP.getScale_Right() >= lTV_SLLP.getScale_Right() &&
+						lSLLP.getScale_Bottom() >= lTV_SLLP.getScale_Bottom()) {
 						
-						moveChildView(v, lTV_SLLP.getScale_Left(), lTV_SLLP.getScale_Top(), lTV_SLLP.getScale_Width()+lTextView_ScaleWidth_Diff/2, lTV_SLLP.getScale_Height());
+						moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top(), lSLLP.getScale_Width()+lTextView_ScaleWidth_Diff/2, lSLLP.getScale_Height());
 					}
 				} break;
 				}
