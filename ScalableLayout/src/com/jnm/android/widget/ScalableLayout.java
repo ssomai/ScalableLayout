@@ -1072,7 +1072,7 @@ public class ScalableLayout extends FrameLayout {
 				int heightMeasureSpec 		= MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
 				pTV_Text.measure(widthMeasureSpec, heightMeasureSpec);
 				
-				float lTextView_Height_New 	= pTV_Text.getMeasuredHeight();
+				float lTextView_Height_New 	= pTV_Text.getMeasuredHeight() * 1.1f;
 				lTextView_ScaleHeight_New 	= lTextView_Height_New / pScale_TextViewMeasure_Pre;
 //				log("updateTextViewHeight 1.3 lTextSize:"+pTV_Text.getTextSize()+"->"+lTextSize_New);
 //				log("updateTextViewHeight 1.4 lTextView_ScaleHeight:"+lTextView_ScaleHeight_Old+"->"+lTextView_ScaleHeight_New);
@@ -1087,7 +1087,7 @@ public class ScalableLayout extends FrameLayout {
 				int heightMeasureSpec 		= MeasureSpec.makeMeasureSpec((int) (lTextView_ScaleHeight_Old * pScale_TextViewMeasure_Pre), MeasureSpec.EXACTLY);
 				pTV_Text.measure(widthMeasureSpec, heightMeasureSpec);
 				
-				float lTextView_Width_New 	= pTV_Text.getMeasuredWidth();
+				float lTextView_Width_New 	= pTV_Text.getMeasuredWidth() * 1.1f;
 				lTextView_ScaleWidth_New 	= lTextView_Width_New / pScale_TextViewMeasure_Pre;
 //				log("updateTextViewWidth 1.3 lTextView_NewWidth:"+lTextView_Width_New+" lTextView_ScaleWidth_New:"+lTextView_ScaleWidth_New);
 			} break;
