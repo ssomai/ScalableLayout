@@ -224,64 +224,74 @@ public class MainActivity extends Activity {
 		mSL.addView(iv2, 220f, 160f, 50f, 50f);
 
 		TextView tv2 = new TextView(this);
-		tv2.setText("test");
+		tv2.setText("test2");
 		tv2.setBackgroundColor(Color.YELLOW);
 		mSL.addView(tv2, 40f, 170f, 100f, 30f);
 		mSL.setScale_TextSize(tv2, 20f);
 		
 		TextView tv3 = new TextView(this);
-		tv3.setText("test");
+		tv3.setText("test3");
 		tv3.setBackgroundColor(Color.YELLOW);
 		mSL.addView(tv3, 0f, 210f, 60f, 30f);
 		mSL.setScale_TextSize(tv3, 20f);
 		
 		TextView tv4 = new TextView(this);
-		tv4.setText("test");
+		tv4.setText("test4");
 		tv4.setBackgroundColor(Color.YELLOW);
 		mSL.addView(tv4, 150f, 250f, 100f, 30f);
 		mSL.setScale_TextSize(tv4, 20f);
 		
 		TextView tv5 = new TextView(this);
-		tv5.setText("test");
+		tv5.setText("test5");
 		tv5.setBackgroundColor(Color.YELLOW);
 		mSL.addView(tv5, 350f, 300f, 100f, 30f);
 		mSL.setScale_TextSize(tv5, 20f);
 
 		TextView tv6 = new TextView(this);
-		tv6.setText("test22");
+		tv6.setText("test6");
 		tv6.setBackgroundColor(Color.YELLOW);
 		mSL.addView(tv6, 50f, 300f, 120f, 40f);
 		mSL.setScale_TextSize(tv6, 20f);
 		
-		mTV_Text = new TextView(this);
-//		mTV_Text.setText("test\n2233");
-//		mTV_Text.setText("test\n2233\n\n");
-//		mTV_Text.setText("test\n2233\n\n\n\nqwelkqjwkrjqw\n\naa");
-//		mTV_Text.setText("test\n2233\nqw\nel\nkqj\nwelkqwje\n\n\n\nwelkrjqw");
+//		mTV_Text = new TextView(this);
+////		mTV_Text.setText("test\n2233");
+////		mTV_Text.setText("test\n2233\n\n");
+////		mTV_Text.setText("test\n2233\n\n\n\nqwelkqjwkrjqw\n\naa");
+////		mTV_Text.setText("test\n2233\nqw\nel\nkqj\nwelkqwje\n\n\n\nwelkrjqw");
+////		mTV_Text.setText("test\n2233\nqw\nel\nkqj\nwelkqwje\n\n\n\nwelkrjqw"
+////					+"\n" +
+////					"ㅁㅈ디ㅏ거미더가\n" +
+////					"ㅁㅈ디ㅏ거밎더ㅏ\n" +
+////					"ㅁㅈ디ㅏ거미더가\n" +
+////					"ㅁㅈ디ㅏ거밎더ㅏ\n" +
+////					"ㅁㅈ디ㅏ거미더가\n" +
+////					"ㅁㅈ디ㅏ거밎더ㅏ\n" +
+////					"ㅁ기ㅏㅓㅎㅁ디가ㅓㅅㅎ미ㅓ\n"
+////);
 //		mTV_Text.setText("test\n2233\nqw\nel\nkqj\nwelkqwje\n\n\n\nwelkrjqw"
-//					+"\n" +
-//					"ㅁㅈ디ㅏ거미더가\n" +
-//					"ㅁㅈ디ㅏ거밎더ㅏ\n" +
-//					"ㅁㅈ디ㅏ거미더가\n" +
-//					"ㅁㅈ디ㅏ거밎더ㅏ\n" +
-//					"ㅁㅈ디ㅏ거미더가\n" +
-//					"ㅁㅈ디ㅏ거밎더ㅏ\n" +
-//					"ㅁ기ㅏㅓㅎㅁ디가ㅓㅅㅎ미ㅓ\n"
-//);
-		mTV_Text.setText("test\n2233\nqw\nel\nkqj\nwelkqwje\n\n\n\nwelkrjqw"
-			+"\n" +
-			"1qwelkjlaske" +
-			"2aa409203kkl" +
-//			"3ㅁㅈ디ㅏ더가" +
-//			"4ㅁㅈ디ㅏ밎더ㅏ" +
-//			"5ㅁㅈ디ㅏ미더가" +
-			"6aaaaawww" +
-			"7zzzzzzz\n"
-			);
+//			+"\n" +
+//			"1qwelkjlaske" +
+//			"2aa409203kkl" +
+////			"3ㅁㅈ디ㅏ더가" +
+////			"4ㅁㅈ디ㅏ밎더ㅏ" +
+////			"5ㅁㅈ디ㅏ미더가" +
+//			"6aaaaawww" +
+//			"7zzzzzzz\n"
+//			);
+//		mTV_Text.setBackgroundColor(Color.RED);
+//		mSL.addView(mTV_Text, 40f, 170f, 100f, 100f);
+//		mSL.setScale_TextSize(mTV_Text, 30f);
+//		mSL.setTextView_WrapContent(mTV_Text, TextView_WrapContent_Direction.Bottom, true);
+		
+
+		mTV_Text = new TextView(this);
+//		mTV_Text.setText("test\n2233\n\n\n\nqwelkqjwkrjqw\n\naa");
+		mTV_Text.setText("test");
 		mTV_Text.setBackgroundColor(Color.RED);
-		mSL.addView(mTV_Text, 40f, 170f, 100f, 100f);
+//		mSL.addView(mTV_Text, 40f, 170f, 100f, 100f);
+		mSL.addView(mTV_Text, 200f, 200f, 1f, 100f);
 		mSL.setScale_TextSize(mTV_Text, 30f);
-		mSL.setTextView_WrapContent(mTV_Text, TextView_WrapContent_Direction.Bottom, true);
+		mSL.setTextView_WrapContent(mTV_Text, TextView_WrapContent_Direction.Center_Horizontal, false);
 		
 //		Handler h = new Handler();
 //		h.postDelayed(new Runnable() {
