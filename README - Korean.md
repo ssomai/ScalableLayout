@@ -103,7 +103,5 @@ ListView에서 각각의 UI가 정확하게 표현되어 있습니다.<br/><br/>
 ![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/sl_03_singoption.jpg)
 다이얼로그에서도 각각의 UI가 정확하게 표현되어 있습니다. 비율대로 표현되기 때문에 옵티머스뷰2에서는 좌우의 여백이 큽니다.
 
-우하하하 디벨롭 테스트
-
 
 
