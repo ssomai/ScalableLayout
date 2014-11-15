@@ -3,59 +3,54 @@ ScalableLayout for Android.
 
 Class: com.jnm.android.widget.ScalableLayout 
 
-Just one code for every resolution of Android devices!<br/>
+Just one layout for every different Android device size!<br/>
 ====================
 
-ScalableLayout is one of the way to show consistent UI<br/>
-for every different resolution of Android devices including tablets.<br/>
+ScalableLayout is a new layout that helps you keep a consistent UI across any screen size.<br/>
 <br/>
-ScalableLayout can be usable in replace of Layouts for example FrameLayout or LinearLayout,<br/>
-which are used to place widgets from Android platform.<br/>
+ScalableLayout can be usable in replace of Layouts (i.e. FrameLayout, LinearLayout, etc.) and does the work of scaling all of the child views correctly for you.<br/>
 <br/>
-Widgets to make application UI like TextView or Imageview<br/>
-would get relative (x,y) coordinates and relative (width, height) values in ScalableLayout.<br/>
-And then the ScalableLayout would place and resize the widgets inside according to its size.<br/>
+UI Widgets like TextView or Imageview get relative (x,y) coordinates and relative (width, height) values from the ScalableLayout.<br/>
+ScalableLayout then places and resizes the widgets according to these values.<br/>
 <br/>
-You can use ScalableLayout by just one java file importing.<br/>
-You can use both of Java and XML to place ScalableLayout in your project.<br/>
+You can use ScalableLayout by importing just one java file.<br/>
+You can use ScalableLayout with either Java or XML in your project.<br/>
 <br/>
-ScalableLayout is used on the everysing application which was awarded as GooglePlay App Awards 2013.<br/>
+ScalableLayout is used on the EverySing Karaoke app, which was awarded in the Google Play App Awards 2013.<br/>
 <br/>
 
 
 
 # Simple example in Java
 
-    // Initialte ScalableLayout instance with 400 width and 200 height. 
-    // It's relative unit. It's not pixel or dp unit.
+    // Initiate ScalableLayout instance with 400 width and 200 height. 
+    // It's a relative unit, not pixels or dip.
     ScalableLayout sl = new ScalableLayout(this, 400, 200);
 
 
-    // Gonna place a TextView instance inside ScalableLayout instance. 
+    // Place a TextView instance inside ScalableLayout instance. 
     TextView tv = new TextView(this);
     
-    // Placing a TextView with following parameters. left: 20, top: 40, width: 100, height: 30.  
-    // You can place it very easily. 
-    // It would place and scale automatically according to the size of its parent ScalableLayout.
+    // Placing a TextView with following parameters. left: 20, top: 40, width: 100, height: 30.
+    // It will place and scale automatically according to the size of its parent ScalableLayout.
     sl.addView(tv, 20f, 40f, 100f, 30f);
     
-    // Set the text size of TextView as 20. It would scale automatically.
+    // Set the text size of TextView as 20. It will scale automatically.
     sl.setScale_TextSize(tv, 20f);
     
-    // All the original methods of TextView works properly. 
+    // All of the original methods of TextView work properly. 
     tv.setText("test");
     tv.setBackgroundColor(Color.YELLOW);
     
     
-    // Gonna place a ImageView instance inside ScalableLayout instance. 
+    // Place an ImageView instance inside a ScalableLayout instance. 
     ImageView iv = new ImageView(this);
     
-    // Placing a ImageView with following parameters. left: 200, top: 30, width: 50, height: 50.  
-    // You can place it very easily. 
-    // It would place and scale automatically according to the size of its parent ScalableLayout.
+    // Placing an ImageView with following parameters. left: 200, top: 30, width: 50, height: 50.
+    // It will place and scale automatically according to the size of its parent ScalableLayout.
     sl.addView(iv, 200f, 30f, 50f, 50f);
     
-    // All the original methods of ImageView works properly of course. 
+    // All of the original methods of ImageView work properly, of course. 
     iv.setImageResource(R.drawable.ic_launcher);
 
 
