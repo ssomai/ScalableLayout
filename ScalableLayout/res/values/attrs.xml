@@ -42,6 +42,7 @@
 		<attr name="scale_height" 		format="float" />
 		<attr name="textview_wrapcontent_direction" 		format="string" />
 		<attr name="textview_wrapcontent_resizesurrounded" 	format="boolean" />
+		<attr name="textview_wrapcontent_movesiblings" 	format="boolean" />
 	</declare-styleable>  
 </resources> 
 
