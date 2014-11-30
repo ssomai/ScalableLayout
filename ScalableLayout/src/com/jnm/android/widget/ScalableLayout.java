@@ -145,7 +145,7 @@ public class ScalableLayout extends FrameLayout {
 	 * @param pRescaleSurrounded 
 	 */
 	public void setTextView_WrapContent(TextView pTextView, TextView_WrapContent_Direction pDirection, boolean pRescaleSurrounded) {
-		setTextView_WrapContent(pTextView, pDirection, true);
+		setTextView_WrapContent(pTextView, pDirection, pRescaleSurrounded, true);
 	}
 	public void setTextView_WrapContent(TextView pTextView, TextView_WrapContent_Direction pDirection, boolean pRescaleSurrounded, boolean pMoveSibligs) {
 		getChildLayoutParams(pTextView).setTextView_WrapContent(pDirection, pRescaleSurrounded, pMoveSibligs);
