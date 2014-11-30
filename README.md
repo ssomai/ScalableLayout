@@ -6,7 +6,7 @@ Class: com.jnm.android.widget.ScalableLayout
 Just one layout for every different Android device size!<br/>
 ====================
 
-ScalableLayout is a new layout that helps you keep a consistent UI across any screen size.<br/>
+ScalableLayout is a new layout that helps you keep a consistent UI across any screen size and any layout size.<br/>
 <br/>
 ScalableLayout can be usable in replace of Layouts (i.e. FrameLayout, LinearLayout, etc.) and does the work of scaling all of the child views correctly for you.<br/>
 <br/>
