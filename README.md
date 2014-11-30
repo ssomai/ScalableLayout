@@ -6,7 +6,7 @@ Class: com.jnm.android.widget.ScalableLayout
 Just one layout for every different Android device size!<br/>
 ====================
 
-ScalableLayout is a new layout that helps you keep a consistent UI across any screen size and any layout size.<br/>
+ScalableLayout is a new layout that helps you keep a consistent UI across any screen size and any layout sizebr/>
 <br/>
 ScalableLayout can be usable in replace of Layouts (i.e. FrameLayout, LinearLayout, etc.) and does the work of scaling all of the child views correctly for you.<br/>
 <br/>
@@ -18,6 +18,14 @@ You can use ScalableLayout with either Java or XML in your project.<br/>
 <br/>
 ScalableLayout is used on the EverySing Karaoke app, which was awarded in the Google Play App Awards 2013.<br/>
 <br/>
+
+
+The library is pushed to Maven Central as a AAR, so you just need to add the following dependency to your build.gradle.<br/>
+
+    dependencies {
+        compile 'com.ssomai:scalablelayout:2.0.0'
+    }
+
 
 
 
