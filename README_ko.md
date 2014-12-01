@@ -24,6 +24,14 @@ ScalableLayout은 2013년에 Google Play에서 빛난 올해의 앱 모음에 �
 S.M.ENTERTAINMENT의 everysing 앱에서도 이용되어 그 우수성을 증명한 바 있습니다.<br/>
 <br/>
 
+이 소스를 Maven Central에 AAR 형태로 퍼블시켰습니다.<br/>
+그래서 안드로이드 스튜디오나 gradle을 사용하시는 분께서는 아래 dependencies를 build.gradle에 추가해주시면 바로 사용해보실수 있습니다.<br/>
+
+    dependencies {
+        compile 'com.ssomai:android.scalablelayout:2.0.0'
+    }
+
+
 # 자바로 뷰를 배치하는 예시 코드
 
     // ScalableLayout의 사이즈를 400 x 200 으로 설정합니다. 
