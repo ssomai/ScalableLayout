@@ -91,8 +91,7 @@ S.M.ENTERTAINMENT의 everysing 앱에서도 이용되어 그 우수성을 증명
     </com.jnm.android.widget.ScalableLayout>        
 
 
-다양한 비율의 화면에서 ScalableLayout이 적용된 예.
-====================
+# 다양한 비율의 화면에서 ScalableLayout이 적용된 예.
 왼쪽부터 삼성 갤럭시 S4 (1920 x 1080. 16:9), LG 옵티머스 뷰2 (1024 x 768. 4:3), 갤럭시 노트 10.1 (1280 x 800. 8:5)<br/><br/>
 ![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/sl_01_main.jpg)
 모든 사이즈의 화면에서 각각의 UI가 정확하게 표현되어 있습니다.<br/><br/>
@@ -102,6 +101,17 @@ ListView에서 각각의 UI가 정확하게 표현되어 있습니다.<br/><br/>
 
 ![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/sl_03_singoption.jpg)
 다이얼로그에서도 각각의 UI가 정확하게 표현되어 있습니다. 비율대로 표현되기 때문에 옵티머스뷰2에서는 좌우의 여백이 큽니다.
+
+# ScalableLayout으로 Layout하실 때 참고하셔야 할 점
+ScalableLayout을 Root Layout으로 지정하시는 것은 추천하지 않습니다.
+그 이유는 폰마다 화면 비율이 다르기 때문입니다.
+ScalableLayout은 지정받은 비율을 그대로 유지합니다.
+즉, 600 x 1000 로 지정하셨다면 그 비율을 그대로 유지합니다.
+
+추천드리고 싶은 방법은 LinearLayout이나 FrameLayout, RelatvieLayout등을 최상위로 두시고
+그안에 각 부분들을 ScalableLayout을 만드시는 것입니다.
+
+그리고 기획이나 디자인 단계에 종사하시는 분께 안드로이드에서는 화면비율이 달라지는것을 항상 고려해달라고 부탁드려주세요. ㅎㅎ
 
 
 
