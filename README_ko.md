@@ -1,7 +1,7 @@
 ScalableLayout for Android. 
 ====================
 
-Class: com.jnm.android.widget.ScalableLayout 
+Class: com.ssomai.android.ScalableLayout 
 
 단 한번의 코딩으로 태블릿을 포함한 모든 화면에서 정확한 UI를 표현하고 싶다면!<br/>
 ====================
@@ -67,7 +67,7 @@ S.M.ENTERTAINMENT의 everysing 앱에서도 이용되어 그 우수성을 증명
 
 # xml로 뷰를 배치하는 예시 코드
 
-    <com.jnm.android.widget.ScalableLayout
+    <com.ssomai.android.ScalableLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@android:color/darker_gray"
@@ -96,7 +96,7 @@ S.M.ENTERTAINMENT의 everysing 앱에서도 이용되어 그 우수성을 증명
         sl:scale_height="50"
         android:src="@drawable/ic_launcher"
         />
-    </com.jnm.android.widget.ScalableLayout>        
+    </com.ssomai.android.ScalableLayout>        
 
 
 # 다양한 비율의 화면에서 ScalableLayout이 적용된 예.
