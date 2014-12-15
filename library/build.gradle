@@ -6,7 +6,8 @@ android {
     compileSdkVersion Integer.parseInt(project.ANDROID_COMPILE_SDK_VERSION)
     buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
     defaultConfig {
-        applicationId 'com.ssomai.android.scalablelayout'
+        // applicationId 'com.ssomai.android.scalablelayout'
+
         // applicationId "com.youngmann.android.scalablelayout"
 //        minSdkVersion 8
 //        targetSdkVersion 21
