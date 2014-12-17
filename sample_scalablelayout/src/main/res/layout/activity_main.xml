@@ -64,7 +64,7 @@
     </RadioGroup>
      -->
 
-    <com.youngmann.android.scalablelayout.ScalableLayout
+    <com.ssomai.android.scalablelayout.ScalableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/main_textview"
@@ -96,7 +96,7 @@
             sl:scale_top="30"
             sl:scale_width="100"
             sl:scale_height="100" />
-    </com.youngmann.android.scalablelayout.ScalableLayout>
+    </com.ssomai.android.scalablelayout.ScalableLayout>
 
 
 </RelativeLayout>
