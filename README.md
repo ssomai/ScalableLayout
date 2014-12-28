@@ -1,7 +1,7 @@
 ScalableLayout for Android. 
 ====================
 
-Class: com.ssomai.android.ScalableLayout 
+Class: com.ssomai.android.scalablelayout.ScalableLayout 
 
 Just one layout for every different Android device size!<br/>
 ====================
@@ -64,7 +64,7 @@ The library is pushed to Maven Central as a AAR, so you just need to add the fol
 
 # Simple example in XML
 
-    <com.ssomai.android.ScalableLayout
+    <com.ssomai.android.scalablelayout.ScalableLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:background="@android:color/darker_gray"
@@ -93,7 +93,7 @@ The library is pushed to Maven Central as a AAR, so you just need to add the fol
         sl:scale_height="50"
         android:src="@drawable/ic_launcher"
         />
-    </com.ssomai.android.ScalableLayout>        
+    </com.ssomai.android.scalablelayout.ScalableLayout>        
 
 
 
