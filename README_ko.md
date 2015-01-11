@@ -1,7 +1,7 @@
-ScalableLayout for Android. 
+ScalableLayout for Android.
 ====================
 
-Class: com.ssomai.android.scalablelayout.ScalableLayout 
+Class: com.ssomai.android.scalablelayout.ScalableLayout
 
 단 한번의 코딩으로 태블릿을 포함한 모든 화면에서 정확한 UI를 표현하고 싶다면!<br/>
 ====================
@@ -26,78 +26,74 @@ S.M.ENTERTAINMENT의 everysing 앱에서도 이용되어 그 우수성을 증명
 
 이 소스를 Maven Central에 AAR 형태로 퍼블시켰습니다.<br/>
 그래서 안드로이드 스튜디오나 gradle을 사용하시는 분께서는 아래 dependencies를 build.gradle에 추가해주시면 바로 사용해보실수 있습니다.<br/>
-
-    dependencies {
-        compile 'com.ssomai:android.scalablelayout:2.0.0'
-    }
-
+```groovy
+dependencies {
+  compile 'com.ssomai:android.scalablelayout:2.0.0'
+}
+```
 
 # 자바로 뷰를 배치하는 예시 코드
+```java
+// ScalableLayout의 사이즈를 400 x 200 으로 설정합니다.
+// 상대적인 단위로 pixel 이나 dp 단위가 아닙니다.
+ScalableLayout sl = new ScalableLayout(this, 400, 200);
 
-    // ScalableLayout의 사이즈를 400 x 200 으로 설정합니다. 
-    // 상대적인 단위로 pixel 이나 dp 단위가 아닙니다.
-    ScalableLayout sl = new ScalableLayout(this, 400, 200);
+// ScalableLayout에 TextView를 넣어보겠습니다.
+TextView tv = new TextView(this);
+
+// 왼쪽 x 좌표는 20, y좌표는 40, width는 100, height는 30으로 ScalableLayout에 TextView를 넣습니다.
+// 단 한줄의 코딩으로 view를 넣은 후 이후에는 자동으로 리사이즈 됩니다.
+sl.addView(tv, 20f, 40f, 100f, 30f);
+
+// TextView 안의 text의 사이즈를 20으로 설정합니다. text의 사이즈도 자동으로 조절됩니다.
+sl.setScale_TextSize(tv, 20f);
+
+// 기존의 TextView 함수들이 물론 정상적으로 작동합니다.
+tv.setText("test");
+tv.setBackgroundColor(Color.YELLOW);
 
 
-    // ScalableLayout에 TextView를 넣어보겠습니다. 
-    TextView tv = new TextView(this);
-    
-    // 왼쪽 x 좌표는 20, y좌표는 40, width는 100, height는 30으로 ScalableLayout에 TextView를 넣습니다. 
-    // 단 한줄의 코딩으로 view를 넣은 후 이후에는 자동으로 리사이즈 됩니다.
-    sl.addView(tv, 20f, 40f, 100f, 30f);
-    
-    // TextView 안의 text의 사이즈를 20으로 설정합니다. text의 사이즈도 자동으로 조절됩니다.
-    sl.setScale_TextSize(tv, 20f);
-    
-    // 기존의 TextView 함수들이 물론 정상적으로 작동합니다.
-    tv.setText("test");
-    tv.setBackgroundColor(Color.YELLOW);
-    
-    
-    // ScalableLayout에 ImageView를 넣어보겠습니다. 
-    ImageView iv = new ImageView(this);
-    
-    // 왼쪽 x 좌표는 200, y좌표는 30, width는 50, height도 50으로 ScalableLayout에 ImageView를 넣습니다. 
-    // 단 한줄의 코딩으로 view를 넣은 후 이후에는 자동으로 리사이즈 됩니다.
-    sl.addView(iv, 200f, 30f, 50f, 50f);
-    
-    // 마찬가지로 기존의 ImageView 함수들이 물론 정상적으로 작동합니다.
-    iv.setImageResource(R.drawable.ic_launcher);
+// ScalableLayout에 ImageView를 넣어보겠습니다.
+ImageView iv = new ImageView(this);
 
+// 왼쪽 x 좌표는 200, y좌표는 30, width는 50, height도 50으로 ScalableLayout에 ImageView를 넣습니다.
+// 단 한줄의 코딩으로 view를 넣은 후 이후에는 자동으로 리사이즈 됩니다.
+sl.addView(iv, 200f, 30f, 50f, 50f);
+
+// 마찬가지로 기존의 ImageView 함수들이 물론 정상적으로 작동합니다.
+iv.setImageResource(R.drawable.ic_launcher);
+```
 
 # xml로 뷰를 배치하는 예시 코드
-
-    <com.ssomai.android.scalablelayout.ScalableLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:background="@android:color/darker_gray"
-      android:layout_above="@+id/main_textview"
-      sl:scale_base_width="400"
-      sl:scale_base_height="200"
-      >
-      <TextView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        sl:scale_left="20"
-        sl:scale_top="40"
-        sl:scale_width="100"
-        sl:scale_height="30"
-        sl:scale_textsize="20"
-        android:text="@string/hello_world" 
-        android:textColor="@android:color/white"
-        android:background="@android:color/black"
-        />
-      <ImageView 
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        sl:scale_left="200"
-        sl:scale_top="30"
-        sl:scale_width="50"
-        sl:scale_height="50"
-        android:src="@drawable/ic_launcher"
-        />
-    </com.ssomai.android.scalablelayout.ScalableLayout>        
-
+```xml
+<com.ssomai.android.scalablelayout.ScalableLayout
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:background="@android:color/darker_gray"
+  android:layout_above="@+id/main_textview"
+  sl:scale_base_width="400"
+  sl:scale_base_height="200">
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    sl:scale_left="20"
+    sl:scale_top="40"
+    sl:scale_width="100"
+    sl:scale_height="30"
+    sl:scale_textsize="20"
+    android:text="@string/hello_world"
+    android:textColor="@android:color/white"
+    android:background="@android:color/black" />
+  <ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    sl:scale_left="200"
+    sl:scale_top="30"
+    sl:scale_width="50"
+    sl:scale_height="50"
+    android:src="@drawable/ic_launcher" />
+</com.ssomai.android.scalablelayout.ScalableLayout>
+```
 
 # 다양한 비율의 화면에서 ScalableLayout이 적용된 예.
 왼쪽부터 삼성 갤럭시 S4 (1920 x 1080. 16:9), LG 옵티머스 뷰2 (1024 x 768. 4:3), 갤럭시 노트 10.1 (1280 x 800. 8:5)<br/><br/>
@@ -120,6 +116,3 @@ ScalableLayout은 지정받은 비율을 그대로 유지합니다.
 그안에 각 부분들을 ScalableLayout을 만드시는 것입니다.
 
 그리고 기획이나 디자인 단계에 종사하시는 분께 안드로이드에서는 화면비율이 달라지는것을 항상 고려해달라고 부탁드려주세요. ㅎㅎ
-
-
-
