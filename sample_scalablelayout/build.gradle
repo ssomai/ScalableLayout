@@ -27,5 +27,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':library')
+    //compile 'com.ssomai:android.scalablelayout:2.0.0'
     compile 'com.android.support:appcompat-v7:21.0.2'
 }

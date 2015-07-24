@@ -5,12 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="top|left"
-        android:text="글자 늘이기"
+        android:text="글자 키우기"
         android:onClick="onClick_SetMoreText"/>
     <Button
         android:layout_width="wrap_content"
@@ -27,6 +26,79 @@
         android:background="@android:color/darker_gray"
         sl:scale_base_width="600"
         sl:scale_base_height="250" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:text="@string/hello_world"
+            android:textColor="@android:color/white"
+            sl:scale_left="20"
+            sl:scale_top="10"
+            sl:scale_height="25"
+            sl:scale_width="100"
+            sl:scale_textsize="20" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:text="@string/hello_world"
+            android:textColor="@android:color/white"
+            sl:scale_left="130"
+            sl:scale_top="10"
+            sl:scale_height="25"
+            sl:scale_width="100"
+            sl:scale_textsize="20" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:text="@string/hello_world"
+            android:textColor="@android:color/white"
+            sl:scale_left="110"
+            sl:scale_top="15"
+            sl:scale_height="25"
+            sl:scale_width="300"
+            sl:scale_textsize="20" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:text="@string/hello_world"
+            android:textColor="@android:color/white"
+            sl:scale_left="110"
+            sl:scale_top="20"
+            sl:scale_height="25"
+            sl:scale_width="500"
+            sl:scale_textsize="20" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:text="@string/hello_world"
+            android:textColor="@android:color/white"
+            sl:scale_left="490"
+            sl:scale_top="40"
+            sl:scale_height="25"
+            sl:scale_width="100"
+            sl:scale_textsize="20" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:text="@string/hello_world"
+            android:textColor="@android:color/white"
+            sl:scale_left="10"
+            sl:scale_top="100"
+            sl:scale_height="25"
+            sl:scale_width="100"
+            sl:scale_textsize="20" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -47,100 +119,16 @@
             sl:scale_top="90"
             sl:scale_width="300"
             sl:scale_height="40"
-            sl:scale_textsize="30"
-            sl:textview_wrapcontent_direction="right"
-            sl:textview_wrapcontent_resizesurrounded="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/black"
-            android:text="top left"
-            android:textColor="@android:color/white"
-            sl:scale_left="10"
-            sl:scale_top="10"
-            sl:scale_height="25"
-            sl:scale_width="100"
-            sl:scale_textsize="20" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/black"
-            android:text="top big"
-            android:textColor="@android:color/white"
-            sl:scale_left="100"
-            sl:scale_top="10"
-            sl:scale_width="400"
-            sl:scale_height="50"
-            sl:scale_textsize="20" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/black"
-            android:text="top medium"
-            android:textColor="@android:color/white"
-            sl:scale_left="105"
-            sl:scale_top="15"
-            sl:scale_width="300"
-            sl:scale_height="40"
-            sl:scale_textsize="20" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/black"
-            android:text="top small"
-            android:textColor="@android:color/white"
-            sl:scale_left="115"
-            sl:scale_top="20"
-            sl:scale_width="100"
-            sl:scale_height="30"
-            sl:scale_textsize="20" />
+            sl:scale_textsize="40"
+            sl:textview_wrapcontent_direction="top"
+            sl:textview_wrapcontent_resizesurrounded="false" />
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/black"
-            android:text="top right"
-            android:textColor="@android:color/white"
-            sl:scale_left="490"
-            sl:scale_top="10"
-            sl:scale_height="25"
-            sl:scale_width="100"
-            sl:scale_textsize="20" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/black"
-            android:text="right"
-            android:textColor="@android:color/white"
-            sl:scale_left="490"
-            sl:scale_top="100"
-            sl:scale_height="25"
-            sl:scale_width="100"
-            sl:scale_textsize="20" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/black"
-            android:text="left"
-            android:textColor="@android:color/white"
-            sl:scale_left="10"
-            sl:scale_top="100"
-            sl:scale_height="25"
-            sl:scale_width="100"
-            sl:scale_textsize="20" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/black"
-            android:text="bot left"
+            android:text="@string/hello_world"
             android:textColor="@android:color/white"
             sl:scale_left="10"
             sl:scale_top="200"
@@ -152,7 +140,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/black"
-            android:text="bot"
+            android:text="@string/hello_world"
             android:textColor="@android:color/white"
             sl:scale_left="200"
             sl:scale_top="200"
@@ -164,7 +152,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/black"
-            android:text="bot right"
+            android:text="@string/hello_world"
             android:textColor="@android:color/white"
             sl:scale_left="490"
             sl:scale_top="200"
@@ -174,6 +162,7 @@
 
 
     </com.ssomai.android.scalablelayout.ScalableLayout>
+
 
 
 </FrameLayout>
