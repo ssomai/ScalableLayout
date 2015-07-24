@@ -1,1 +1,1 @@
-include ':library', ':sample_scalablelayout'
+include ':library_scalablelayout', ':sample_scalablelayout'

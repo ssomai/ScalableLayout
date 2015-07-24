@@ -28,7 +28,7 @@ S.M.ENTERTAINMENT의 everysing 앱에서도 이용되어 그 우수성을 증명
 그래서 안드로이드 스튜디오나 gradle을 사용하시는 분께서는 아래 dependencies를 build.gradle에 추가해주시면 바로 사용해보실수 있습니다.<br/>
 
     dependencies {
-        compile 'com.ssomai:android.scalablelayout:2.0.0'
+        compile 'com.ssomai:android.scalablelayout:2.1.0'
     }
 
 

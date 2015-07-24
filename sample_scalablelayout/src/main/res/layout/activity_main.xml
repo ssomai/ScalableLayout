@@ -40,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="텍스트뷰"
+            android:text="텍스트aasde3"
             android:id="@+id/tv_moretext"
             android:background="@android:color/white"
             sl:scale_left="145"
@@ -48,8 +48,9 @@
             sl:scale_width="300"
             sl:scale_height="40"
             sl:scale_textsize="30"
-            sl:textview_wrapcontent_direction="right"
-            sl:textview_wrapcontent_resizesurrounded="true" />
+            sl:textview_wrapcontent_direction="center_horizontal"
+            sl:textview_wrapcontent_resizesurrounded="true"
+            sl:textview_wrapcontent_movesiblings="true"/>
 
         <TextView
             android:layout_width="wrap_content"

@@ -459,7 +459,7 @@ public class ScalableLayout extends FrameLayout {
         Bottom,
         Left,
         Right,
-        Cover,
+        Surrounded,
         Nothing
     }
     private ViewPosition getViewPosition(LayoutParams pSrc, LayoutParams pDst) {
@@ -512,7 +512,7 @@ public class ScalableLayout extends FrameLayout {
                 pDst.getScale_Left() <= pSrc.getScale_Left() &&
                 pDst.getScale_Right() >= pSrc.getScale_Right() &&
                 pDst.getScale_Bottom() >= pSrc.getScale_Bottom()) {
-            return ViewPosition.Cover;
+            return ViewPosition.Surrounded;
         }
 
         return ViewPosition.Nothing;
@@ -598,7 +598,7 @@ public class ScalableLayout extends FrameLayout {
                             switch (position) {
                                 case Top: {
                                 } break;
-                                case Cover: {
+                                case Surrounded: {
                                     moveChildView(v,
                                             lSLLP.getScale_Left(), lSLLP.getScale_Top(),
                                             lSLLP.getScale_Width(), lSLLP.getScale_Height()+lTextView_ScaleHeight_Diff);
@@ -621,7 +621,7 @@ public class ScalableLayout extends FrameLayout {
                                case Bottom: {
                                    moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top() + lTextView_ScaleHeight_Diff);
                                } break;
-                               case Cover: {
+                               case Surrounded: {
                                    moveChildView(v,
                                             lSLLP.getScale_Left(), lSLLP.getScale_Top(),
                                             lSLLP.getScale_Width(), lSLLP.getScale_Height() + lTextView_ScaleHeight_Diff);
@@ -643,7 +643,7 @@ public class ScalableLayout extends FrameLayout {
                                 case Bottom: {
                                     moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top() + lTextView_ScaleHeight_Diff);
                                 } break;
-                                case Cover: {
+                                case Surrounded: {
                                     moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top(), lSLLP.getScale_Width(), lSLLP.getScale_Height()+lTextView_ScaleHeight_Diff);
                                 } break;
                                 default: {
@@ -666,7 +666,7 @@ public class ScalableLayout extends FrameLayout {
                             switch (position) {
                                 case Left: {
                                 } break;
-                                case Cover: {
+                                case Surrounded: {
                                     moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top(), lSLLP.getScale_Width()+lTextView_ScaleWidth_Diff, lSLLP.getScale_Height());
                                 } break;
                                 default: {
@@ -687,7 +687,7 @@ public class ScalableLayout extends FrameLayout {
                                 case Right: {
                                     moveChildView(v, lSLLP.getScale_Left()+lTextView_ScaleWidth_Diff, lSLLP.getScale_Top());
                                 } break;
-                                case Cover: {
+                                case Surrounded: {
                                     moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top(), lSLLP.getScale_Width()+lTextView_ScaleWidth_Diff, lSLLP.getScale_Height());
                                 } break;
                             }
@@ -707,7 +707,7 @@ public class ScalableLayout extends FrameLayout {
                                 case Right: {
                                     moveChildView(v, lSLLP.getScale_Left() + lTextView_ScaleWidth_Diff, lSLLP.getScale_Top());
                                 } break;
-                                case Cover: {
+                                case Surrounded: {
                                     moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top(), lSLLP.getScale_Width() + lTextView_ScaleWidth_Diff, lSLLP.getScale_Height());
                                 } break;
                                 default: {
@@ -723,6 +723,96 @@ public class ScalableLayout extends FrameLayout {
                                     moveChildView(v, lSLLP.getScale_Left() + lTextView_ScaleWidth_Diff / 2, lSLLP.getScale_Top());
                                 } break;
                             }
+                        }
+                    } break;
+                    default: {
+                    } break;
+                }
+            }
+        } else {
+            for(int i = 0; i < getChildCount(); i++) {
+                View v = getChildAt(i);
+                if(v == pTV_Text) {
+                    continue;
+                }
+                ScalableLayout.LayoutParams lSLLP = getChildLayoutParams(v);
+                ViewPosition position = getViewPosition(lTV_SLLP, lSLLP);
+
+                switch (lTextView_WrapContent_Direction) {
+                    case Top: {
+                        if(lTV_SLLP.mTextView_WrapContent_ResizeSurrounded) {
+                            switch (position) {
+                                case Surrounded: {
+                                    moveChildView(v,
+                                            lSLLP.getScale_Left(), lSLLP.getScale_Top(),
+                                            lSLLP.getScale_Width(), lSLLP.getScale_Height()+lTextView_ScaleHeight_Diff);
+                                } break;
+                                default: {
+                                    moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top()+lTextView_ScaleHeight_Diff);
+                                } break;
+                            }
+                        } else {
+                        }
+                    } break;
+                    case Bottom: {
+                        if(lTV_SLLP.mTextView_WrapContent_ResizeSurrounded) {
+                            switch (position) {
+                                case Surrounded: {
+                                    moveChildView(v,
+                                            lSLLP.getScale_Left(), lSLLP.getScale_Top(),
+                                            lSLLP.getScale_Width(), lSLLP.getScale_Height() + lTextView_ScaleHeight_Diff);
+                                } break;
+                            }
+                        } else {
+                        }
+                    } break;
+                    case Center_Vertical: {
+                        if(lTV_SLLP.mTextView_WrapContent_ResizeSurrounded) {
+                            switch (position) {
+                                case Surrounded: {
+                                    moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top(), lSLLP.getScale_Width(), lSLLP.getScale_Height()+lTextView_ScaleHeight_Diff);
+                                } break;
+                                default: {
+                                    moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top() + lTextView_ScaleHeight_Diff / 2, lSLLP.getScale_Width(), lSLLP.getScale_Height());
+                                } break;
+                            }
+                        } else {
+                        }
+                    } break;
+                    case Left: {
+                        if(lTV_SLLP.mTextView_WrapContent_ResizeSurrounded) {
+                            switch (position) {
+                                case Surrounded: {
+                                    moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top(), lSLLP.getScale_Width()+lTextView_ScaleWidth_Diff, lSLLP.getScale_Height());
+                                } break;
+                                default: {
+                                    moveChildView(v, lSLLP.getScale_Left()+lTextView_ScaleWidth_Diff, lSLLP.getScale_Top());
+                                } break;
+                            }
+                        } else {
+                        }
+                    } break;
+                    case Right: {
+                        if(lTV_SLLP.mTextView_WrapContent_ResizeSurrounded) {
+                            switch (position) {
+                                case Surrounded: {
+                                    moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top(), lSLLP.getScale_Width()+lTextView_ScaleWidth_Diff, lSLLP.getScale_Height());
+                                } break;
+                            }
+                        } else {
+                        }
+                    } break;
+                    case Center_Horizontal: {
+                        if(lTV_SLLP.mTextView_WrapContent_ResizeSurrounded) {
+                            switch (position) {
+                                case Surrounded: {
+                                    moveChildView(v, lSLLP.getScale_Left(), lSLLP.getScale_Top(), lSLLP.getScale_Width() + lTextView_ScaleWidth_Diff, lSLLP.getScale_Height());
+                                } break;
+                                default: {
+                                    moveChildView(v, lSLLP.getScale_Left() + lTextView_ScaleWidth_Diff / 2, lSLLP.getScale_Top(), lSLLP.getScale_Width(), lSLLP.getScale_Height());
+                                } break;
+                            }
+                        } else {
                         }
                     } break;
                     default: {
