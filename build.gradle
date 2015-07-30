@@ -12,6 +12,7 @@ buildscript {
 }
 
 def isReleaseBuild() {
+    println 'isReleaseBuild ' + (version.contains("SNAPSHOT") == false)
     return version.contains("SNAPSHOT") == false
 }
 
