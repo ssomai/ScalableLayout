@@ -65,6 +65,11 @@ iv.setImageResource(R.drawable.ic_launcher);
 ```
 
 # xml로 뷰를 배치하는 예시 코드
+xml에서 사용하실때는 최상단의 ViewGroup에서 아래 코드가 추가되어 있어야 합니다.
+xmlns:sl에서 sl은 어떤 문자열이든 상관은 없습니다만, 이 값과 동일하게 그 아래에서 사용해야 합니다.
+
+    xmlns:sl="http://schemas.android.com/apk/res-auto"
+    
 ```xml
 <com.ssomai.android.scalablelayout.ScalableLayout
   android:layout_width="match_parent"
@@ -105,6 +110,84 @@ ListView에서 각각의 UI가 정확하게 표현되어 있습니다.<br/><br/>
 
 ![alt tag](https://raw.github.com/ssomai/ScalableLayout/master/images/sl_03_singoption.jpg)
 다이얼로그에서도 각각의 UI가 정확하게 표현되어 있습니다. 비율대로 표현되기 때문에 옵티머스뷰2에서는 좌우의 여백이 큽니다.
+
+# TextView에서 Text 내용에 맞춰서 View크기가 변동되게하는 WrapContent 기능
+
+direction은 wrapcontent할 방향을 지정하는 값입니다.  
+resizesurrounded는 TextView를 감싸고 있는 View들도 TextView크기 변화에 맞춰서 같이 변하게 할것인지 지정하는 값입니다.  
+movesiblings는 wrapcontent할 방향에 있는 view들도 TextView크기 변화에 맞춰서 같이 이동시키게 할것인지 지정하는 값입니다.  
+
+    sl:textview_wrapcontent_direction="bottom"
+    sl:textview_wrapcontent_resizesurrounded="true"
+    sl:textview_wrapcontent_movesiblings="true"
+            
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:sl="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <com.ssomai.android.scalablelayout.ScalableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        sl:scale_base_width="1242"
+        sl:scale_base_height="1200"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            sl:scale_left="300"
+            sl:scale_top="300"
+            sl:scale_width="700"
+            sl:scale_height="50"
+            sl:scale_textsize="100"
+            sl:textview_wrapcontent_direction="bottom"
+            sl:textview_wrapcontent_resizesurrounded="true"
+            sl:textview_wrapcontent_movesiblings="true"
+            android:text="test long text: Hi, everybody. It's good to see you."
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            sl:scale_left="100"
+            sl:scale_top="220"
+            sl:scale_width="1000"
+            sl:scale_height="50"
+            android:background="#00FF00"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            sl:scale_left="100"
+            sl:scale_top="350"
+            sl:scale_width="50"
+            sl:scale_height="500"
+            android:background="#0000FF"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            sl:scale_left="1100"
+            sl:scale_top="400"
+            sl:scale_width="50"
+            sl:scale_height="500"
+            android:background="#00FFFF"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            sl:scale_left="100"
+            sl:scale_top="600"
+            sl:scale_width="1000"
+            sl:scale_height="50"
+            android:background="#FF0000"
+            />
+    </com.ssomai.android.scalablelayout.ScalableLayout>
+
+</LinearLayout>
+```
 
 # ScalableLayout으로 Layout하실 때 참고하셔야 할 점
 ScalableLayout을 Root Layout으로 지정하시는 것은 추천하지 않습니다.
