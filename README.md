@@ -2,6 +2,7 @@ ScalableLayout for Android.
 ====================
 
 Class: com.ssomai.android.scalablelayout.ScalableLayout
+한글버전 README.md: https://github.com/ssomai/ScalableLayout/blob/master/README_ko.md
 
 Just one layout for every different Android device size!<br/>
 ====================
