@@ -28,7 +28,7 @@ S.M.ENTERTAINMENT의 everysing 앱에서도 이용되어 그 우수성을 증명
 그래서 안드로이드 스튜디오나 gradle을 사용하시는 분께서는 아래 dependencies를 build.gradle에 추가해주시면 바로 사용해보실수 있습니다.<br/>
 ```groovy
 dependencies {
-  compile 'com.ssomai:android.scalablelayout:2.1.0'
+  compile 'com.ssomai:android.scalablelayout:2.1.1'
 }
 ```
 
@@ -199,3 +199,11 @@ ScalableLayout은 지정받은 비율을 그대로 유지합니다.
 그안에 각 부분들을 ScalableLayout을 만드시는 것입니다.
 
 그리고 기획이나 디자인 단계에 종사하시는 분께 안드로이드에서는 화면비율이 달라지는것을 항상 고려해달라고 부탁드려주세요. ㅎㅎ
+
+# 중복되는 속성값들을 템플릿으로 사용하기위해 style이나 dimens를 사용하는 방법
+<a href="https://github.com/sion1116">sion1116</a>님이 문의 주신 내용입니다. ㅎ
+아래 링크로 가셔서 참조하시면 될것 같습니다.
+https://github.com/ssomai/ScalableLayout/issues/35
+
+
+
