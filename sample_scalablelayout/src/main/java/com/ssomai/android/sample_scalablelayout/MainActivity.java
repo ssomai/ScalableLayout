@@ -13,18 +13,29 @@ import com.ssomai.android.scalablelayout.ScalableLayout;
 
 public class MainActivity extends ActionBarActivity {
 
-    private static final String DebugTag = "ScalableLayout_TestAndroid";
-    private TextView mTV_Text;
+//    private static final String DebugTag = "ScalableLayout_TestAndroid";
+    private static final String DebugTag = "TestAndroid";
+    private TextView mTV_Log;
     private ScalableLayout mSL;
 
     private static void log(String pLog) {
         Log.e(DebugTag, "MainActivity] " + pLog);
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        ScalableLayout.setLoggable("MainActivity");
+//        ScalableLayout.setLogger(new ScalableLayout.ILogger() {
+//            @Override
+//            public void log(String pLog) {
+//                throw new NullPointerException();
+////                mTV_Log.setText(pLog+"\n"+mTV_Log.getText()+"ssdfsdfsdfsdf");
+//            }
+//        });
+
 		setContentView(R.layout.activity_main);
+//        mTV_Log = (TextView) findViewById(R.id.tv_log);
+
 
 ////		ScalableLayout.setLoggable(DebugTag);
 ////

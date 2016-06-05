@@ -1,4 +1,5 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:sl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -6,18 +7,18 @@
     tools:context=".MainActivity" >
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|left"
-        android:text="글자 늘이기"
-        android:onClick="onClick_SetMoreText"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:text="글자 줄이기"
-        android:onClick="onClick_SetLessText"/>
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="top|left"-->
+        <!--android:text="글자 늘이기"-->
+        <!--android:onClick="onClick_SetMoreText"/>-->
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="top|right"-->
+        <!--android:text="글자 줄이기"-->
+        <!--android:onClick="onClick_SetLessText"/>-->
 
     <com.ssomai.android.scalablelayout.ScalableLayout
         android:layout_width="match_parent"
@@ -26,21 +27,24 @@
         android:layout_gravity="bottom"
         android:background="@android:color/darker_gray"
         sl:scale_base_width="600"
-        sl:scale_base_height="250" >
+        sl:scale_base_height="600"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:color/black"
             sl:scale_left="135"
+            sl:scale_left_baseposition="right"
             sl:scale_top="80"
+            sl:scale_top_baseposition="center"
             sl:scale_width="320"
             sl:scale_height="60" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="텍스트aasde3"
+            android:text="텍스트aasdeqwe3"
             android:id="@+id/tv_moretext"
             android:background="@android:color/white"
             sl:scale_left="145"
@@ -49,8 +53,9 @@
             sl:scale_height="40"
             sl:scale_textsize="30"
             sl:textview_wrapcontent_direction="center_horizontal"
-            sl:textview_wrapcontent_resizesurrounded="true"
-            sl:textview_wrapcontent_movesiblings="true"/>
+            sl:textview_wrapcontent_resizesurrounded="false"
+            sl:textview_wrapcontent_movesiblings="false"
+            />
 
         <TextView
             android:layout_width="wrap_content"

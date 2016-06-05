@@ -1,48 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <!-- 
-    <declare-styleable name="Carousel">
-        <attr name="android:gravity" /> 
-
-        <attr name="android:animationDuration" />
-
-        <attr name="UseReflection" format="boolean"/>
-
-        <attr name="Items" format="integer"/>
-
-        <attr name="SelectedItem" format="integer"/>
-
-        <attr name="maxTheta" format="float"/>
-
-        <attr name="minQuantity" format="integer"/>
-
-        <attr name="maxQuantity" format="integer"/>
-
-        <attr name="Names" format="string" />
-
-    </declare-styleable>    
-	<declare-styleable name="ScaledLayout">
-		<attr name="scale_textsize" format="boolean" />
-		<attr name="scale_width" 	format="boolean" />
-		<attr name="scale_height" 	format="string" />
-	</declare-styleable>  
-	<declare-styleable name="ScaledLayout">
-		<attr name="ScaleWidth" 	format="float" />
-		<attr name="ScaleHeight" 	format="float" />
-	</declare-styleable>  
-     -->
-     
 	<declare-styleable name="ScalableLayout">
-		<attr name="scale_base_width" 		format="float" />
-		<attr name="scale_base_height" 		format="float" />
-		<attr name="scale_textsize" 	format="float" />
-		<attr name="scale_top" 			format="float" />
-		<attr name="scale_left" 		format="float" />
-		<attr name="scale_width" 		format="float" />
-		<attr name="scale_height" 		format="float" />
+		<attr name="scale_base_width" 			format="float" />
+		<attr name="scale_base_height" 			format="float" />
+
+		<!--<attr name="scale_baseposition">-->
+			<!--<flag name="center_vertical" value="0x10"/>-->
+			<!--<flag name="top" value="0x30" />-->
+			<!--<flag name="bottom" value="0x50"/>-->
+
+			<!--<flag name="center_horizontal" value="0x01"/>-->
+			<!--<flag name="left" value="0x03"/>-->
+			<!--<flag name="right" value="0x05"/>-->
+
+			<!--<flag name="center" value="0x11"/>-->
+		<!--</attr>-->
+	</declare-styleable>
+
+
+	<declare-styleable name="View">
+		<attr name="scale_left" 				format="float" />
+		<attr name="scale_top" 					format="float" />
+		<attr name="scale_width" 				format="float" />
+		<attr name="scale_height" 				format="float" />
+
+		<attr name="scale_textsize" 			format="float" />
+
+		<attr name="scale_left_baseposition" format="enum">
+			<enum name="left" value="0" />
+			<enum name="center" value="1" />
+			<enum name="right" value="2" />
+		</attr>
+		<!--<attr name="scale_left_baseposition" format="integer" >-->
+			<!--<flag name="left" value="0" />-->
+			<!--<flag name="center" value="1" />-->
+			<!--<flag name="right" value="2" />-->
+		<!--</attr>-->
+		<attr name="scale_top_baseposition" format="enum">
+			<enum name="top" value="0" />
+			<enum name="center" value="1" />
+			<enum name="bottom" value="2" />
+		</attr>
+	</declare-styleable>
+
+	<declare-styleable name="TextView">
 		<attr name="textview_wrapcontent_direction" 		format="string" />
 		<attr name="textview_wrapcontent_resizesurrounded" 	format="boolean" />
-		<attr name="textview_wrapcontent_movesiblings" 	format="boolean" />
-	</declare-styleable>  
-</resources> 
+		<attr name="textview_wrapcontent_movesiblings" 		format="boolean" />
+	</declare-styleable>
+</resources>
 
