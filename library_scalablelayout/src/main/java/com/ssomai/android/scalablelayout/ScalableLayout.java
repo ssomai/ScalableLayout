@@ -909,7 +909,12 @@ public class ScalableLayout extends FrameLayout {
 
 
     public enum TextView_WrapContent_Direction {
-        None, Left, Right, Center_Horizontal, Top, Bottom, Center_Vertical,
+        None(0), Left(10), Center_Horizontal(20), Right(30), Top(100), Center_Vertical(200), Bottom(300),
+        ;
+        int mValue = 0;
+        TextView_WrapContent_Direction(int pValue) {
+            mValue = pValue;
+        }
     }
     /**
      * ScalableLayout.LayoutParams
@@ -922,14 +927,23 @@ public class ScalableLayout extends FrameLayout {
 
             TextView_WrapContent_Direction dir = TextView_WrapContent_Direction.None;
 
+//            TypedArray attrs_textview = pContext.obtainStyledAttributes(pAttrs, R.styleable.TextView);
+//            String dirstr = attrs_textview.getString(R.styleable.TextView_textview_wrapcontent_direction);
+//            if(dirstr != null) {
+//                for(TextView_WrapContent_Direction d : TextView_WrapContent_Direction.values()) {
+//                    if(dirstr.toLowerCase().compareTo(d.name().toLowerCase()) == 0) {
+//                        dir = d;
+//                        break;
+//                    }
+//                }
+//            }
+
             TypedArray attrs_textview = pContext.obtainStyledAttributes(pAttrs, R.styleable.TextView);
-            String dirstr = attrs_textview.getString(R.styleable.TextView_textview_wrapcontent_direction);
-            if(dirstr != null) {
-                for(TextView_WrapContent_Direction d : TextView_WrapContent_Direction.values()) {
-                    if(dirstr.toLowerCase().compareTo(d.name().toLowerCase()) == 0) {
-                        dir = d;
-                        break;
-                    }
+            int dirstr = attrs_textview.getInteger(R.styleable.TextView_textview_wrapcontent_direction, 0);
+            for(TextView_WrapContent_Direction d : TextView_WrapContent_Direction.values()) {
+                if(d.mValue == dirstr) {
+                    dir = d;
+                    break;
                 }
             }
 

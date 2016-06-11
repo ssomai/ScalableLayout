@@ -44,7 +44,16 @@
 	</declare-styleable>
 
 	<declare-styleable name="TextView">
-		<attr name="textview_wrapcontent_direction" 		format="string" />
+		<!--<attr name="textview_wrapcontent_direction" 		format="string" />-->
+		<attr name="textview_wrapcontent_direction" 		format="enum">
+			<enum name="none" value="0" />
+			<enum name="left" value="10" />
+			<enum name="center_horizontal" value="20" />
+			<enum name="right" value="30" />
+			<enum name="top" value="100" />
+			<enum name="center_vertical" value="200" />
+			<enum name="bottom" value="300" />
+		</attr>
 		<attr name="textview_wrapcontent_resizesurrounded" 	format="boolean" />
 		<attr name="textview_wrapcontent_movesiblings" 		format="boolean" />
 	</declare-styleable>
