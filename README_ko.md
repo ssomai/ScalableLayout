@@ -190,13 +190,16 @@ movesiblings는 wrapcontent할 방향에 있는 view들도 TextView크기 변화
 ```
 
 # ScalableLayout으로 Layout하실 때 참고하셔야 할 점
-ScalableLayout을 Root Layout으로 지정하시는 것은 추천하지 않습니다.
+ScalableLayot으로 화면 전체를 layout하시는 것은 추천하지 않습니다.
 그 이유는 폰마다 화면 비율이 다르기 때문입니다.
 ScalableLayout은 지정받은 비율을 그대로 유지합니다.
 즉, 600 x 1000 로 지정하셨다면 그 비율을 그대로 유지합니다.
 
-추천드리고 싶은 방법은 LinearLayout이나 FrameLayout, RelatvieLayout등을 최상위로 두시고
-그안에 각 부분들을 ScalableLayout을 만드시는 것입니다.
+추천드리고 싶은 방법은 LinearLayout이나 FrameLayout, RelatvieLayout등을 최상위로 두시고,
+화면 비율이 달라질때마다 대응할 수 있도록 flexible한 공간을 만드세요.
+그리고 ScalableLayout은 화면 내의 일부분들에 대해서만 사용하시면 됩니다.
+예를 들어서 화면 아래의 TabBar를 ScalableLayout으로 쓰거나 
+ListView나 RecyclerView내의 ItemView에 대해서 쓰는 등으로 하시면 다양한 해상도 대응에 편해집니다. 
 
 그리고 기획이나 디자인 단계에 종사하시는 분께 안드로이드에서는 화면비율이 달라지는것을 항상 고려해달라고 부탁드려주세요. ㅎㅎ
 
