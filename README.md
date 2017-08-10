@@ -23,7 +23,7 @@ ScalableLayout is used on the EverySing Karaoke app, which was awarded in the Go
 The library is pushed to Maven Central as a AAR, so you just need to add the following dependency to your build.gradle.<br/>
 ```groovy
 dependencies {
-  compile 'com.ssomai:android.scalablelayout:2.1.0'
+  compile 'com.ssomai:android.scalablelayout:2.1.3'
 }
 ```
 
@@ -61,33 +61,41 @@ iv.setImageResource(R.drawable.ic_launcher);
 
 # Simple example in XML
 ```xml
-<com.ssomai.android.scalablelayout.ScalableLayout
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:background="@android:color/darker_gray"
-  android:layout_above="@+id/main_textview"
-  sl:scale_base_width="400"
-  sl:scale_base_height="200">
-  <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    sl:scale_left="20"
-    sl:scale_top="40"
-    sl:scale_width="100"
-    sl:scale_height="30"
-    sl:scale_textsize="20"
-    android:text="@string/hello_world"
-    android:textColor="@android:color/white"
-    android:background="@android:color/black" />
-  <ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    sl:scale_left="200"
-    sl:scale_top="30"
-    sl:scale_width="50"
-    sl:scale_height="50"
-    android:src="@drawable/ic_launcher" />
-</com.ssomai.android.scalablelayout.ScalableLayout>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+	<com.ssomai.android.scalablelayout.ScalableLayout
+	  android:layout_width="match_parent"
+	  android:layout_height="wrap_content"
+	  android:background="@android:color/darker_gray"
+	  android:layout_above="@+id/main_textview"
+	  app:scale_base_width="400"
+	  app:scale_base_height="200">
+	  <TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:scale_left="20"
+		app:scale_top="40"
+		app:scale_width="100"
+		app:scale_height="30"
+		app:scale_textsize="20"
+		android:text="@string/hello_world"
+		android:textColor="@android:color/white"
+		android:background="@android:color/black" />
+	  <ImageView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:scale_left="200"
+		app:scale_top="30"
+		app:scale_width="50"
+		app:scale_height="50"
+		android:src="@drawable/ic_launcher" />
+	</com.ssomai.android.scalablelayout.ScalableLayout>
+</FrameLayout>
 ```
 
 Examples of ScalableLayout on different resolutions of Android devices.

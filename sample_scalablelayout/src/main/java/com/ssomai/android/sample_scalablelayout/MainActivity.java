@@ -118,7 +118,7 @@ public class MainActivity extends ActionBarActivity {
 //        mSL = new ScalableLayout(this, 400, 500);
 ////		mSL = (ScalableLayout) findViewById(R.id.main_sl);
 //        mSL.setBackgroundColor(Color.LTGRAY);
-//        ScalableLayout.setLoggable(DebugTag);
+        ScalableLayout.setLoggable(DebugTag);
 //
 ////		RelativeLayout rl = (RelativeLayout)findViewById(R.id.main_relativelayout);
 ////		RelativeLayout.LayoutParams rllp = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);

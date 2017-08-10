@@ -24,6 +24,7 @@
 		<attr name="scale_width" 				format="float" />
 		<attr name="scale_height" 				format="float" />
 
+
 		<attr name="scale_textsize" 			format="float" />
 
 		<attr name="scale_left_baseposition" format="enum">
@@ -45,6 +46,7 @@
 
 	<declare-styleable name="TextView">
 		<!--<attr name="textview_wrapcontent_direction" 		format="string" />-->
+		<attr name="textview_wrapcontent_scale_maxwidth" 	format="float" />
 		<attr name="textview_wrapcontent_direction" 		format="enum">
 			<enum name="none" value="0" />
 			<enum name="left" value="10" />

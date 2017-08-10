@@ -66,38 +66,46 @@ iv.setImageResource(R.drawable.ic_launcher);
 
 # xml로 뷰를 배치하는 예시 코드
 xml에서 사용하실때는 최상단의 ViewGroup에서 아래 코드가 추가되어 있어야 합니다.
-xmlns:sl에서 sl은 어떤 문자열이든 상관은 없습니다만, 이 값과 동일하게 그 아래에서 사용해야 합니다.
+xmlns:app에서 app은 어떤 문자열이든 상관은 없습니다만, 이 값과 동일하게 그 아래에서 사용해야 합니다.
 
-    xmlns:sl="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     
 ```xml
-<com.ssomai.android.scalablelayout.ScalableLayout
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:background="@android:color/darker_gray"
-  android:layout_above="@+id/main_textview"
-  sl:scale_base_width="400"
-  sl:scale_base_height="200">
-  <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    sl:scale_left="20"
-    sl:scale_top="40"
-    sl:scale_width="100"
-    sl:scale_height="30"
-    sl:scale_textsize="20"
-    android:text="@string/hello_world"
-    android:textColor="@android:color/white"
-    android:background="@android:color/black" />
-  <ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    sl:scale_left="200"
-    sl:scale_top="30"
-    sl:scale_width="50"
-    sl:scale_height="50"
-    android:src="@drawable/ic_launcher" />
-</com.ssomai.android.scalablelayout.ScalableLayout>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+	<com.ssomai.android.scalablelayout.ScalableLayout
+	  android:layout_width="match_parent"
+	  android:layout_height="wrap_content"
+	  android:background="@android:color/darker_gray"
+	  android:layout_above="@+id/main_textview"
+	  app:scale_base_width="400"
+	  app:scale_base_height="200">
+	  <TextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:scale_left="20"
+		app:scale_top="40"
+		app:scale_width="100"
+		app:scale_height="30"
+		app:scale_textsize="20"
+		android:text="@string/hello_world"
+		android:textColor="@android:color/white"
+		android:background="@android:color/black" />
+	  <ImageView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		app:scale_left="200"
+		app:scale_top="30"
+		app:scale_width="50"
+		app:scale_height="50"
+		android:src="@drawable/ic_launcher" />
+	</com.ssomai.android.scalablelayout.ScalableLayout>
+</FrameLayout>
 ```
 
 # 다양한 비율의 화면에서 ScalableLayout이 적용된 예.
@@ -117,71 +125,73 @@ direction은 wrapcontent할 방향을 지정하는 값입니다.
 resizesurrounded는 TextView를 감싸고 있는 View들도 TextView크기 변화에 맞춰서 같이 변하게 할것인지 지정하는 값입니다.  
 movesiblings는 wrapcontent할 방향에 있는 view들도 TextView크기 변화에 맞춰서 같이 이동시키게 할것인지 지정하는 값입니다.  
 
-    sl:textview_wrapcontent_direction="bottom"
-    sl:textview_wrapcontent_resizesurrounded="true"
-    sl:textview_wrapcontent_movesiblings="true"
+    app:textview_wrapcontent_direction="bottom"
+    app:textview_wrapcontent_resizesurrounded="true"
+    app:textview_wrapcontent_movesiblings="true"
             
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:sl="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	>
     <com.ssomai.android.scalablelayout.ScalableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
-        sl:scale_base_width="1242"
-        sl:scale_base_height="1200"
+        app:scale_base_width="1242"
+        app:scale_base_height="1200"
         >
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            sl:scale_left="300"
-            sl:scale_top="300"
-            sl:scale_width="700"
-            sl:scale_height="50"
-            sl:scale_textsize="100"
-            sl:textview_wrapcontent_direction="bottom"
-            sl:textview_wrapcontent_resizesurrounded="true"
-            sl:textview_wrapcontent_movesiblings="true"
+            app:scale_left="300"
+            app:scale_top="300"
+            app:scale_width="700"
+            app:scale_height="50"
+            app:scale_textsize="100"
+            app:textview_wrapcontent_direction="bottom"
+            app:textview_wrapcontent_resizesurrounded="true"
+            app:textview_wrapcontent_movesiblings="true"
             android:text="test long text: Hi, everybody. It's good to see you."
             />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            sl:scale_left="100"
-            sl:scale_top="220"
-            sl:scale_width="1000"
-            sl:scale_height="50"
+            app:scale_left="100"
+            app:scale_top="220"
+            app:scale_width="1000"
+            app:scale_height="50"
             android:background="#00FF00"
             />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            sl:scale_left="100"
-            sl:scale_top="350"
-            sl:scale_width="50"
-            sl:scale_height="500"
+            app:scale_left="100"
+            app:scale_top="350"
+            app:scale_width="50"
+            app:scale_height="500"
             android:background="#0000FF"
             />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            sl:scale_left="1100"
-            sl:scale_top="400"
-            sl:scale_width="50"
-            sl:scale_height="500"
+            app:scale_left="1100"
+            app:scale_top="400"
+            app:scale_width="50"
+            app:scale_height="500"
             android:background="#00FFFF"
             />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            sl:scale_left="100"
-            sl:scale_top="600"
-            sl:scale_width="1000"
-            sl:scale_height="50"
+            app:scale_left="100"
+            app:scale_top="600"
+            app:scale_width="1000"
+            app:scale_height="50"
             android:background="#FF0000"
             />
     </com.ssomai.android.scalablelayout.ScalableLayout>
