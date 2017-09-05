@@ -29,6 +29,8 @@
             app:scale_height="120"
             app:scale_textsize="45"
 
+            app:scale_left_baseposition="left"
+
             app:textview_wrapcontent_scale_maxwidth="286"
             app:textview_wrapcontent_direction="right"
             app:textview_wrapcontent_resizesurrounded="false"

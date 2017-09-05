@@ -19,7 +19,6 @@ android {
     lintOptions {
         abortOnError false
     }
-
 }
 
 if(hasProperty('nexusUsername') && hasProperty('nexusPassword')) {

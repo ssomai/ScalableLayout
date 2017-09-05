@@ -201,7 +201,7 @@ movesiblings는 wrapcontent할 방향에 있는 view들도 TextView크기 변화
 
 
 # TextView의 WrapContent를 사용할때 최대 확장값 세팅하는 기능 추가 2017.08.10, v2.1.3 
-아래 링크의 이슈를 주셔서 작업했습니다
+아래 링크의 이슈를 주셔서 작업했습니다.    
 https://github.com/ssomai/ScalableLayout/issues/49
     
     app:textview_wrapcontent_scale_maxwidth="286"

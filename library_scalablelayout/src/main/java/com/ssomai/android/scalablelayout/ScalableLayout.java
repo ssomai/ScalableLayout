@@ -102,8 +102,8 @@ public class ScalableLayout extends FrameLayout {
      */
     public ScalableLayout(Context pContext, AttributeSet pAttrs) {
         this(pContext, pAttrs,
-                pContext.obtainStyledAttributes(pAttrs, R.styleable.ScalableLayout).getFloat(R.styleable.ScalableLayout_scale_base_width, Default_Scale_Base_Width),
-                pContext.obtainStyledAttributes(pAttrs, R.styleable.ScalableLayout).getFloat(R.styleable.ScalableLayout_scale_base_height, Default_Scale_Base_Height)
+                pContext.obtainStyledAttributes(pAttrs, com.ssomai.android.scalablelayout.R.styleable.ScalableLayout).getFloat(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_scale_base_width, Default_Scale_Base_Width),
+                pContext.obtainStyledAttributes(pAttrs, com.ssomai.android.scalablelayout.R.styleable.ScalableLayout).getFloat(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_scale_base_height, Default_Scale_Base_Height)
         );
     }
 
@@ -148,6 +148,7 @@ public class ScalableLayout extends FrameLayout {
         }
         return (ScalableLayout.LayoutParams) pChild.getLayoutParams();
     }
+
     /**
      * sets TextSize of TextView and EdiText to scale automatically
      * @param pTextView
@@ -909,25 +910,24 @@ public class ScalableLayout extends FrameLayout {
 
             TextView_WrapContent_Direction dir = TextView_WrapContent_Direction.None;
 
-            {
-                TypedArray attrs_view = pContext.obtainStyledAttributes(pAttrs, R.styleable.View);
-                int lLeft_BasePosition = attrs_view.getInteger(R.styleable.View_scale_left_baseposition, Default_Scale_Left_BasePosition);
-                int lTop_BasePosition = attrs_view.getInteger(R.styleable.View_scale_top_baseposition, Default_Scale_Top_BasePosition);
-                float lScale_Left = attrs_view.getFloat(R.styleable.View_scale_left, Default_Scale_Left);
-                float lScale_Top = attrs_view.getFloat(R.styleable.View_scale_top, Default_Scale_Top);
+            // 2017.09.05 XML preview 안되던 현상  <eat-comment/> 덕분인듯?
+            // 그건 아닌듯 그냥 build후에 하니까 되는듯
+                TypedArray attrs_view = pContext.obtainStyledAttributes(pAttrs, com.ssomai.android.scalablelayout.R.styleable.View2);
+            float lScale_Left = attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.View2_scale_left, Default_Scale_Left);
+                int lLeft_BasePosition = attrs_view.getInteger(com.ssomai.android.scalablelayout.R.styleable.View2_scale_left_baseposition, Default_Scale_Left_BasePosition);
+            float lScale_Top = attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.View2_scale_top, Default_Scale_Top);
+                int lTop_BasePosition = attrs_view.getInteger(com.ssomai.android.scalablelayout.R.styleable.View2_scale_top_baseposition, Default_Scale_Top_BasePosition);
 
                 setScale_Left(lScale_Left);
                 setScale_Left_BasePosition(lLeft_BasePosition);
                 setScale_Top(lScale_Top);
                 setScale_Top_BasePosition(lTop_BasePosition);
-                setScale_Width(attrs_view.getFloat(R.styleable.View_scale_width, Default_Scale_Width));
-                setScale_Height(attrs_view.getFloat(R.styleable.View_scale_height, Default_Scale_Height));
-                setScale_TextSize(attrs_view.getFloat(R.styleable.View_scale_textsize, Default_Scale_TextSize));
-            }
+                setScale_Width(attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.View2_scale_width, Default_Scale_Width));
+                setScale_Height(attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.View2_scale_height, Default_Scale_Height));
+                setScale_TextSize(attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.View2_scale_textsize, Default_Scale_TextSize));
 
-            try {
-                TypedArray attrs_textview = pContext.obtainStyledAttributes(pAttrs, R.styleable.TextView);
-                int dirstr = attrs_textview.getInteger(R.styleable.TextView_textview_wrapcontent_direction, 0);
+                TypedArray attrs_textview = pContext.obtainStyledAttributes(pAttrs, com.ssomai.android.scalablelayout.R.styleable.TextView);
+                int dirstr = attrs_textview.getInteger(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_direction, 0);
                 for (TextView_WrapContent_Direction d : TextView_WrapContent_Direction.values()) {
                     if (d.mValue == dirstr) {
                         dir = d;
@@ -935,13 +935,27 @@ public class ScalableLayout extends FrameLayout {
                     }
                 }
                 setTextView_WrapContent(dir,
-                        attrs_textview.getBoolean(R.styleable.TextView_textview_wrapcontent_resizesurrounded, false),
-                        attrs_textview.getBoolean(R.styleable.TextView_textview_wrapcontent_movesiblings, true));
-                setTextView_WrapContent_Scale_MaxWidth(attrs_textview.getFloat(R.styleable.TextView_textview_wrapcontent_scale_maxwidth, Default_TextView_WrapContent_Scale_MaxWidth));
-//                setTextView_WrapContent_Scale_MaxWidth(100f);
-            } catch (Throwable e) {
-                ex(e);
-            }
+                        attrs_textview.getBoolean(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_resizesurrounded, false),
+                        attrs_textview.getBoolean(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_movesiblings, true));
+                setTextView_WrapContent_Scale_MaxWidth(attrs_textview.getFloat(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_scale_maxwidth, Default_TextView_WrapContent_Scale_MaxWidth));
+
+//            try {
+//                TypedArray attrs_textview = pContext.obtainStyledAttributes(pAttrs, com.ssomai.android.scalablelayout.R.styleable.TextView);
+//                int dirstr = attrs_textview.getInteger(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_direction, 0);
+//                for (TextView_WrapContent_Direction d : TextView_WrapContent_Direction.values()) {
+//                    if (d.mValue == dirstr) {
+//                        dir = d;
+//                        break;
+//                    }
+//                }
+//                setTextView_WrapContent(dir,
+//                        attrs_textview.getBoolean(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_resizesurrounded, false),
+//                        attrs_textview.getBoolean(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_movesiblings, true));
+//                setTextView_WrapContent_Scale_MaxWidth(attrs_textview.getFloat(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_scale_maxwidth, Default_TextView_WrapContent_Scale_MaxWidth));
+////                setTextView_WrapContent_Scale_MaxWidth(100f);
+//            } catch (Throwable e) {
+//                ex(e);
+//            }
         }
         public LayoutParams(
                 float pScale_Left, float pScale_Top,
