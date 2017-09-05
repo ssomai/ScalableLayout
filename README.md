@@ -23,7 +23,7 @@ ScalableLayout is used on the EverySing Karaoke app, which was awarded in the Go
 The library is pushed to Maven Central as a AAR, so you just need to add the following dependency to your build.gradle.<br/>
 ```groovy
 dependencies {
-  compile 'com.ssomai:android.scalablelayout:2.1.3'
+  compile 'com.ssomai:android.scalablelayout:2.1.6'
 }
 ```
 
