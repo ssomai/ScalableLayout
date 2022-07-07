@@ -17,11 +17,10 @@
 		<!--</attr>-->
 	</declare-styleable>
 
-
 	<!--2017.09.05 XML preview 안되던 현상  <eat-comment/> 덕분인듯?-->
 	<eat-comment />
 
-	<declare-styleable name="View2">
+	<declare-styleable name="ScalableLayout_Layout">
 		<attr name="scale_left" 				format="float" />
 		<attr name="scale_top" 					format="float" />
 		<attr name="scale_width" 				format="float" />
@@ -39,11 +38,7 @@
 			<enum name="center" value="1" />
 			<enum name="bottom" value="2" />
 		</attr>
-	</declare-styleable>
 
-	<eat-comment />
-
-	<declare-styleable name="TextView">
 		<!--<attr name="textview_wrapcontent_direction" 		format="string" />-->
 		<attr name="textview_wrapcontent_scale_maxwidth" 	format="float" />
 		<attr name="textview_wrapcontent_direction" 		format="enum">
@@ -58,5 +53,8 @@
 		<attr name="textview_wrapcontent_resizesurrounded" 	format="boolean" />
 		<attr name="textview_wrapcontent_movesiblings" 		format="boolean" />
 	</declare-styleable>
+
+	<eat-comment />
+
 </resources>
 

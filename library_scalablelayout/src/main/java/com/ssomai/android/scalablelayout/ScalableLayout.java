@@ -912,22 +912,22 @@ public class ScalableLayout extends FrameLayout {
 
             // 2017.09.05 XML preview 안되던 현상  <eat-comment/> 덕분인듯?
             // 그건 아닌듯 그냥 build후에 하니까 되는듯
-                TypedArray attrs_view = pContext.obtainStyledAttributes(pAttrs, com.ssomai.android.scalablelayout.R.styleable.View2);
-            float lScale_Left = attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.View2_scale_left, Default_Scale_Left);
-                int lLeft_BasePosition = attrs_view.getInteger(com.ssomai.android.scalablelayout.R.styleable.View2_scale_left_baseposition, Default_Scale_Left_BasePosition);
-            float lScale_Top = attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.View2_scale_top, Default_Scale_Top);
-                int lTop_BasePosition = attrs_view.getInteger(com.ssomai.android.scalablelayout.R.styleable.View2_scale_top_baseposition, Default_Scale_Top_BasePosition);
+                TypedArray attrs_view = pContext.obtainStyledAttributes(pAttrs, com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout);
+            float lScale_Left = attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_scale_left, Default_Scale_Left);
+                int lLeft_BasePosition = attrs_view.getInteger(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_scale_left_baseposition, Default_Scale_Left_BasePosition);
+            float lScale_Top = attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_scale_top, Default_Scale_Top);
+                int lTop_BasePosition = attrs_view.getInteger(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_scale_top_baseposition, Default_Scale_Top_BasePosition);
 
                 setScale_Left(lScale_Left);
                 setScale_Left_BasePosition(lLeft_BasePosition);
                 setScale_Top(lScale_Top);
                 setScale_Top_BasePosition(lTop_BasePosition);
-                setScale_Width(attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.View2_scale_width, Default_Scale_Width));
-                setScale_Height(attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.View2_scale_height, Default_Scale_Height));
-                setScale_TextSize(attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.View2_scale_textsize, Default_Scale_TextSize));
+                setScale_Width(attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_scale_width, Default_Scale_Width));
+                setScale_Height(attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_scale_height, Default_Scale_Height));
+                setScale_TextSize(attrs_view.getFloat(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_scale_textsize, Default_Scale_TextSize));
 
-                TypedArray attrs_textview = pContext.obtainStyledAttributes(pAttrs, com.ssomai.android.scalablelayout.R.styleable.TextView);
-                int dirstr = attrs_textview.getInteger(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_direction, 0);
+                TypedArray attrs_textview = pContext.obtainStyledAttributes(pAttrs, com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout);
+                int dirstr = attrs_textview.getInteger(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_textview_wrapcontent_direction, 0);
                 for (TextView_WrapContent_Direction d : TextView_WrapContent_Direction.values()) {
                     if (d.mValue == dirstr) {
                         dir = d;
@@ -935,13 +935,13 @@ public class ScalableLayout extends FrameLayout {
                     }
                 }
                 setTextView_WrapContent(dir,
-                        attrs_textview.getBoolean(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_resizesurrounded, false),
-                        attrs_textview.getBoolean(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_movesiblings, true));
-                setTextView_WrapContent_Scale_MaxWidth(attrs_textview.getFloat(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_scale_maxwidth, Default_TextView_WrapContent_Scale_MaxWidth));
+                        attrs_textview.getBoolean(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_textview_wrapcontent_resizesurrounded, false),
+                        attrs_textview.getBoolean(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_textview_wrapcontent_movesiblings, true));
+                setTextView_WrapContent_Scale_MaxWidth(attrs_textview.getFloat(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_textview_wrapcontent_scale_maxwidth, Default_TextView_WrapContent_Scale_MaxWidth));
 
 //            try {
-//                TypedArray attrs_textview = pContext.obtainStyledAttributes(pAttrs, com.ssomai.android.scalablelayout.R.styleable.TextView);
-//                int dirstr = attrs_textview.getInteger(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_direction, 0);
+//                TypedArray attrs_textview = pContext.obtainStyledAttributes(pAttrs, com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout);
+//                int dirstr = attrs_textview.getInteger(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_textview_wrapcontent_direction, 0);
 //                for (TextView_WrapContent_Direction d : TextView_WrapContent_Direction.values()) {
 //                    if (d.mValue == dirstr) {
 //                        dir = d;
@@ -949,9 +949,9 @@ public class ScalableLayout extends FrameLayout {
 //                    }
 //                }
 //                setTextView_WrapContent(dir,
-//                        attrs_textview.getBoolean(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_resizesurrounded, false),
-//                        attrs_textview.getBoolean(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_movesiblings, true));
-//                setTextView_WrapContent_Scale_MaxWidth(attrs_textview.getFloat(com.ssomai.android.scalablelayout.R.styleable.TextView_textview_wrapcontent_scale_maxwidth, Default_TextView_WrapContent_Scale_MaxWidth));
+//                        attrs_textview.getBoolean(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_textview_wrapcontent_resizesurrounded, false),
+//                        attrs_textview.getBoolean(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_textview_wrapcontent_movesiblings, true));
+//                setTextView_WrapContent_Scale_MaxWidth(attrs_textview.getFloat(com.ssomai.android.scalablelayout.R.styleable.ScalableLayout_Layout_textview_wrapcontent_scale_maxwidth, Default_TextView_WrapContent_Scale_MaxWidth));
 ////                setTextView_WrapContent_Scale_MaxWidth(100f);
 //            } catch (Throwable e) {
 //                ex(e);
