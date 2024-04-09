@@ -1,19 +1,29 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion "30.0.2"
+    compileSdkVersion 30
     defaultConfig {
         applicationId 'com.ssomai.android.sample_scalablelayout'
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdkVersion 21
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+
+//        jackOptions {
+//            enabled true
+//        }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_7
+//        targetCompatibility JavaVersion.VERSION_1_7
+//    }
+
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+////        incremental true
+//    }
     buildTypes {
         release {
             minifyEnabled false
@@ -22,9 +32,20 @@ android {
     }
     productFlavors {
     }
-    lintOptions {
-        abortOnError false
-    }
+//    dexOptions {
+////        jumboMode = true
+//        dexInProcess true
+//        javaMaxHeapSize '12g'
+//        // 2017.09.20 컴파일 속도 올리기
+//        maxProcessCount = 8
+//        preDexLibraries true
+//    }
+//    lintOptions {
+//        disable 'InvalidPackage'
+//        abortOnError false
+//    }
+
+
 
 //    sourceSets {
 //        androidTest {
@@ -52,8 +73,8 @@ dependencies {
 //    compile 'com.android.support:appcompat-v7:25.3.1'
 //    compile 'com.android.support:design:25.3.1'
 
-    compile 'com.android.support:appcompat-v7:26.+'
-    compile 'com.android.support:design:26.+'
+//    compile 'com.android.support:appcompat-v7:29.'
+//    compile 'com.android.support:design:30.+'
 
 //    compile 'me.grantland:autofittextview:0.2.+'
 

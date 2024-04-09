@@ -13,8 +13,8 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="@string/hello_world" />
-        
-    <!-- 
+
+    <!--
     xmlns:sl="http://schemas.android.com/apk/res/com.jnm.android.widget.scalablelayout_testandroid"
     <RadioGroup
         android:layout_width="match_parent"
@@ -36,7 +36,7 @@
             sl:scale_top="40"
             sl:scale_height="100"
             sl:scale_width="600"
-            sl:scale_textsize="60" 
+            sl:scale_textsize="60"
               />
             <RadioButton
             android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
             sl:scale_top="140"
             sl:scale_height="100"
             sl:scale_width="600"
-            sl:scale_textsize="70" 
+            sl:scale_textsize="70"
               />
             <RadioButton
             android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
             sl:scale_top="240"
             sl:scale_height="100"
             sl:scale_width="600"
-            sl:scale_textsize="80" 
+            sl:scale_textsize="80"
               />
         </com.jnm.android.widget.ScalableLayout>
     </RadioGroup>

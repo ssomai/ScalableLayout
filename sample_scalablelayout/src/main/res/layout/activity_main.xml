@@ -1,280 +1,375 @@
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity">
 
-    <com.ssomai.android.scalablelayout.ScalableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <!--    <com.ssomai.android.scalablelayout.ScalableLayout-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
 
-        app:scale_base_width="506"
-        app:scale_base_height="120"
-        >
-        <TextView
-            android:id="@+id/txtView"
+    <!--        app:scale_base_width="506"-->
+    <!--        app:scale_base_height="120"-->
+    <!--        >-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/txtView"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:gravity="left|center_vertical"-->
+    <!--            android:maxLines="1"-->
+    <!--            android:ellipsize="end"-->
+
+    <!--            android:text="testscalab"-->
+
+    <!--            app:scale_left="0"-->
+    <!--            app:scale_top="0"-->
+    <!--            app:scale_width="0"-->
+    <!--            app:scale_height="120"-->
+    <!--            app:scale_textsize="45"-->
+
+    <!--            app:scale_left_baseposition="left"-->
+
+    <!--            app:textview_wrapcontent_scale_maxwidth="286"-->
+    <!--            app:textview_wrapcontent_direction="right"-->
+    <!--            app:textview_wrapcontent_resizesurrounded="false"-->
+    <!--            app:textview_wrapcontent_movesiblings="true"-->
+    <!--            />-->
+
+    <!--        &lt;!&ndash; TextView 우측에 위치시킬 뷰... &ndash;&gt;-->
+    <!--        <View-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:background="@android:color/holo_green_dark"-->
+    <!--            app:scale_left="100"-->
+    <!--            app:scale_top="0"-->
+    <!--            app:scale_width="120"-->
+    <!--            app:scale_height="120"-->
+    <!--            />-->
+
+    <!--    </com.ssomai.android.scalablelayout.ScalableLayout>-->
+
+    <!--        android:fontFamily="@font/notosans_bold"-->
+    <!--    android:fontFamily="@font/notosans_regular"-->
+    <!--    android:textColor="@color/color_black"-->
+    <!--    android:background="@drawable/img_patient_settings"-->
+
+<!--    <FrameLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/txtUserName"-->
+<!--            android:layout_width="50dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="#FF0"-->
+<!--            android:ellipsize="end"-->
+<!--            android:gravity="center_vertical|left"-->
+<!--            android:maxLines="1"-->
+<!--            android:text="김sdsdsdsiojiojlkmlm"-->
+<!--            android:textColor="#000000"-->
+<!--            app:scale_height="30"-->
+<!--            app:scale_left="8"-->
+<!--            app:scale_textsize="20"-->
+<!--            app:scale_top="10"-->
+<!--            app:scale_width="140"-->
+<!--            app:textview_wrapcontent_direction="right"-->
+<!--            app:textview_wrapcontent_movesiblings="true"-->
+<!--            app:textview_wrapcontent_resizesurrounded="true"-->
+<!--            app:textview_wrapcontent_scale_maxwidth="145" />-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/imgPatient"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="end"-->
+<!--            android:onClick="onClick_imgPatient"-->
+<!--            app:scale_height="22"-->
+<!--            app:scale_left="283"-->
+<!--            app:scale_top="15"-->
+<!--            app:scale_width="20" />-->
+<!--    </FrameLayout>-->
+
+        <com.ssomai.android.scalablelayout.ScalableLayout
+            android:id="@+id/patientResultScalable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="left|center_vertical"
-            android:maxLines="1"
-            android:ellipsize="end"
-
-            android:text="testscalab"
-
-            app:scale_left="0"
-            app:scale_top="0"
-            app:scale_width="0"
-            app:scale_height="120"
-            app:scale_textsize="45"
-
-            app:scale_left_baseposition="left"
-
-            app:textview_wrapcontent_scale_maxwidth="286"
-            app:textview_wrapcontent_direction="right"
-            app:textview_wrapcontent_resizesurrounded="false"
-            app:textview_wrapcontent_movesiblings="true"
-            />
-
-        <!-- TextView 우측에 위치시킬 뷰... -->
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/holo_green_dark"
-            app:scale_left="100"
-            app:scale_top="0"
-            app:scale_width="120"
-            app:scale_height="120"
-            />
-
-    </com.ssomai.android.scalablelayout.ScalableLayout>
+            app:scale_base_height="100"
+            app:scale_base_width="300"
+            app:scale_height="40"
+            app:scale_left="15"
+            app:scale_top="68"
+            app:scale_width="350">
+            <TextView
+                android:id="@+id/txtUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical|left"
+                android:maxLines="1"
+                android:text="김sdsdsdsiojiojlkmlm"
+                android:textColor="#000000"
+                android:background="#FF0"
+                app:scale_height="80"
+                app:scale_left="8"
+                app:scale_textsize="20"
+                app:scale_top="10"
+                app:scale_width="110"
+                app:textview_wrapcontent_direction="right"
+                app:textview_wrapcontent_movesiblings="true"
+                app:textview_wrapcontent_resizesurrounded="true"
+                app:textview_wrapcontent_scale_maxwidth="145" />
+            <TextView
+                android:id="@+id/txtUserInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:text="(Female, 49 y/o)"
+                android:textColor="#000000"
+                app:scale_height="25"
+                app:scale_left="148"
+                app:scale_textsize="16"
+                app:scale_top="15"
+                app:scale_width="130"
+                app:textview_wrapcontent_direction="right"
+                app:textview_wrapcontent_movesiblings="true"
+                app:textview_wrapcontent_resizesurrounded="true" />
+            <ImageButton
+                android:id="@+id/imgPatient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onClick_imgPatient"
+                app:scale_height="22"
+                app:scale_left="283"
+                app:scale_top="15"
+                app:scale_width="20" />
+        </com.ssomai.android.scalablelayout.ScalableLayout>
 
     <!--<Button-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="top|left"-->
-        <!--android:text="글자 늘이기"-->
-        <!--android:onClick="onClick_SetMoreText"/>-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="top|left"-->
+    <!--android:text="글자 늘이기"-->
+    <!--android:onClick="onClick_SetMoreText"/>-->
     <!--<Button-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="top|right"-->
-        <!--android:text="글자 줄이기"-->
-        <!--android:onClick="onClick_SetLessText"/>-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="top|right"-->
+    <!--android:text="글자 줄이기"-->
+    <!--android:onClick="onClick_SetLessText"/>-->
 
     <!--<com.ssomai.android.scalablelayout.ScalableLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:id="@+id/main_sl"-->
-        <!--android:layout_gravity="bottom"-->
-        <!--android:background="@android:color/darker_gray"-->
-        <!--app:scale_base_width="600"-->
-        <!--app:scale_base_height="600"-->
-        <!--&gt;-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:id="@+id/main_sl"-->
+    <!--android:layout_gravity="bottom"-->
+    <!--android:background="@android:color/darker_gray"-->
+    <!--app:scale_base_width="600"-->
+    <!--app:scale_base_height="600"-->
+    <!--&gt;-->
 
-        <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@android:color/black"-->
-            <!--app:scale_left="335"-->
-            <!--app:scale_left_baseposition="right"-->
-            <!--app:scale_top="80"-->
-            <!--app:scale_top_baseposition="center"-->
-            <!--app:scale_width="320"-->
-            <!--app:scale_height="60" />-->
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:src="@android:color/black"-->
+    <!--app:scale_left="335"-->
+    <!--app:scale_left_baseposition="right"-->
+    <!--app:scale_top="80"-->
+    <!--app:scale_top_baseposition="center"-->
+    <!--app:scale_width="320"-->
+    <!--app:scale_height="60" />-->
 
-        <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:text="텍스트aasdeqwe3"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:id="@+id/tv_moretext"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:background="@android:color/white"&ndash;&gt;-->
-            <!--&lt;!&ndash;sl:scale_left="145"&ndash;&gt;-->
-            <!--&lt;!&ndash;sl:scale_top="90"&ndash;&gt;-->
-            <!--&lt;!&ndash;sl:scale_width="300"&ndash;&gt;-->
-            <!--&lt;!&ndash;sl:scale_height="40"&ndash;&gt;-->
-            <!--&lt;!&ndash;sl:scale_textsize="30"&ndash;&gt;-->
-            <!--&lt;!&ndash;sl:textview_wrapcontent_direction="center_horizontal"&ndash;&gt;-->
-            <!--&lt;!&ndash;sl:textview_wrapcontent_resizesurrounded="false"&ndash;&gt;-->
-            <!--&lt;!&ndash;sl:textview_wrapcontent_movesiblings="false"&ndash;&gt;-->
-            <!--&lt;!&ndash;/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:text="텍스트aasdeqwe3"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/tv_moretext"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:background="@android:color/white"&ndash;&gt;-->
+    <!--&lt;!&ndash;sl:scale_left="145"&ndash;&gt;-->
+    <!--&lt;!&ndash;sl:scale_top="90"&ndash;&gt;-->
+    <!--&lt;!&ndash;sl:scale_width="300"&ndash;&gt;-->
+    <!--&lt;!&ndash;sl:scale_height="40"&ndash;&gt;-->
+    <!--&lt;!&ndash;sl:scale_textsize="30"&ndash;&gt;-->
+    <!--&lt;!&ndash;sl:textview_wrapcontent_direction="center_horizontal"&ndash;&gt;-->
+    <!--&lt;!&ndash;sl:textview_wrapcontent_resizesurrounded="false"&ndash;&gt;-->
+    <!--&lt;!&ndash;sl:textview_wrapcontent_movesiblings="false"&ndash;&gt;-->
+    <!--&lt;!&ndash;/>&ndash;&gt;-->
 
-        <!--&lt;!&ndash;<me.grantland.widget.AutofitTextView&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:text="textview test test test test test test test test"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:id="@+id/tv_moretext"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:background="@android:color/white"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:maxLines="2"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:textSize="40sp"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:minTextSize="5sp"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:scale_left="150"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:scale_top="90"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:scale_width="300"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:scale_height="100"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:scale_textsize="30"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:textview_wrapcontent_direction="none"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:textview_wrapcontent_resizesurrounded="false"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:textview_wrapcontent_movesiblings="false"&ndash;&gt;-->
-            <!--&lt;!&ndash;/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<me.grantland.widget.AutofitTextView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:text="textview test test test test test test test test"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/tv_moretext"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:background="@android:color/white"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:maxLines="2"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textSize="40sp"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:minTextSize="5sp"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_left="150"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_top="90"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_width="300"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_height="100"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_textsize="30"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:textview_wrapcontent_direction="none"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:textview_wrapcontent_resizesurrounded="false"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:textview_wrapcontent_movesiblings="false"&ndash;&gt;-->
+    <!--&lt;!&ndash;/>&ndash;&gt;-->
 
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@android:color/black"-->
-            <!--android:text="top left"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--app:scale_left="10"-->
-            <!--app:scale_top="10"-->
-            <!--app:scale_width="100"-->
-            <!--app:scale_height="25"-->
-            <!--app:scale_textsize="20" />-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/black"-->
+    <!--android:text="top left"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--app:scale_left="10"-->
+    <!--app:scale_top="10"-->
+    <!--app:scale_width="100"-->
+    <!--app:scale_height="25"-->
+    <!--app:scale_textsize="20" />-->
 
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@android:color/black"-->
-            <!--android:text="top big"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--app:scale_left="100"-->
-            <!--app:scale_top="250"-->
-            <!--app:scale_width="400"-->
-            <!--app:scale_height="500"-->
-            <!--app:scale_textsize="20"-->
-            <!--/>-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@android:color/black"-->
-            <!--android:text="top medium"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--app:scale_left="105"-->
-            <!--app:scale_top="15"-->
-            <!--app:scale_width="300"-->
-            <!--app:scale_height="40"-->
-            <!--app:scale_textsize="20" />-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@android:color/black"-->
-            <!--android:text="top small"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--app:scale_left="115"-->
-            <!--app:scale_top="20"-->
-            <!--app:scale_width="100"-->
-            <!--app:scale_height="30"-->
-            <!--app:scale_textsize="20" />-->
-
-
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@android:color/black"-->
-            <!--android:text="top right"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--app:scale_left="490"-->
-            <!--app:scale_top="10"-->
-            <!--app:scale_height="25"-->
-            <!--app:scale_width="100"-->
-            <!--app:scale_textsize="20" />-->
-
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@android:color/black"-->
-            <!--android:text="right"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--app:scale_left="490"-->
-            <!--app:scale_top="100"-->
-            <!--app:scale_height="25"-->
-            <!--app:scale_width="100"-->
-            <!--app:scale_textsize="20" />-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/black"-->
+    <!--android:text="top big"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--app:scale_left="100"-->
+    <!--app:scale_top="250"-->
+    <!--app:scale_width="400"-->
+    <!--app:scale_height="500"-->
+    <!--app:scale_textsize="20"-->
+    <!--/>-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/black"-->
+    <!--android:text="top medium"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--app:scale_left="105"-->
+    <!--app:scale_top="15"-->
+    <!--app:scale_width="300"-->
+    <!--app:scale_height="40"-->
+    <!--app:scale_textsize="20" />-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/black"-->
+    <!--android:text="top small"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--app:scale_left="115"-->
+    <!--app:scale_top="20"-->
+    <!--app:scale_width="100"-->
+    <!--app:scale_height="30"-->
+    <!--app:scale_textsize="20" />-->
 
 
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@android:color/black"-->
-            <!--android:text="left"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--app:scale_left="10"-->
-            <!--app:scale_top="100"-->
-            <!--app:scale_height="25"-->
-            <!--app:scale_width="100"-->
-            <!--app:scale_textsize="20" />-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/black"-->
+    <!--android:text="top right"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--app:scale_left="490"-->
+    <!--app:scale_top="10"-->
+    <!--app:scale_height="25"-->
+    <!--app:scale_width="100"-->
+    <!--app:scale_textsize="20" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/black"-->
+    <!--android:text="right"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--app:scale_left="490"-->
+    <!--app:scale_top="100"-->
+    <!--app:scale_height="25"-->
+    <!--app:scale_width="100"-->
+    <!--app:scale_textsize="20" />-->
 
 
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@android:color/black"-->
-            <!--android:text="bot left"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--app:scale_left="10"-->
-            <!--app:scale_top="200"-->
-            <!--app:scale_height="25"-->
-            <!--app:scale_width="100"-->
-            <!--app:scale_textsize="20" />-->
-
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@android:color/black"-->
-            <!--android:text="bot"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--app:scale_left="200"-->
-            <!--app:scale_top="200"-->
-            <!--app:scale_height="25"-->
-            <!--app:scale_width="100"-->
-            <!--app:scale_textsize="20" />-->
-
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@android:color/black"-->
-            <!--android:text="bot right"-->
-            <!--android:textColor="@android:color/white"-->
-            <!--app:scale_left="490"-->
-            <!--app:scale_top="200"-->
-            <!--app:scale_height="25"-->
-            <!--app:scale_width="100"-->
-            <!--app:scale_textsize="20" />-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/black"-->
+    <!--android:text="left"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--app:scale_left="10"-->
+    <!--app:scale_top="100"-->
+    <!--app:scale_height="25"-->
+    <!--app:scale_width="100"-->
+    <!--app:scale_textsize="20" />-->
 
 
-        <!--&lt;!&ndash;<android.support.design.widget.TextInputLayout&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:background="@android:color/holo_green_light"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:scale_left="105"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:scale_top="50"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:scale_width="320"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:scale_height="130"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:errorEnabled="true"&ndash;&gt;-->
-            <!--&lt;!&ndash;&gt;&ndash;&gt;-->
-            <!--&lt;!&ndash;<android.support.v7.widget.AppCompatEditText&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:hint="E-mail address"&ndash;&gt;-->
-                <!--&lt;!&ndash;/>&ndash;&gt;-->
-        <!--&lt;!&ndash;</android.support.design.widget.TextInputLayout>&ndash;&gt;-->
-        <!--&lt;!&ndash;<android.support.design.widget.TextInputLayout&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;android:background="@android:color/holo_blue_light"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:scale_left="105"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:scale_top="200"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:scale_width="320"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:scale_height="120"&ndash;&gt;-->
-            <!--&lt;!&ndash;app:errorEnabled="true"&ndash;&gt;-->
-            <!--&lt;!&ndash;&gt;&ndash;&gt;-->
-            <!--&lt;!&ndash;<android.support.v7.widget.AppCompatEditText&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:hint="Password"&ndash;&gt;-->
-                <!--&lt;!&ndash;app:scale_textsize="50"&ndash;&gt;-->
-                <!--&lt;!&ndash;/>&ndash;&gt;-->
-        <!--&lt;!&ndash;</android.support.design.widget.TextInputLayout>&ndash;&gt;-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/black"-->
+    <!--android:text="bot left"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--app:scale_left="10"-->
+    <!--app:scale_top="200"-->
+    <!--app:scale_height="25"-->
+    <!--app:scale_width="100"-->
+    <!--app:scale_textsize="20" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/black"-->
+    <!--android:text="bot"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--app:scale_left="200"-->
+    <!--app:scale_top="200"-->
+    <!--app:scale_height="25"-->
+    <!--app:scale_width="100"-->
+    <!--app:scale_textsize="20" />-->
+
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@android:color/black"-->
+    <!--android:text="bot right"-->
+    <!--android:textColor="@android:color/white"-->
+    <!--app:scale_left="490"-->
+    <!--app:scale_top="200"-->
+    <!--app:scale_height="25"-->
+    <!--app:scale_width="100"-->
+    <!--app:scale_textsize="20" />-->
+
+
+    <!--&lt;!&ndash;<android.support.design.widget.TextInputLayout&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:background="@android:color/holo_green_light"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_left="105"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_top="50"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_width="320"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_height="130"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:errorEnabled="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;<android.support.v7.widget.AppCompatEditText&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:hint="E-mail address"&ndash;&gt;-->
+    <!--&lt;!&ndash;/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</android.support.design.widget.TextInputLayout>&ndash;&gt;-->
+    <!--&lt;!&ndash;<android.support.design.widget.TextInputLayout&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:background="@android:color/holo_blue_light"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_left="105"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_top="200"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_width="320"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_height="120"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:errorEnabled="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;<android.support.v7.widget.AppCompatEditText&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:hint="Password"&ndash;&gt;-->
+    <!--&lt;!&ndash;app:scale_textsize="50"&ndash;&gt;-->
+    <!--&lt;!&ndash;/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</android.support.design.widget.TextInputLayout>&ndash;&gt;-->
     <!--</com.ssomai.android.scalablelayout.ScalableLayout>-->
 
 

@@ -1,7 +1,9 @@
 package com.ssomai.android.sample_scalablelayout;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +13,7 @@ import android.widget.TextView;
 import com.ssomai.android.scalablelayout.ScalableLayout;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
 //    private static final String DebugTag = "ScalableLayout_TestAndroid";
     private static final String DebugTag = "TestAndroid";
@@ -403,5 +405,30 @@ public class MainActivity extends ActionBarActivity {
         TextView tv = (TextView) findViewById(R.id.tv_moretext);
         tv.setText(tv.getText().subSequence(1, tv.getText().length()));
         tv.requestLayout();
+    }
+
+    public void onClick_imgPatient(View view) {
+        final TextView tv = (TextView) findViewById(R.id.txtUserName);
+//        tv.setEllipsize(TextUtils.TruncateAt.END);
+//        tv.setMaxLines(1);
+//        tv.setText("text");
+        tv.setText("테스트트트asdqwe답지다ㅣ");
+
+
+        tv.setEllipsize(TextUtils.TruncateAt.MARQUEE);
+//        tv.setEllipsize(TextUtils.TruncateAt.END);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                tv.setEllipsize(TextUtils.TruncateAt.END);
+                tv.forceLayout();
+                tv.requestLayout();
+                findViewById(R.id.patientResultScalable).requestLayout();
+                findViewById(R.id.patientResultScalable).forceLayout();
+                findViewById(R.id.patientResultScalable).invalidate();
+                tv.invalidate();
+            }
+        }, 1000);
     }
 }
